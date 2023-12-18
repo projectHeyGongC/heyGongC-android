@@ -21,9 +21,6 @@ class ActivityMain : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val monitoringFragment = MonitoringFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.fragmentHost, monitoringFragment).commit()
-
         binding.bottomNavi.labelVisibilityMode = LABEL_VISIBILITY_LABELED   // label 항상 보이기
         initBottomNavigation()
     }

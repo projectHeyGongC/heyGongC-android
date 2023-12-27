@@ -14,24 +14,23 @@ import com.cctv.heygongc.R
 import com.cctv.heygongc.data.LoginDataViewPager
 import com.cctv.heygongc.databinding.ViewpagerLoginBinding
 
-class LoginViewPagerAdapter(context: Context, item: ArrayList<LoginDataViewPager>) : RecyclerView.Adapter<LoginViewPagerAdapter.PagerViewHolder>() {
-    var item = item
+class LoginViewPagerAdapter(context: Context, items: ArrayList<LoginDataViewPager>) : RecyclerView.Adapter<LoginViewPagerAdapter.PagerViewHolder>() {
+    var items = items
     var context = context
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PagerViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PagerViewHolder(ViewpagerLoginBinding.inflate(LayoutInflater.from(parent.context),parent,false))
 
-    override fun getItemCount(): Int = item.size
+    override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-        holder.textViewMsg.text = item[position].msg
-        holder.imageViewLogin.setImageResource(item[position].image)
-//        Glide.with(context).load(item[position].image)
-//            .into(holder.imageViewLogin)
+        holder.bind(items[position])
     }
 
-    inner class PagerViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.viewpager_login, parent, false))  {
+    inner class PagerViewHolder(private val binding: ViewpagerLoginBinding) : RecyclerView.ViewHolder(binding.root)  {
 
-        val textViewMsg = itemView.findViewById<TextView>(R.id.textViewMsg)
-        val imageViewLogin = itemView.findViewById<ImageView>(R.id.imageViewLogin)
+        fun bind(item: LoginDataViewPager) {
+            binding.textViewMsg.text = item.msg
+            binding.imageViewLogin.setImageResource(item.image)
+        }
     }
 }

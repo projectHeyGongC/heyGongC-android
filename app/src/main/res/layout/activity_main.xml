@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.BottomNavigationView"
+        android:theme="@style/Theme.NavigationBottom"
         app:menu="@menu/navi_menu"
         android:clickable="false"
         app:itemIconTint="@drawable/menu_click_color"

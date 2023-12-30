@@ -10,4 +10,8 @@
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication">
         <item name="colorPrimary">@color/yellow</item>
     </style>
+
+    <style name="Theme.NavigationBottom" parent="Base.Theme.MyApplication">
+        <item name="colorPrimary">@color/white</item>
+    </style>
 </resources>

@@ -72,6 +72,16 @@
             app:layout_constraintLeft_toLeftOf="@id/textViewAll"
             app:layout_constraintBaseline_toBaselineOf="@id/checkBoxTerms"/>
 
+        <ImageView
+            android:id="@+id/imageViewArrowTerms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewTerms"
+            app:layout_constraintBottom_toBottomOf="@id/textViewTerms"
+            android:src="@drawable/arrow_forward"
+            android:padding="10dp"/>
+
         <CheckBox
             android:id="@+id/checkBoxInfo"
             android:layout_width="wrap_content"
@@ -87,6 +97,16 @@
             android:text="개인정보처리방침 동의 (필수)"
             app:layout_constraintLeft_toLeftOf="@id/textViewAll"
             app:layout_constraintBaseline_toBaselineOf="@id/checkBoxInfo"/>
+
+        <ImageView
+            android:id="@+id/imageViewArrowInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewInfo"
+            app:layout_constraintBottom_toBottomOf="@id/textViewInfo"
+            android:src="@drawable/arrow_forward"
+            android:padding="10dp"/>
 
         <CheckBox
             android:id="@+id/checkBoxMarketing"
@@ -104,16 +124,26 @@
             app:layout_constraintLeft_toLeftOf="@id/textViewAll"
             app:layout_constraintBaseline_toBaselineOf="@id/checkBoxMarketing"/>
 
+        <ImageView
+            android:id="@+id/imageViewArrowMarketing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewMarketing"
+            app:layout_constraintBottom_toBottomOf="@id/textViewMarketing"
+            android:src="@drawable/arrow_forward"
+            android:padding="10dp"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
+        android:id="@+id/buttonComfirm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="확인"
         android:textColor="@color/black"
         android:layout_marginTop="30dp"
-        android:clickable="false"
-        android:backgroundTint="@color/grey"/>
+        android:enabled="false" />
 
 </LinearLayout>

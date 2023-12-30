@@ -20,8 +20,12 @@ class ActivityLogin : AppCompatActivity() {
 
 //        ActivitySplash.setStatusBarTransparent(this)
 
-        binding.buttonMove.setOnClickListener {
+        binding.buttonMoveJoin.setOnClickListener {
             startActivity(Intent(this, ActivityJoin::class.java))
+        }
+
+        binding.buttonMoveMain.setOnClickListener {
+            startActivity(Intent(this, ActivityMain::class.java))
         }
 
         var item = ArrayList<LoginDataViewPager>()

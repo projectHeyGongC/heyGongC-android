@@ -28,6 +28,8 @@ class AnalysisFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mBinding = FragmentAnalysisBinding.inflate(inflater, container, false)
+
+        binding.recyclerViewDate.adapter =
         return binding.root
     }
 

@@ -10,16 +10,6 @@ import com.cctv.heygongc.databinding.FragmentAnalysisBinding
 import com.cctv.heygongc.databinding.FragmentMonitoringBinding
 import com.cctv.heygongc.databinding.FragmentPremiumBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [PremiumFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PremiumFragment : Fragment() {
     private var mBinding: FragmentPremiumBinding? = null
     private val binding get() = mBinding!!

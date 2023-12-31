@@ -3,11 +3,9 @@ package com.cctv.heygongc
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.viewpager2.widget.ViewPager2
 import com.cctv.heygongc.adapter.LoginViewPagerAdapter
-import com.cctv.heygongc.data.LoginDataViewPager
+import com.cctv.heygongc.data.LoginData
 import com.cctv.heygongc.databinding.ActivityLoginBinding
-import com.cctv.heygongc.databinding.ActivityMainBinding
 
 class ActivityLogin : AppCompatActivity() {
 
@@ -28,10 +26,10 @@ class ActivityLogin : AppCompatActivity() {
             startActivity(Intent(this, ActivityMain::class.java))
         }
 
-        var item = ArrayList<LoginDataViewPager>()
-        item.add(LoginDataViewPager(resources.getString(R.string.viewpager_page1), R.drawable.login_viewpager1))
-        item.add(LoginDataViewPager(resources.getString(R.string.viewpager_page2), R.drawable.login_viewpager2))
-        item.add(LoginDataViewPager(resources.getString(R.string.viewpager_page3), R.drawable.login_viewpager3))
+        var item = ArrayList<LoginData>()
+        item.add(LoginData(resources.getString(R.string.viewpager_page1), R.drawable.login_viewpager1))
+        item.add(LoginData(resources.getString(R.string.viewpager_page2), R.drawable.login_viewpager2))
+        item.add(LoginData(resources.getString(R.string.viewpager_page3), R.drawable.login_viewpager3))
 
         binding.ViewPagerLogin.adapter = LoginViewPagerAdapter(this, item)
         binding.dotsIndicator.attachTo(binding.ViewPagerLogin)

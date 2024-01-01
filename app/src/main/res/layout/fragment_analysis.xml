@@ -43,6 +43,15 @@
         app:layout_constraintBottom_toBottomOf="@id/textViewDate"
         app:layout_constraintLeft_toRightOf="@id/textViewDate"/>
 
+    <ImageView
+        android:id="@+id/imageViewCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/analysis_calendar"
+        app:layout_constraintTop_toTopOf="@id/textViewTitle"
+        app:layout_constraintBottom_toBottomOf="@id/textViewTitle"
+        app:layout_constraintRight_toRightOf="parent"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDate"
         android:layout_width="match_parent"
@@ -51,5 +60,175 @@
         app:layout_constraintTop_toBottomOf="@id/textViewTitle"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="horizontal"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintSoundContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/recyclerViewDate"
+        app:layout_constraintBottom_toTopOf="@id/constraintVideoContainer"
+        app:layout_constraintVertical_bias="0.5">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/textViewSoundTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="하루 요약"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutDevice1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/textViewSoundTitle"
+                android:padding="20dp"
+                android:background="@drawable/view_background_round_grey"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/textViewDevice1Where"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="거실"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/textViewDevice1Msg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="오늘 소리가 3번 감지되었습니다"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutDevice2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutDevice1"
+                android:padding="20dp"
+                android:background="@drawable/view_background_round_grey"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/textViewDevice2Where"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="안방"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/textViewDevice2Msg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="오늘은 아무런 움직임이 없었습니다"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutDevice3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutDevice2"
+                android:padding="20dp"
+                android:background="@drawable/view_background_round_grey"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/textViewDevice3Where"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/textViewDevice3Msg"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="기기를 추가하여 리포트를 받아보세요"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintVideoContainer"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/constraintSoundContainer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.5">
+
+        <TextView
+            android:id="@+id/textViewTwoWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="영상은 최대 2주간 보관됩니다!"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/textViewVideo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="영상"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/textViewTwoWeek"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <TextView
+            android:id="@+id/textViewDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="더보기"
+            android:textSize="14dp"
+            app:layout_constraintBaseline_toBaselineOf="@id/textViewVideo"
+            app:layout_constraintRight_toLeftOf="@id/imageViewDetail"/>
+
+        <ImageView
+            android:id="@+id/imageViewDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewDetail"
+            app:layout_constraintBottom_toBottomOf="@id/textViewDetail"
+            android:src="@drawable/arrow_forward"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/textViewVideo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="1"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/view_background_round_grey"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

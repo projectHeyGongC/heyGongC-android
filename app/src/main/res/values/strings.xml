@@ -2,8 +2,12 @@
     <string name="app_name">My Application</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- google client id -->
+    <string name="google_login_client_id">17269488169-g686qg9mnmv0ia99c4m1ugklc7k9voca.apps.googleusercontent.com</string>
+
     <!-- ActivityLogin -->
     <string name="viewpager_page1">수상한 소리가 나면 주인한테 알려줘요</string>
     <string name="viewpager_page2">무슨 소리가 났었는지 확인 할 수 있어요</string>
     <string name="viewpager_page3">언제 어디서 소리가 났는지 볼 수 있어요</string>
+
 </resources>

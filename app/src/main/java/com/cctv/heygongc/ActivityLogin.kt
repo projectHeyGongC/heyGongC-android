@@ -1,16 +1,51 @@
 package com.cctv.heygongc
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.cctv.heygongc.adapter.LoginViewPagerAdapter
 import com.cctv.heygongc.data.LoginData
 import com.cctv.heygongc.databinding.ActivityLoginBinding
+import com.google.android.gms.auth.api.Auth
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.Scopes
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.common.api.Scope
 
-class ActivityLogin : AppCompatActivity() {
+
+class ActivityLogin : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
+
 
     private var mBinding: ActivityLoginBinding? = null
     private val binding get() = mBinding!!
+
+    private val googleSignInClient: GoogleSignInClient by lazy { getGoogleClient() }
+    private val googleAuthLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+
+        try {
+            Log.e("구글로그인","성공")
+            val account = task.getResult(ApiException::class.java)  // 여기가 오류
+
+            // 이름, 이메일 등이 필요하다면 아래와 같이 account를 통해 각 메소드를 불러올 수 있다.
+            val userName = account.givenName
+            val serverAuth = account.serverAuthCode
+            val id = account.id
+            val email = account.email
+            val idToken = account.idToken
+            Log.e("구글로그인","성공, userName : ${userName}, serverAuth : ${serverAuth}, id : ${id}, email : ${email}, idToken : ${idToken}")
+            moveSignUpActivity()
+
+        } catch (e: ApiException) {
+            e.printStackTrace()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityLoginBinding.inflate(layoutInflater)
@@ -18,13 +53,6 @@ class ActivityLogin : AppCompatActivity() {
 
 //        ActivitySplash.setStatusBarTransparent(this)
 
-        binding.buttonMoveJoin.setOnClickListener {
-            startActivity(Intent(this, ActivityJoin::class.java))
-        }
-
-        binding.buttonMoveMain.setOnClickListener {
-            startActivity(Intent(this, ActivityMain::class.java))
-        }
 
         var item = ArrayList<LoginData>()
         item.add(LoginData(resources.getString(R.string.viewpager_page1), R.drawable.login_viewpager1))
@@ -34,13 +62,16 @@ class ActivityLogin : AppCompatActivity() {
         binding.ViewPagerLogin.adapter = LoginViewPagerAdapter(this, item)
         binding.dotsIndicator.attachTo(binding.ViewPagerLogin)
 
-//        binding.ViewPagerLogin.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-//            override fun onPageSelected(position: Int) {
-//                super.onPageSelected(position)
-//
-//            }
-//        })
+        addListener()
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        // 기존의 로그인한 사용자가 있으면 사용자 유지
+        val account = GoogleSignIn.getLastSignedInAccount(this)
+//        updateUI(account)
     }
 
     override fun onBackPressed() {
@@ -48,4 +79,39 @@ class ActivityLogin : AppCompatActivity() {
         finishAffinity()
         System.exit(0)
     }
+
+    private fun addListener() {
+        binding.buttonMoveJoin.setOnClickListener {
+            startActivity(Intent(this, ActivityJoin::class.java))
+        }
+
+        binding.buttonMoveMain.setOnClickListener {
+            startActivity(Intent(this, ActivityMain::class.java))
+        }
+
+        binding.ImageViewLoginGoogle.setOnClickListener {
+            googleSignInClient.signOut()
+            val signInIntent = googleSignInClient.signInIntent
+            googleAuthLauncher.launch(signInIntent)
+        }
+    }
+
+    private fun getGoogleClient(): GoogleSignInClient {
+        val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestScopes(Scope("https://www.googleapis.com/auth/pubsub"))
+//            .requestScopes(Scope("https://www.googleapis.com/oauth2/v4/token"))
+//            .requestServerAuthCode(getString(R.string.google_login_client_id)) // string 파일에 저장해둔 client id 를 이용해 server authcode를 요청한다.
+            .requestEmail() // 이메일도 요청할 수 있다.
+            .build()
+
+        return GoogleSignIn.getClient(this@ActivityLogin, googleSignInOption)
+    }
+
+    private fun moveSignUpActivity() {
+        run {
+            startActivity(Intent(this@ActivityLogin, ActivityJoin::class.java))
+            finish()
+        }
+    }
+
 }

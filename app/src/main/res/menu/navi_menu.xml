@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/monitoringFragment"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="모니터링" />
+    <item android:id="@+id/analysisFragment"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="분석" />
+    <item android:id="@+id/premiumFragment"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="프리미엄" />
+    <item android:id="@+id/profileFragment"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="프로필" />
+
+</menu>

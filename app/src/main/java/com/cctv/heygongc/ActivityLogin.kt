@@ -1,26 +1,23 @@
 package com.cctv.heygongc
 
+import android.R.attr
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.cctv.heygongc.adapter.LoginViewPagerAdapter
-import com.cctv.heygongc.data.LoginData
+import com.cctv.heygongc.data.LoginPagerData
 import com.cctv.heygongc.databinding.ActivityLoginBinding
-import com.google.android.gms.auth.api.Auth
+import com.cctv.heygongc.login.LoginGoogle
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.Scopes
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.common.api.Scope
 
 
-class ActivityLogin : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
-
+class ActivityLogin : AppCompatActivity() {
+    // todo : https://jhg3410.tistory.com/m/entry/android-google-login-apioauth2-%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0
 
     private var mBinding: ActivityLoginBinding? = null
     private val binding get() = mBinding!!
@@ -30,7 +27,6 @@ class ActivityLogin : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLis
         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
 
         try {
-            Log.e("구글로그인","성공")
             val account = task.getResult(ApiException::class.java)  // 여기가 오류
 
             // 이름, 이메일 등이 필요하다면 아래와 같이 account를 통해 각 메소드를 불러올 수 있다.
@@ -39,12 +35,16 @@ class ActivityLogin : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLis
             val id = account.id
             val email = account.email
             val idToken = account.idToken
-            Log.e("구글로그인","성공, userName : ${userName}, serverAuth : ${serverAuth}, id : ${id}, email : ${email}, idToken : ${idToken}")
+//            Log.e("구글로그인","성공, userName : ${userName}, serverAuth : ${serverAuth}, id : ${id}, email : ${email}, idToken : ${idToken}")
             moveSignUpActivity()
 
         } catch (e: ApiException) {
             e.printStackTrace()
         }
+    }
+
+    private val loginGoogle: LoginGoogle by lazy {
+        LoginGoogle(this)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +54,10 @@ class ActivityLogin : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLis
 //        ActivitySplash.setStatusBarTransparent(this)
 
 
-        var item = ArrayList<LoginData>()
-        item.add(LoginData(resources.getString(R.string.viewpager_page1), R.drawable.login_viewpager1))
-        item.add(LoginData(resources.getString(R.string.viewpager_page2), R.drawable.login_viewpager2))
-        item.add(LoginData(resources.getString(R.string.viewpager_page3), R.drawable.login_viewpager3))
+        var item = ArrayList<LoginPagerData>()
+        item.add(LoginPagerData(resources.getString(R.string.viewpager_page1), R.drawable.login_viewpager1))
+        item.add(LoginPagerData(resources.getString(R.string.viewpager_page2), R.drawable.login_viewpager2))
+        item.add(LoginPagerData(resources.getString(R.string.viewpager_page3), R.drawable.login_viewpager3))
 
         binding.ViewPagerLogin.adapter = LoginViewPagerAdapter(this, item)
         binding.dotsIndicator.attachTo(binding.ViewPagerLogin)
@@ -90,10 +90,34 @@ class ActivityLogin : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLis
         }
 
         binding.ImageViewLoginGoogle.setOnClickListener {
-            googleSignInClient.signOut()
-            val signInIntent = googleSignInClient.signInIntent
-            googleAuthLauncher.launch(signInIntent)
+//            googleSignInClient.signOut()
+//            val signInIntent = googleSignInClient.signInIntent
+//            googleAuthLauncher.launch(signInIntent)
+
+            loginGoogle.signIn(this)
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        Log.e("로그인","진입_1")
+        if (requestCode === 1000) {
+            if (resultCode !== RESULT_OK) {
+                return
+            }
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                loginGoogle.handleSignInResult(task)
+
+            } catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                e.printStackTrace()
+                // ...
+            }
+        }
+
     }
 
     private fun getGoogleClient(): GoogleSignInClient {

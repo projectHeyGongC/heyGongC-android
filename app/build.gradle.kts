@@ -69,4 +69,13 @@ dependencies {
 //    implementation("com.google.firebase:firebase-auth:22.0.0")
 //    implementation("com.google.firebase:firebase-bom:32.0.0")
 
+    // Retrofit 라이브러리
+    implementation("com.squareup.retrofit2:retrofit:2.6.4")
+
+    // Gson 변환기 라이브러리
+    implementation("com.squareup.retrofit2:converter-gson:2.6.4")
+
+    // Scalars 변환기 라이브러리
+    implementation("com.squareup.retrofit2:converter-scalars:2.6.4")
+
 }

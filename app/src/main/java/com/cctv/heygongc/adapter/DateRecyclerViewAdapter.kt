@@ -5,10 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.cctv.heygongc.data.LoginData
 import com.cctv.heygongc.data.TopDateData
 import com.cctv.heygongc.databinding.RecyclerviewCellTopDateBinding
-import com.cctv.heygongc.databinding.ViewpagerLoginBinding
 
 class DateRecyclerViewAdapter(items: List<TopDateData>) : RecyclerView.Adapter<DateRecyclerViewAdapter.ViewHolder>() {
     var items = items
@@ -37,7 +35,6 @@ class DateRecyclerViewAdapter(items: List<TopDateData>) : RecyclerView.Adapter<D
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Log.e("날짜", "${position}, ${items.size-1}")
         holder.bind(items[position], position == items.size-1)
     }
 }

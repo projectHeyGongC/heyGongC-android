@@ -25,10 +25,10 @@ class LoginRepository(val context: Context) {
             )
         ).enqueue(object : Callback<LoginGoogleResponseModel> {
             override fun onResponse(call: Call<LoginGoogleResponseModel>, response: Response<LoginGoogleResponseModel>) {
-                Log.e("로그인", "${response.isSuccessful}")
                 if(response.isSuccessful) {
                     val accessToken = response.body()?.access_token.orEmpty()
-                    Log.d(TAG, "accessToken: $accessToken")     // todo accessToken 받기 완료
+
+                    // third part 서버로 access token 보내기
 //                    sendAccessToken(accessToken)
                 }
             }

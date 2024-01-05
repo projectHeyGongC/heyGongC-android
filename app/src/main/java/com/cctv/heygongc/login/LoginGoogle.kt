@@ -23,8 +23,7 @@ class LoginGoogle(val context: Context) {
 
     fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
-            val authCode: String? =
-                completedTask.getResult(ApiException::class.java)?.serverAuthCode
+            val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode
             LoginRepository(context).getAccessToken(authCode!!)
         } catch (e: ApiException) {
             Log.w(TAG, "handleSignInResult: error" + e.statusCode)

@@ -78,4 +78,8 @@ dependencies {
     // Scalars 변환기 라이브러리
     implementation("com.squareup.retrofit2:converter-scalars:2.6.4")
 
+    // by viewModels() 사용
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.activity:activity-ktx:1.8.2")
+
 }

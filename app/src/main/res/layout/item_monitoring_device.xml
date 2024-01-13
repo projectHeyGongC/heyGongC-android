@@ -125,7 +125,7 @@
         android:textAlignment="viewStart"
         android:textColor="@color/black"
         app:icon="@drawable/ic_home_sound_sensing"
-        app:iconGrabvity="textStart"
+        app:iconGravity="textStart"
         app:iconTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

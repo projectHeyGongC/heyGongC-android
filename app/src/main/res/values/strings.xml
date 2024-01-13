@@ -2,4 +2,50 @@
     <string name="app_name">My Application</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--DeviceSetting-->
+    <string name="title_set_device">기기 설정</string>
+    <string name="section_set_device">기기 정보</string>
+    <string name="label_device_name">기기명</string>
+    <string name="label_device_model">기종</string>
+    <string name="section_sense_sound">소리 감지 기능</string>
+    <string name="label_set_sensitivity">민감도 설정</string>
+    <string name="guide_sensitivity">민감도가 높을수록 더 작은 소리도 기기가 감지하여\n많은 알림이 올 수 있습니다</string>
+    <string name="section_set_camera">카메라 설정</string>
+    <string name="btn_label_front_camera">전면 카메라</string>
+    <string name="btn_label_back_camera">후면 카메라</string>
+    <string name="section_remote_control">원격 제어</string>
+    <string name="description_device_state">기기 상태 : 오프라인</string>
+    <string name="label_remote_control">원격 실행</string>
+    <string name="section_manage_device">기기 관리</string>
+    <string name="btn_label_disconnect_device">연동 해제</string>
+
+    <!--Scan-->
+    <string name="description_scan_qr_code">공기계의 QR코드를 스캔해주세요</string>
+
+    <!--SetDeviceName-->
+    <string name="title_device_name">기기 이름</string>
+    <string name="label_add_device">기기 등록</string>
+
+    <!--Terms-->
+    <string name="title_permission_guide">앱 사용 권한 안내</string>
+    <string name="description_permission_guide">편리하고 안전한 헤이공씨 앱 사용을 위해 \n다음과 같은 권한 허용이 필요합니다.</string>
+    <string name="permission_camera">카메라 필수</string>
+    <string name="description_camera">스트리밍, 녹화 등 카메라 기능 사용</string>
+    <string name="permission_microphone">마이크 필수</string>
+    <string name="description_microphone">스트리밍, 녹화 등 카메라 기능 사용</string>
+    <string name="permission_description"><![CDATA[* 접근 권한 변경 방법: 설정 > 헤이공씨 > 권한 ON/OFF\n* 접근 권한을 허용하지 않는 경우 서비스 이용이 어려울 수 있습니다.]]></string>
+    <string name="btn_label_confim">확인</string>
+
+    <!--ItemAddDevice-->
+    <string name="btn_label_add_device">기기 추가하기</string>
+
+    <!--ItemMonitoringDevice-->
+    <string name="description_camera_on_off">카메라가 꺼져 있습니다.</string>
+    <string name="label_turn_on_camera">카메라 깨우기</string>
+    <string name="label_turn_on_sense_sound">소리 감지 모드 on/off</string>
+
+    <!--Monitoring-->
+    <string name="title_monitoring">모니터링</string>
+
 </resources>

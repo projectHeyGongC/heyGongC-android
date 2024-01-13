@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F9F9F9">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/appbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_left_arrow">
+
+            <TextView
+                android:id="@+id/tv_device_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/title_set_device"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <TextView
+            android:id="@+id/tv_section_device_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/section_set_device"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbar" />
+
+        <ImageView
+            android:id="@+id/iv_device_info"
+            android:layout_width="0dp"
+            android:layout_height="78dp"
+            android:layout_marginHorizontal="37dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_gray_9dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section_device_info" />
+
+        <TextView
+            android:id="@+id/tv_label_device_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14.4dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/label_device_name"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/iv_device_info"
+            app:layout_constraintTop_toTopOf="@id/iv_device_info" />
+
+        <TextView
+            android:id="@+id/tv_device_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="27.4dp"
+            android:layout_marginTop="12dp"
+            android:gravity="start"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toStartOf="@id/iv_edit"
+            app:layout_constraintStart_toEndOf="@id/tv_label_device_name"
+            app:layout_constraintTop_toTopOf="@id/iv_device_info"
+            tools:text="안방" />
+
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="8dp"
+            android:src="@drawable/ic_edit"
+            app:layout_constraintEnd_toEndOf="@id/iv_device_info"
+            app:layout_constraintTop_toTopOf="@id/iv_device_info" />
+
+        <TextView
+            android:id="@+id/tv_label_device_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14.4dp"
+            android:layout_marginTop="24.8dp"
+            android:text="@string/label_device_model"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintStart_toStartOf="@id/iv_device_info"
+            app:layout_constraintTop_toBottomOf="@id/tv_label_device_name" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="27.4dp"
+            android:layout_marginTop="24.8dp"
+            android:gravity="start"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@id/iv_device_info"
+            app:layout_constraintStart_toEndOf="@id/tv_label_device_type"
+            app:layout_constraintTop_toBottomOf="@id/tv_device_name"
+            tools:text="iPhone14" />
+
+        <TextView
+            android:id="@+id/tv_section_sound_sensing_function"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="23dp"
+            android:text="@string/section_sense_sound"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_device_info" />
+
+        <ImageView
+            android:id="@+id/iv_sound_sensing_function"
+            android:layout_width="0dp"
+            android:layout_height="87dp"
+            android:layout_marginHorizontal="37dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_gray_9dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section_sound_sensing_function" />
+
+        <TextView
+            android:id="@+id/tv_set_sensitivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="11dp"
+            android:text="@string/label_set_sensitivity"
+            android:textColor="@color/black"
+            android:textSize="12.8sp"
+            app:layout_constraintStart_toStartOf="@id/iv_sound_sensing_function"
+            app:layout_constraintTop_toTopOf="@id/iv_sound_sensing_function" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/sensitivity_slider"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="43dp"
+            android:scrollbarAlwaysDrawHorizontalTrack="false"
+            android:scrollbarAlwaysDrawVerticalTrack="false"
+            android:scrollbarSize="4dp"
+            android:stepSize="1.0"
+            android:valueFrom="1.0"
+            android:valueTo="5.0"
+            app:layout_constraintEnd_toEndOf="@id/iv_sound_sensing_function"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/iv_sound_sensing_function"
+            app:layout_constraintTop_toBottomOf="@id/tv_set_sensitivity"
+            app:thumbColor="@color/white"
+            app:tickColorActive="#FEBF00"
+            app:tickColorInactive="#E9DCB6"
+            app:trackColorActive="#FEBF00"
+            app:trackColorInactive="#E9DCB6"
+            app:values="@array/sensitivity" />
+
+        <TextView
+            android:id="@+id/tv_sensitivity_guide"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="37dp"
+            android:layout_marginTop="11dp"
+            android:text="@string/guide_sensitivity"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_sound_sensing_function" />
+
+        <TextView
+            android:id="@+id/tv_set_camera"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="23dp"
+            android:text="@string/section_set_camera"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sensitivity_guide" />
+
+        <ImageView
+            android:id="@+id/iv_set_camera"
+            android:layout_width="0dp"
+            android:layout_height="96dp"
+            android:layout_marginHorizontal="37dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_gray_9dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_set_camera" />
+
+        <RadioGroup
+            android:id="@+id/set_camera_radio_button_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@id/iv_set_camera"
+            app:layout_constraintStart_toStartOf="@id/iv_set_camera"
+            app:layout_constraintTop_toTopOf="@id/iv_set_camera">
+
+            <RadioButton
+                android:id="@+id/btn_front_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/btn_label_front_camera" />
+
+            <RadioButton
+                android:id="@+id/btn_back_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_label_back_camera" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/tv_section_remote_control"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="23dp"
+            android:text="@string/section_remote_control"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_set_camera" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="23dp"
+            android:layout_marginEnd="37dp"
+            android:text="@string/description_device_state"
+            android:textColor="#2B2B2B"
+            android:textSize="9sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_set_camera" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_remote_control"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="37dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_gray_9dp"
+            android:gravity="center"
+            android:text="@string/label_remote_control"
+            android:textColor="@color/black"
+            android:textSize="12.8sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section_remote_control" />
+
+        <TextView
+            android:id="@+id/tv_section_manage_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="23dp"
+            android:text="@string/section_manage_device"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_remote_control" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_disconnect_device"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="37dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_gray_9dp"
+            android:gravity="center"
+            android:text="@string/btn_label_disconnect_device"
+            android:textColor="#FE0000"
+            android:textSize="12.8sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_section_manage_device" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>
+
+    <!--
+                //카메라 설정 색상, range slider label 색상 !!
+
+
+         val rangeSlider = findViewById<RangeSlider>(R.id.rangeSlider)
+
+                // Set tick positions
+                val tickPositions = listOf(1.0f, 2.0f, 3.0f, 4.0f)
+                rangeSlider.values = tickPositions
+
+                // Customize tick color
+                rangeSlider.tickActiveTintList = ColorStateList.valueOf(/* your desired tick color */)
+                rangeSlider.tickInactiveTintList = ColorStateList.valueOf(/* your desired inactive tick color */)
+    -->

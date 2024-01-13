@@ -47,6 +47,7 @@ class ActivityLogin : AppCompatActivity() {
         LoginGoogle(this)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
+        //
         super.onCreate(savedInstanceState)
         mBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)

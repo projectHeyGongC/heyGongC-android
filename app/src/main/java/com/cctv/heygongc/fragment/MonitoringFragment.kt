@@ -19,9 +19,6 @@ class MonitoringFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mBinding = FragmentMonitoringBinding.inflate(inflater, container, false)
-        binding.buttonTest.setOnClickListener {
-            binding.textViewTest.text = "클릭됨"
-        }
         return binding.root
     }
 

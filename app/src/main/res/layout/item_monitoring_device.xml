@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    android:background="@drawable/selector_background_monitoring_item">
+
+    <TextView
+        android:id="@+id/tv_device_state_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/description_camera_on_off"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_set_device"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_device_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_image_device_state"
+        app:layout_constraintBottom_toTopOf="@id/tv_device_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_device_state_description" />
+
+    <TextView
+        android:id="@+id/tv_turn_on_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_turn_on_camera"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/iv_device_state"
+        app:layout_constraintEnd_toEndOf="@id/iv_device_state"
+        app:layout_constraintStart_toStartOf="@id/iv_device_state"
+        app:layout_constraintTop_toTopOf="@id/iv_device_state" />
+
+    <TextView
+        android:id="@+id/tv_device_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginBottom="8dp"
+        android:textColor="@color/white"
+        android:textSize="16.2sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/btn_sense_sound_mode"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="거실" />
+
+    <TextView
+        android:id="@+id/tv_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="6dp"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@id/btn_sense_sound_mode"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:text="28'C" />
+
+    <ImageView
+        android:id="@+id/iv_temperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/ic_temperature"
+        app:layout_constraintBottom_toTopOf="@id/btn_sense_sound_mode"
+        app:layout_constraintEnd_toStartOf="@id/tv_temperature" />
+
+    <TextView
+        android:id="@+id/tv_battery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="6dp"
+        android:textColor="@color/white"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toTopOf="@id/btn_sense_sound_mode"
+        app:layout_constraintEnd_toStartOf="@id/iv_temperature"
+        tools:text="87%" />
+
+    <ImageView
+        android:id="@+id/iv_battery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_battery"
+        app:layout_constraintBottom_toTopOf="@id/btn_sense_sound_mode"
+        app:layout_constraintEnd_toStartOf="@id/tv_battery" />
+
+    <Button
+        android:id="@+id/btn_sense_sound_mode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="13dp"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#F6F6F6"
+        android:minWidth="0dp"
+        android:paddingStart="12.8dp"
+        android:paddingTop="12.8dp"
+        android:paddingEnd="12.8dp"
+        android:paddingBottom="12.8dp"
+        android:stateListAnimator="@null"
+        android:text="@string/label_turn_on_sense_sound"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        app:icon="@drawable/ic_home_sound_sensing"
+        app:iconGrabvity="textStart"
+        app:iconTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!--
+    토글 버튼 !!!!!
+    온도, 배터리 ~ String 리소스로 관리
+        tv_device_state_description, tv_device_name - selected 됐을 때 text 바꾸기
+        -->

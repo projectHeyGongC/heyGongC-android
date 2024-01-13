@@ -1,4 +1,4 @@
-package com.cctv.heygongc.adapter
+package com.cctv.heygongc.ui.adapter
 
 import android.graphics.Color
 import android.util.Log

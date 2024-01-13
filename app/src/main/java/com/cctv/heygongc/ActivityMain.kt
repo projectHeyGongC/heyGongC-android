@@ -1,13 +1,12 @@
 package com.cctv.heygongc
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import com.cctv.heygongc.databinding.ActivityMainBinding
-import com.cctv.heygongc.fragment.*
-import com.google.android.material.navigation.NavigationBarView.LABEL_VISIBILITY_LABELED
+import com.cctv.heygongc.ui.analysis.AnalysisFragment
+import com.cctv.heygongc.ui.fragment.MonitoringFragment
+import com.cctv.heygongc.ui.fragment.PremiumFragment
+import com.cctv.heygongc.ui.fragment.ProfileFragment
 
 class ActivityMain : AppCompatActivity() {
 

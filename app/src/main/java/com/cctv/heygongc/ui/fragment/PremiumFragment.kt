@@ -1,4 +1,4 @@
-package com.cctv.heygongc.fragment
+package com.cctv.heygongc.ui.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,11 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.cctv.heygongc.R
+import com.cctv.heygongc.databinding.FragmentAnalysisBinding
+import com.cctv.heygongc.databinding.FragmentMonitoringBinding
 import com.cctv.heygongc.databinding.FragmentPremiumBinding
-import com.cctv.heygongc.databinding.FragmentProfileBinding
 
-class ProfileFragment : Fragment() {
-    private var mBinding: FragmentProfileBinding? = null
+class PremiumFragment : Fragment() {
+    private var mBinding: FragmentPremiumBinding? = null
     private val binding get() = mBinding!!
 
 
@@ -18,8 +19,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        mBinding = FragmentProfileBinding.inflate(inflater, container, false)
+        mBinding = FragmentPremiumBinding.inflate(inflater, container, false)
         return binding.root
     }
 

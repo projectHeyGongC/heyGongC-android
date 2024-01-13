@@ -59,5 +59,27 @@ dependencies {
 //    implementation("androidx.compose.material3:material3:1.1.2")
 //    implementation("androidx.compose.material3:material3-window-size-class:1.1.2")
 
-//    implementation("com.google.android.material:material:1.3.0")
+    implementation("com.google.android.material:material:1.3.0")
+    implementation("com.github.bumptech.glide:glide:4.12.0")
+    implementation("com.tbuonomo:dotsindicator:5.0")
+
+    // Google Play services
+    implementation("com.google.gms:google-services:4.3.15")
+    implementation("com.google.android.gms:play-services-auth:20.5.0")
+//    implementation("com.google.firebase:firebase-auth:22.0.0")
+//    implementation("com.google.firebase:firebase-bom:32.0.0")
+
+    // Retrofit 라이브러리
+    implementation("com.squareup.retrofit2:retrofit:2.6.4")
+
+    // Gson 변환기 라이브러리
+    implementation("com.squareup.retrofit2:converter-gson:2.6.4")
+
+    // Scalars 변환기 라이브러리
+    implementation("com.squareup.retrofit2:converter-scalars:2.6.4")
+
+    // by viewModels() 사용
+    implementation("androidx.fragment:fragment-ktx:1.6.2")
+    implementation("androidx.activity:activity-ktx:1.8.2")
+
 }

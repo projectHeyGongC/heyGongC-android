@@ -1,4 +1,4 @@
-package com.cctv.heygongc.login
+package com.cctv.heygongc.ui.login
 
 import android.app.Activity
 import android.content.Context

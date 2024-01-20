@@ -1,22 +1,30 @@
 package com.cctv.heygongc.ui.analysis
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CalendarView.OnDateChangeListener
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import com.cctv.heygongc.ui.adapter.DateRecyclerViewAdapter
+import com.cctv.heygongc.ActivityMain
+import com.cctv.heygongc.R
 import com.cctv.heygongc.data.TopDateData
 import com.cctv.heygongc.databinding.FragmentAnalysisBinding
+import com.cctv.heygongc.ui.adapter.DateRecyclerViewAdapter
+import com.cctv.heygongc.ui.fragment.MonitoringFragment
 import java.util.Calendar
+
 
 class AnalysisFragment : Fragment() {
     private var mBinding: FragmentAnalysisBinding? = null
     private val binding get() = mBinding!!
     private val mapDay = mapOf<Int, String>(1 to "Sun", 2 to "Mon", 3 to "Tue", 4 to "Wed", 5 to "Thu", 6 to "Fri", 7 to "Sat")
     private val arrayListDate = mutableListOf<TopDateData>()
+    private val bottomSheet = AnalysisBottomSheet()
+    private var soundFragment: SoundFragment? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,11 +61,36 @@ class AnalysisFragment : Fragment() {
         smoothScroller.targetPosition = arrayListDate.size
         binding.recyclerViewDate.layoutManager?.startSmoothScroll(smoothScroller)
 
+        binding.imageViewCalendar.setOnClickListener {
+            // 바텀 시트 알러트 생성
+            bottomSheet.show(requireFragmentManager(), bottomSheet.tag)
+        }
+
+        binding.linearLayoutDevice1.setOnClickListener {
+            moveSoundFrg()
+        }
+
+
         return binding.root
     }
 
     override fun onDestroyView() {
         mBinding = null
         super.onDestroyView()
+    }
+
+    fun moveSoundFrg() {
+        if(soundFragment == null){ // null일때만 한번 만들고 이후에는 생성된 객체를 사용하기 때문에 초기화 안됨
+            soundFragment = SoundFragment()
+            ActivityMain.fm.beginTransaction().add(R.id.fragmentHost,soundFragment!!).commit()
+            Log.e("프래그먼트_크기", "${ActivityMain.fm.fragments.size}")
+        }
+        if(soundFragment != null) ActivityMain.fm.beginTransaction().show(soundFragment!!).commit()
+        Log.e("프래그먼트_크기_2", "${ActivityMain.fm.fragments.size}")
+        for (i in 0 until  ActivityMain.fm.fragments.size) {
+            Log.e("프래그먼트_목록", "${ActivityMain.fm.fragments[i]}")
+            ActivityMain.fm.beginTransaction().hide(ActivityMain.fm.fragments[i]!!).commit()
+        }
+//        ActivityMain.moveFragment("sound")
     }
 }

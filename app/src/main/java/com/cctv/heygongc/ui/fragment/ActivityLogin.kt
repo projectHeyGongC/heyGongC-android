@@ -18,7 +18,7 @@ import com.google.android.gms.common.api.ApiException
 
 
 class ActivityLogin : AppCompatActivity() {
-    // todo : https://jhg3410.tistory.com/m/entry/android-google-login-apioauth2-%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0
+    // oauth2 : https://jhg3410.tistory.com/m/entry/android-google-login-apioauth2-%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0
 
     private var mBinding: ActivityLoginBinding? = null
     private val binding get() = mBinding!!

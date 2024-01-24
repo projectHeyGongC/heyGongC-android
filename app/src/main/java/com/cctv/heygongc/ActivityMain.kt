@@ -10,7 +10,7 @@ import com.cctv.heygongc.ui.analysis.AnalysisFragment
 import com.cctv.heygongc.ui.analysis.SoundFragment
 import com.cctv.heygongc.ui.fragment.MonitoringFragment
 import com.cctv.heygongc.ui.fragment.PremiumFragment
-import com.cctv.heygongc.ui.fragment.ProfileFragment
+import com.cctv.heygongc.ui.profile.ProfileFragment
 
 class ActivityMain : AppCompatActivity() {
 

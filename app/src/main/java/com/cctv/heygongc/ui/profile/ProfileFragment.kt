@@ -1,4 +1,4 @@
-package com.cctv.heygongc.ui.fragment
+package com.cctv.heygongc.ui.profile
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -18,8 +18,11 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         mBinding = FragmentProfileBinding.inflate(inflater, container, false)
+
+
+
+
         return binding.root
     }
 

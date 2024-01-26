@@ -39,9 +39,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    buildFeatures { // 뷰바인딩
+    
+    // 뷰바인딩
+    buildFeatures { 
         viewBinding = true
+    }
+
+    // 데이터바인딩
+    buildFeatures {
+        dataBinding = true
     }
 
 
@@ -84,6 +90,7 @@ dependencies {
     implementation("androidx.fragment:fragment-ktx:1.6.2")
     implementation("androidx.activity:activity-ktx:1.8.2")
 
+    // 차트
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 }

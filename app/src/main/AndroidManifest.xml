@@ -22,7 +22,7 @@
             android:name=".ActivityMain"
             android:exported="false" />
         <activity
-            android:name=".ui.fragment.ActivityLogin"
+            android:name=".ui.login.ActivityLogin"
             android:exported="false" />
         <activity
             android:name=".ui.fragment.ActivitySplash"

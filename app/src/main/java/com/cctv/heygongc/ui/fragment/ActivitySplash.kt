@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.core.view.WindowCompat
 import com.cctv.heygongc.R
+import com.cctv.heygongc.ui.login.ActivityLogin
 import java.util.Timer
 import java.util.TimerTask
 

@@ -35,8 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/textViewTitle"
-        app:layout_constraintBottom_toTopOf="@id/constraintVideoContainer"
-        app:layout_constraintVertical_bias="0.5">
+        android:layout_marginTop="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,6 +120,13 @@
                 app:layout_constraintLeft_toLeftOf="parent"/>
 
             <!-- todo : 기기목록 recyclerview or listview로 만들것 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+            </LinearLayout>
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/linearLayoutDevice"
                 android:layout_width="match_parent"
@@ -188,18 +194,41 @@
                 android:background="@drawable/view_background_round_grey"
                 android:layout_marginTop="10dp">
 
-                <TextView
-                    android:id="@+id/textViewDevice3Where"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/textViewDevice3Msg"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="기기를 추가하여 리포트를 받아보세요"
+                    android:text="기기 추가 +"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#11000000"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayoutDisconn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@id/linearLayoutDevice"
+                android:padding="20dp"
+                android:background="@drawable/view_background_round_grey">
+
+
+                <TextView
+                    android:id="@+id/textViewDisconn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="모든 기기 연동 해제"
+                    android:textColor="#FF0000"
                     android:gravity="center"/>
 
             </LinearLayout>
@@ -210,63 +239,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintVideoContainer"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/constraintProfileContainer"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.5">
 
-        <TextView
-            android:id="@+id/textViewTwoWeek"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:text="영상은 최대 2주간 보관됩니다!"
-            android:textSize="16dp"/>
-
-        <TextView
-            android:id="@+id/textViewVideo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="영상"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/textViewTwoWeek"
-            app:layout_constraintLeft_toLeftOf="parent" />
-
-        <TextView
-            android:id="@+id/textViewDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="더보기"
-            android:textSize="14dp"
-            app:layout_constraintBaseline_toBaselineOf="@id/textViewVideo"
-            app:layout_constraintRight_toLeftOf="@id/imageViewDetail"/>
-
-        <ImageView
-            android:id="@+id/imageViewDetail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/textViewDetail"
-            app:layout_constraintBottom_toBottomOf="@id/textViewDetail"
-            android:src="@drawable/arrow_forward"
-            android:padding="10dp"
-            android:layout_marginRight="10dp"/>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/textViewVideo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_bias="1"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/view_background_round_grey"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

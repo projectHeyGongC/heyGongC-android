@@ -1,4 +1,4 @@
-package com.cctv.heygongc.ui.adapter
+package com.cctv.heygongc.ui.login
 
 import android.content.Context
 import android.view.LayoutInflater

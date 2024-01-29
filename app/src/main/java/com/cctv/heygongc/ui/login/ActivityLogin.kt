@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.R
-import com.cctv.heygongc.ui.adapter.LoginViewPagerAdapter
 import com.cctv.heygongc.data.LoginPagerData
 import com.cctv.heygongc.databinding.ActivityLoginBinding
 import com.cctv.heygongc.ui.fragment.ActivityJoin
@@ -27,7 +26,7 @@ class ActivityLogin : AppCompatActivity() {
 
     val loginViewModel: LoginViewModel by viewModels()
 
-//    private val googleSignInClient: GoogleSignInClient by lazy { getGoogleClient() }
+    private val googleSignInClient: GoogleSignInClient by lazy { getGoogleClient() }
     private val googleAuthLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
 
@@ -48,15 +47,18 @@ class ActivityLogin : AppCompatActivity() {
         }
     }
 
-//    private val loginGoogle: LoginGoogle by lazy {
-//        LoginGoogle(this)
-//    }
+    private val loginGoogle: LoginGoogle by lazy {
+        LoginGoogle(this)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
 
 //        ActivitySplash.setStatusBarTransparent(this)
+
+        binding.viewModel = loginViewModel
+        binding.lifecycleOwner = this
 
 
         var item = ArrayList<LoginPagerData>()
@@ -100,12 +102,13 @@ class ActivityLogin : AppCompatActivity() {
             startActivity(Intent(this, ActivityMain::class.java))
         }
 
+        // viewModel에서 fun으로 view에 이벤트 연결하고 liveData 변하면 Activity에서 감지해서 화면 이동 하도록 할것
         binding.ImageViewLoginGoogle.setOnClickListener {
-//            googleSignInClient.signOut()
-//            val signInIntent = googleSignInClient.signInIntent
-//            googleAuthLauncher.launch(signInIntent)
+            googleSignInClient.signOut()
+            val signInIntent = googleSignInClient.signInIntent
+            googleAuthLauncher.launch(signInIntent)
 
-//            loginGoogle.signIn(this)
+            loginGoogle.signIn(this)
         }
     }
 
@@ -130,16 +133,16 @@ class ActivityLogin : AppCompatActivity() {
         }
     }
 
-//    private fun getGoogleClient(): GoogleSignInClient {
-//        val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-////            .requestScopes(Scope("https://www.googleapis.com/auth/pubsub"))
-////            .requestScopes(Scope("https://www.googleapis.com/oauth2/v4/token"))
-////            .requestServerAuthCode(getString(R.string.google_login_client_id)) // string 파일에 저장해둔 client id 를 이용해 server authcode를 요청한다.
-//            .requestEmail() // 이메일도 요청할 수 있다.
-//            .build()
-//
-//        return GoogleSignIn.getClient(this@ActivityLogin, googleSignInOption)
-//    }
+    private fun getGoogleClient(): GoogleSignInClient {
+        val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//            .requestScopes(Scope("https://www.googleapis.com/auth/pubsub"))
+//            .requestScopes(Scope("https://www.googleapis.com/oauth2/v4/token"))
+//            .requestServerAuthCode(getString(R.string.google_login_client_id)) // string 파일에 저장해둔 client id 를 이용해 server authcode를 요청한다.
+            .requestEmail() // 이메일도 요청할 수 있다.
+            .build()
+
+        return GoogleSignIn.getClient(this@ActivityLogin, googleSignInOption)
+    }
 
     private fun moveSignUpActivity() {
         run {

@@ -1,7 +1,9 @@
 package com.cctv.heygongc.ui.analysis
 
+import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,8 @@ import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.cctv.heygongc.ActivityMain
+import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.FragmentSoundBinding
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
@@ -30,6 +34,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 class SoundFragment : Fragment() {
     private var mBinding: FragmentSoundBinding? = null
     private val binding get() = mBinding!!
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,12 +55,12 @@ class SoundFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         // 이 프래그먼트가 속한 Activity의 뒤로가기 인터페이스를 여기서 재정의
-        requireActivity().onBackPressedDispatcher.addCallback(object: OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                // 뒤로 가기 시 실행되는 코드
-                requireActivity().supportFragmentManager.beginTransaction().remove(this@SoundFragment).commit()
-            }
-        })
+//        requireActivity().onBackPressedDispatcher.addCallback(object: OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                // 뒤로 가기 시 실행되는 코드
+//                requireActivity().supportFragmentManager.beginTransaction().remove(this@SoundFragment).commit()
+//            }
+//        })
     }
 
     override fun onDestroyView() {
@@ -147,6 +152,26 @@ class SoundFragment : Fragment() {
         val data = BarData(barDataSet)
         barChart.data = data
         barChart.invalidate()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // 뒤로가기
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                Log.e("뒤로가기","진입")
+                // 뒤로가기 클릭시 동작하는 로직
+//                requireActivity().supportFragmentManager.beginTransaction()
+//                    .remove(this@SoundFragment)
+//                    .commit()
+
+//                ActivityMain.fm.beginTransaction().remove(this@SoundFragment).commit()
+                ActivityMain.fm.beginTransaction().show(ActivityMain.fragmentMap["analysis"]!!).commit()    // todo : 이게 발동 안함
+
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
 

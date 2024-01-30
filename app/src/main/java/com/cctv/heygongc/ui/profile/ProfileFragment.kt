@@ -20,6 +20,9 @@ class ProfileFragment : Fragment() {
     ): View? {
         mBinding = FragmentProfileBinding.inflate(inflater, container, false)
 
+        binding.imageViewSettings.setOnClickListener {
+
+        }
 
 
 

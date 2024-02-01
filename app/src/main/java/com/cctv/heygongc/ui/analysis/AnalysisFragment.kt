@@ -1,5 +1,7 @@
 package com.cctv.heygongc.ui.analysis
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -25,6 +27,7 @@ class AnalysisFragment : Fragment() {
     private val arrayListDate = mutableListOf<TopDateData>()
     private val bottomSheet = AnalysisBottomSheet()
     private var soundFragment: SoundFragment? = null
+    lateinit var activityMain: ActivityMain
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,18 +82,26 @@ class AnalysisFragment : Fragment() {
         super.onDestroyView()
     }
 
+    override fun onAttach(context: Activity) {
+        super.onAttach(context)
+        activityMain = context as ActivityMain
+    }
+
     fun moveSoundFrg() {
-        if(soundFragment == null){ // null일때만 한번 만들고 이후에는 생성된 객체를 사용하기 때문에 초기화 안됨
-            soundFragment = SoundFragment()
-            ActivityMain.fm.beginTransaction().add(R.id.fragmentHost,soundFragment!!).commit()
-            Log.e("프래그먼트_크기", "${ActivityMain.fm.fragments.size}")
-        }
-        if(soundFragment != null) ActivityMain.fm.beginTransaction().show(soundFragment!!).commit()
-        Log.e("프래그먼트_크기_2", "${ActivityMain.fm.fragments.size}")
-        for (i in 0 until  ActivityMain.fm.fragments.size) {
-            Log.e("프래그먼트_목록", "${ActivityMain.fm.fragments[i]}")
-            ActivityMain.fm.beginTransaction().hide(ActivityMain.fm.fragments[i]!!).commit()
-        }
-//        ActivityMain.moveFragment("sound")
+//        if(soundFragment == null){ // null일때만 한번 만들고 이후에는 생성된 객체를 사용하기 때문에 초기화 안됨
+//            soundFragment = SoundFragment()
+//            activityMain.fm.beginTransaction().add(R.id.fragmentHost,soundFragment!!).commit()
+//            Log.e("프래그먼트_크기", "${activityMain.fm.fragments.size}")
+//        }
+//        if(soundFragment != null) activityMain.fm.beginTransaction().show(soundFragment!!).commit()
+//        Log.e("프래그먼트_크기_2", "${ActivityMain.fm.fragments.size}")
+//        for (i in 0 until  ActivityMain.fm.fragments.size) {
+//            Log.e("프래그먼트_목록", "${ActivityMain.fm.fragments[i]}")
+//            ActivityMain.fm.beginTransaction().hide(ActivityMain.fm.fragments[i]!!).commit()
+//        }
+        Log.e("이동","진입, ${activityMain.fragmentMap["analysis"]}")
+        activityMain.fm.beginTransaction().show(activityMain.fragmentMap["sound"]!!).commit()
+        activityMain.fm.beginTransaction().hide(activityMain.fragmentMap["analysis"]!!).commit()    // todo : 이게 발동 안함, 부모 자식 프래그먼트 해보기
+
     }
 }

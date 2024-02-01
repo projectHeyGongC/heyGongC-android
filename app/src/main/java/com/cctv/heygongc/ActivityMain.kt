@@ -13,15 +13,16 @@ import com.cctv.heygongc.ui.fragment.PremiumFragment
 import com.cctv.heygongc.ui.profile.ProfileFragment
 
 class ActivityMain : AppCompatActivity() {
-
+    lateinit var fm: FragmentManager
+    lateinit var fragmentMap: MutableMap<String, Fragment>
     companion object {
-        lateinit var fm: FragmentManager
-        lateinit var fragmentMap: MutableMap<String, Fragment>
+//        lateinit var fm: FragmentManager
+//        lateinit var fragmentMap: MutableMap<String, Fragment>
 
-        fun moveFragment(fragment: String) {
-            var fragment = fragmentMap[fragment]
-            Log.e("프래그먼트_1", "${fragment}")
-            fm.beginTransaction().show(fragment!!).commit()
+//        fun moveFragment(fragment: String) {
+//            var fragment = fragmentMap[fragment]
+//            Log.e("프래그먼트_1", "${fragment}")
+//            fm.beginTransaction().show(fragment!!).commit()
 //            fm.beginTransaction().hide(AnalysisFragment()!!).commit()
 //            fragmentMap.values.forEach {
 //                Log.e("프래그먼트_2", "${it}")
@@ -29,7 +30,7 @@ class ActivityMain : AppCompatActivity() {
 //            }
 //            Log.e("프래그먼트_3", "${fragment}")
 //            fm.beginTransaction().show(fragment!!).commit()
-        }
+//        }
     }
 
 
@@ -70,6 +71,17 @@ class ActivityMain : AppCompatActivity() {
         }
 
     }
+
+//    fun goDetail(){
+//        val transaction = supportFragmentManager.beginTransaction()  // 트랜잭션을 시작하고 변수에 저장
+//        transaction.add(R.id.fragmentContainerView,detailFragment) // 상세 프래그먼트를 fragmentContainerView 레이아웃에 추가
+//        transaction.addToBackStack("detail") // 백스택에 담아둠 → 뒤로가기 버튼으로 트랜잭션 전체 제거 가능
+//        transaction.commit() // 정상처리되었음을 트랜잭션에 알려 반영
+//    }
+
+//    fun goBack(){
+//        onBackPressed()
+//    }
 
     private fun initBottomNavigation(){
         // 최초로 보이는 프래그먼트

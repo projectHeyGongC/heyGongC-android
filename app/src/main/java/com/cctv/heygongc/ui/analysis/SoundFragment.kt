@@ -1,5 +1,6 @@
 package com.cctv.heygongc.ui.analysis
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
@@ -7,34 +8,28 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SeekBar
-import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.cctv.heygongc.ActivityMain
-import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.FragmentSoundBinding
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.Legend.LegendForm
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.XAxis.XAxisPosition
 import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.components.YAxis.YAxisLabelPosition
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 
 
 class SoundFragment : Fragment() {
     private var mBinding: FragmentSoundBinding? = null
     private val binding get() = mBinding!!
     private lateinit var callback: OnBackPressedCallback
+    lateinit var activityMain: ActivityMain
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,6 +62,7 @@ class SoundFragment : Fragment() {
         mBinding = null
         super.onDestroyView()
     }
+
 
     private fun initBarChart(barChart: BarChart) {
         // 차트 회색 배경 설정 (default = false)
@@ -156,7 +152,7 @@ class SoundFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
+        activityMain = context as ActivityMain
         // 뒤로가기
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -167,7 +163,8 @@ class SoundFragment : Fragment() {
 //                    .commit()
 
 //                ActivityMain.fm.beginTransaction().remove(this@SoundFragment).commit()
-                ActivityMain.fm.beginTransaction().show(ActivityMain.fragmentMap["analysis"]!!).commit()    // todo : 이게 발동 안함
+                activityMain.fm.beginTransaction().hide(activityMain.fragmentMap["sound"]!!).commit()
+                activityMain.fm.beginTransaction().show(activityMain.fragmentMap["analysis"]!!).commit()    // todo : 이게 발동 안함
 
             }
         }

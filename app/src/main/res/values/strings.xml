@@ -4,7 +4,7 @@
 
     <!-- google client id -->
     <!--안드로이드 클라 id-->
-<!--    <string name="google_login_client_id">17269488169-g686qg9mnmv0ia99c4m1ugklc7k9voca.apps.googleusercontent.com</string>-->
+    <!--    <string name="google_login_client_id">17269488169-g686qg9mnmv0ia99c4m1ugklc7k9voca.apps.googleusercontent.com</string>-->
     <!--웹 어플리케이션 클라 id-->
     <string name="google_login_client_id">17269488169-9ahv5tpfa8o1c8q2gb26acg991qsjhrq.apps.googleusercontent.com</string>
     <string name="google_login_client_secret">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</string>

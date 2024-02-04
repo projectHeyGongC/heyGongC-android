@@ -99,9 +99,21 @@ class AnalysisFragment : Fragment() {
 //            Log.e("프래그먼트_목록", "${ActivityMain.fm.fragments[i]}")
 //            ActivityMain.fm.beginTransaction().hide(ActivityMain.fm.fragments[i]!!).commit()
 //        }
-        Log.e("이동","진입, ${activityMain.fragmentMap["analysis"]}")
-        activityMain.fm.beginTransaction().show(activityMain.fragmentMap["sound"]!!).commit()
-        activityMain.fm.beginTransaction().hide(activityMain.fragmentMap["analysis"]!!).commit()    // todo : 이게 발동 안함, 부모 자식 프래그먼트 해보기
+        Log.e("이동", "진입, ${ActivityMain.fragmentMap[ActivityMain.FRAGMENT_SOUND]}")
+//        activityMain.fm.beginTransaction().show(activityMain.fragmentMap["sound"]!!).commit()
+//        activityMain.fm.beginTransaction().hide(activityMain.fragmentMap["analysis"]!!).commit()    // todo : 이게 발동 안함, 부모 자식 프래그먼트 해보기
+
+//        soundFragment = SoundFragment()
+//        activityMain.fm.beginTransaction().add(R.id.fragmentHost, soundFragment!!).commit()
+
+        for (i in 0 until parentFragmentManager.fragments.size) {
+            Log.e("프래그먼트_목록", "${parentFragmentManager.fragments[i]}")
+        }
+
+//        parentFragmentManager.beginTransaction().show(soundFragment!!).commit()
+//        parentFragmentManager.beginTransaction().hide(this).commit()
+
+        ActivityMain.showFragment(ActivityMain.FRAGMENT_SOUND)
 
     }
 }

@@ -94,6 +94,8 @@ class ActivityLogin : AppCompatActivity() {
     }
 
     private fun addListener() {
+
+        // 
         binding.buttonMoveJoin.setOnClickListener {
             startActivity(Intent(this, ActivityJoin::class.java))
         }

@@ -59,7 +59,7 @@ class LoginRepository(val context: Context) {
                     if (response.code() == 204) { // 회원가입 필요
                         signup(accessToken)
                     } else if (response.code() == 200) {    // 로그인 성공. 메인화면으로 이동. 여기서 access token, refresh token shared에 저장해야되나?
-                        
+
                     }
                 }
             }

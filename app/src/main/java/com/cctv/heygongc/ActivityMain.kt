@@ -1,8 +1,12 @@
 package com.cctv.heygongc
 
+import android.annotation.SuppressLint
+import android.content.DialogInterface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.cctv.heygongc.databinding.ActivityMainBinding
@@ -13,24 +17,37 @@ import com.cctv.heygongc.ui.fragment.PremiumFragment
 import com.cctv.heygongc.ui.profile.ProfileFragment
 
 class ActivityMain : AppCompatActivity() {
-    lateinit var fm: FragmentManager
-    lateinit var fragmentMap: MutableMap<String, Fragment>
-    companion object {
-//        lateinit var fm: FragmentManager
-//        lateinit var fragmentMap: MutableMap<String, Fragment>
+//    lateinit var fm: FragmentManager
+//    lateinit var fragmentMap: MutableMap<String, Fragment>
 
-//        fun moveFragment(fragment: String) {
-//            var fragment = fragmentMap[fragment]
-//            Log.e("프래그먼트_1", "${fragment}")
+
+
+    companion object {
+        lateinit var fm: FragmentManager
+        lateinit var fragmentMap: MutableMap<String, Fragment>
+        var NowFragment = ""
+
+        val FRAGMENT_MONITORING = "monitoring"
+        val FRAGMENT_ANALYSIS = "analysis"
+        val FRAGMENT_PREMIUM = "premium"
+        val FRAGMENT_PROFILE = "profile"
+        val FRAGMENT_SOUND = "sound"
+        val FRAGMENT_SETTING = "setting"
+        val FRAGMENT_NOTIFICATION = "notification"
+
+        fun showFragment(fragment: String) {
+            NowFragment = fragment
+            var fragment = fragmentMap[fragment]
+            Log.e("프래그먼트_1", "${fragment}")
 //            fm.beginTransaction().show(fragment!!).commit()
 //            fm.beginTransaction().hide(AnalysisFragment()!!).commit()
-//            fragmentMap.values.forEach {
-//                Log.e("프래그먼트_2", "${it}")
-//                if(it != null) fm.beginTransaction().hide(it!!).commit()
-//            }
-//            Log.e("프래그먼트_3", "${fragment}")
-//            fm.beginTransaction().show(fragment!!).commit()
-//        }
+            fragmentMap.values.forEach {
+                Log.e("프래그먼트_2", "${it}")
+                if(it != null) fm.beginTransaction().hide(it!!).commit()
+            }
+            Log.e("프래그먼트_3", "${fragment}")
+            fm.beginTransaction().show(fragment!!).commit()
+        }
     }
 
 
@@ -56,6 +73,26 @@ class ActivityMain : AppCompatActivity() {
         initBottomNavigation()
     }
 
+    @SuppressLint("MissingSuperCall")
+    override fun onBackPressed() {
+        if (NowFragment == FRAGMENT_SOUND) {    // sound 프래그먼트에서 뒤로 가기 누르면 analysis 프래그먼트로 이동
+            showFragment(FRAGMENT_ANALYSIS)
+        } else {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("앱 종료")
+                .setMessage("앱을 종료할까요?")
+                .setPositiveButton("종료",
+                    DialogInterface.OnClickListener { dialog, id ->
+                        ActivityCompat.finishAffinity(this)
+                        System.exit(0)
+                    })
+                .setNegativeButton("취소",null)
+            // 다이얼로그를 띄워주기
+            builder.show()
+        }
+
+    }
+
     private fun initFragmentMap() {
         fragmentMap = mutableMapOf()
         fragmentMap["monitoring"] = MonitoringFragment()
@@ -67,7 +104,7 @@ class ActivityMain : AppCompatActivity() {
         fm = supportFragmentManager
         fragmentMap.values.forEach {
             Log.e("프래그먼트Map","${it}")
-            fm.beginTransaction().add(R.id.fragmentHost,it!!).commit()
+            fm.beginTransaction().add(R.id.fragmentHost, it!!).commit()
         }
 
     }
@@ -85,10 +122,11 @@ class ActivityMain : AppCompatActivity() {
 
     private fun initBottomNavigation(){
         // 최초로 보이는 프래그먼트
-        monitoringFragment = MonitoringFragment()
-        fm.beginTransaction().replace(R.id.fragmentHost,monitoringFragment!!).commit()
+//        monitoringFragment = MonitoringFragment()
+//        fm.beginTransaction().replace(R.id.fragmentHost,monitoringFragment!!).commit()
 //        beforeFragment = R.id.monitoringFragment
 
+        showFragment(FRAGMENT_MONITORING)
         binding.bottomNavi.setOnItemSelectedListener {
 
             when(it.itemId){
@@ -96,58 +134,66 @@ class ActivityMain : AppCompatActivity() {
 //                    if(beforeFragment == it.itemId) {   // todo : 같은 네비게이션 버튼 다시 클릭했을때 화면 갱신
 //                        fragmentManager.beginTransaction().(R.id.fragmentHost, monitoringFragment!!).commit()
 //                    }
-                    if(monitoringFragment == null){ // null일때만 한번 만들고 이후에는 생성된 객체를 사용하기 때문에 초기화 안됨
-                        monitoringFragment = MonitoringFragment()
-                        fm.beginTransaction().add(R.id.fragmentHost,monitoringFragment!!).commit()
-                    } else {
+//                    if(monitoringFragment == null){ // null일때만 한번 만들고 이후에는 생성된 객체를 사용하기 때문에 초기화 안됨
+//                        monitoringFragment = MonitoringFragment()
+//                        fm.beginTransaction().add(R.id.fragmentHost,monitoringFragment!!).commit()
+//                    } else {
 //                        fragmentManager.beginTransaction().replace(R.id.fragmentHost, monitoringFragment!!).commit()
-                    }
-                    if(monitoringFragment != null) fm.beginTransaction().show(monitoringFragment!!).commit()
-                    if(analysisFragment != null) fm.beginTransaction().hide(analysisFragment!!).commit()
-                    if(premiumFragment != null) fm.beginTransaction().hide(premiumFragment!!).commit()
-                    if(profileFragment != null) fm.beginTransaction().hide(profileFragment!!).commit()
+//                    }
+//                    if(monitoringFragment != null) fm.beginTransaction().show(monitoringFragment!!).commit()
+//                    if(analysisFragment != null) fm.beginTransaction().hide(analysisFragment!!).commit()
+//                    if(premiumFragment != null) fm.beginTransaction().hide(premiumFragment!!).commit()
+//                    if(profileFragment != null) fm.beginTransaction().hide(profileFragment!!).commit()
+
+                    showFragment(FRAGMENT_MONITORING)
 
                     return@setOnItemSelectedListener true
                 }
                 R.id.analysisFragment ->{
-                    if(analysisFragment == null){
-                        analysisFragment = AnalysisFragment()
-                        fm.beginTransaction().add(R.id.fragmentHost,analysisFragment!!).commit()
-                    } else {
+//                    if(analysisFragment == null){
+//                        analysisFragment = AnalysisFragment()
+//                        fm.beginTransaction().add(R.id.fragmentHost,analysisFragment!!).commit()
+//                    } else {
 //                        fragmentManager.beginTransaction().replace(R.id.fragmentHost, analysisFragment!!).commit()
-                    }
-                    if(monitoringFragment != null) fm.beginTransaction().hide(monitoringFragment!!).commit()
-                    if(analysisFragment != null) fm.beginTransaction().show(analysisFragment!!).commit()
-                    if(premiumFragment != null) fm.beginTransaction().hide(premiumFragment!!).commit()
-                    if(profileFragment != null) fm.beginTransaction().hide(profileFragment!!).commit()
+//                    }
+//                    if(monitoringFragment != null) fm.beginTransaction().hide(monitoringFragment!!).commit()
+//                    if(analysisFragment != null) fm.beginTransaction().show(analysisFragment!!).commit()
+//                    if(premiumFragment != null) fm.beginTransaction().hide(premiumFragment!!).commit()
+//                    if(profileFragment != null) fm.beginTransaction().hide(profileFragment!!).commit()
+
+                    showFragment(FRAGMENT_ANALYSIS)
 
                     return@setOnItemSelectedListener true
                 }
                 R.id.premiumFragment ->{
-                    if(premiumFragment == null){
-                        premiumFragment = PremiumFragment()
-                        fm.beginTransaction().add(R.id.fragmentHost,premiumFragment!!).commit()
-                    } else {
+//                    if(premiumFragment == null){
+//                        premiumFragment = PremiumFragment()
+//                        fm.beginTransaction().add(R.id.fragmentHost,premiumFragment!!).commit()
+//                    } else {
 //                        fragmentManager.beginTransaction().replace(R.id.fragmentHost, premiumFragment!!).commit()
-                    }
-                    if(monitoringFragment != null) fm.beginTransaction().hide(monitoringFragment!!).commit()
-                    if(analysisFragment != null) fm.beginTransaction().hide(analysisFragment!!).commit()
-                    if(premiumFragment != null) fm.beginTransaction().show(premiumFragment!!).commit()
-                    if(profileFragment != null) fm.beginTransaction().hide(profileFragment!!).commit()
+//                    }
+//                    if(monitoringFragment != null) fm.beginTransaction().hide(monitoringFragment!!).commit()
+//                    if(analysisFragment != null) fm.beginTransaction().hide(analysisFragment!!).commit()
+//                    if(premiumFragment != null) fm.beginTransaction().show(premiumFragment!!).commit()
+//                    if(profileFragment != null) fm.beginTransaction().hide(profileFragment!!).commit()
+
+                    showFragment(FRAGMENT_PREMIUM)
 
                     return@setOnItemSelectedListener true
                 }
                 R.id.profileFragment ->{
-                    if(profileFragment == null){
-                        profileFragment = ProfileFragment()
-                        fm.beginTransaction().add(R.id.fragmentHost,profileFragment!!).commit()
-                    } else {
+//                    if(profileFragment == null){
+//                        profileFragment = ProfileFragment()
+//                        fm.beginTransaction().add(R.id.fragmentHost,profileFragment!!).commit()
+//                    } else {
 //                        fragmentManager.beginTransaction().replace(R.id.fragmentHost, profileFragment!!).commit()
-                    }
-                    if(monitoringFragment != null) fm.beginTransaction().hide(monitoringFragment!!).commit()
-                    if(analysisFragment != null) fm.beginTransaction().hide(analysisFragment!!).commit()
-                    if(premiumFragment != null) fm.beginTransaction().hide(premiumFragment!!).commit()
-                    if(profileFragment != null) fm.beginTransaction().show(profileFragment!!).commit()
+//                    }
+//                    if(monitoringFragment != null) fm.beginTransaction().hide(monitoringFragment!!).commit()
+//                    if(analysisFragment != null) fm.beginTransaction().hide(analysisFragment!!).commit()
+//                    if(premiumFragment != null) fm.beginTransaction().hide(premiumFragment!!).commit()
+//                    if(profileFragment != null) fm.beginTransaction().show(profileFragment!!).commit()
+
+                    showFragment(FRAGMENT_PROFILE)
 
                     return@setOnItemSelectedListener true
                 }
@@ -157,4 +203,6 @@ class ActivityMain : AppCompatActivity() {
             }
         }
     }
+
+
 }

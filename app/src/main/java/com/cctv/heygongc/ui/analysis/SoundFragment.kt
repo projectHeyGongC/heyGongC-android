@@ -149,29 +149,4 @@ class SoundFragment : Fragment() {
         barChart.data = data
         barChart.invalidate()
     }
-
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        activityMain = context as ActivityMain
-//        // 뒤로가기(연결된 ActivityMain의 뒤로가기와 같이 호출됨)
-//        callback = object : OnBackPressedCallback(true) {
-//            override fun handleOnBackPressed() {
-//                Log.e("뒤로가기","진입, ${ActivityMain.fm.fragments}")
-//                // 뒤로가기 클릭시 동작하는 로직
-////                requireActivity().supportFragmentManager.beginTransaction()
-////                    .remove(this@SoundFragment)
-////                    .commit()
-//
-////                ActivityMain.fm.beginTransaction().remove(this@SoundFragment).commit()
-////                activityMain.fm.beginTransaction().hide(activityMain.fragmentMap["sound"]!!).commit()
-////                activityMain.fm.beginTransaction().show(activityMain.fragmentMap["analysis"]!!).commit()    // todo : 이게 발동 안함
-//                if (ActivityMain.NowFragment == ActivityMain.FRAGMENT_SOUND) {
-//                    ActivityMain.showFragment(ActivityMain.FRAGMENT_ANALYSIS)
-//                }
-//            }
-//        }
-//        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-//    }
-
-
 }

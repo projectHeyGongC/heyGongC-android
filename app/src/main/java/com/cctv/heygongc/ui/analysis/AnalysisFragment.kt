@@ -37,7 +37,7 @@ class AnalysisFragment : Fragment() {
 
 
 
-        // todo : 데이터를 어떻게 넣어 줄것인가. 오늘을 기준으로 2주전까지 데이터를 받아와야함
+        // todo : 데이터를 어떻게 넣어 줄것인가. 오늘을 기준으로 2주전까지 데이터를 받아와야함. 소리감지 recyclerview로 다시 만들것.
         val calendar = Calendar.getInstance()
         binding.textViewDate.text = "${calendar.get((Calendar.DATE))}"
         binding.textViewMonth.text = "${mapDay[calendar.get(Calendar.DAY_OF_WEEK)]}\n${calendar.get(Calendar.MONTH)+1} ${calendar.get(Calendar.YEAR)}"
@@ -88,32 +88,6 @@ class AnalysisFragment : Fragment() {
     }
 
     fun moveSoundFrg() {
-//        if(soundFragment == null){ // null일때만 한번 만들고 이후에는 생성된 객체를 사용하기 때문에 초기화 안됨
-//            soundFragment = SoundFragment()
-//            activityMain.fm.beginTransaction().add(R.id.fragmentHost,soundFragment!!).commit()
-//            Log.e("프래그먼트_크기", "${activityMain.fm.fragments.size}")
-//        }
-//        if(soundFragment != null) activityMain.fm.beginTransaction().show(soundFragment!!).commit()
-//        Log.e("프래그먼트_크기_2", "${ActivityMain.fm.fragments.size}")
-//        for (i in 0 until  ActivityMain.fm.fragments.size) {
-//            Log.e("프래그먼트_목록", "${ActivityMain.fm.fragments[i]}")
-//            ActivityMain.fm.beginTransaction().hide(ActivityMain.fm.fragments[i]!!).commit()
-//        }
-        Log.e("이동", "진입, ${ActivityMain.fragmentMap[ActivityMain.FRAGMENT_SOUND]}")
-//        activityMain.fm.beginTransaction().show(activityMain.fragmentMap["sound"]!!).commit()
-//        activityMain.fm.beginTransaction().hide(activityMain.fragmentMap["analysis"]!!).commit()    // todo : 이게 발동 안함, 부모 자식 프래그먼트 해보기
-
-//        soundFragment = SoundFragment()
-//        activityMain.fm.beginTransaction().add(R.id.fragmentHost, soundFragment!!).commit()
-
-        for (i in 0 until parentFragmentManager.fragments.size) {
-            Log.e("프래그먼트_목록", "${parentFragmentManager.fragments[i]}")
-        }
-
-//        parentFragmentManager.beginTransaction().show(soundFragment!!).commit()
-//        parentFragmentManager.beginTransaction().hide(this).commit()
-
         ActivityMain.showFragment(ActivityMain.FRAGMENT_SOUND)
-
     }
 }

@@ -15,6 +15,7 @@ import com.cctv.heygongc.ui.analysis.SoundFragment
 import com.cctv.heygongc.ui.fragment.MonitoringFragment
 import com.cctv.heygongc.ui.fragment.PremiumFragment
 import com.cctv.heygongc.ui.profile.ProfileFragment
+import com.cctv.heygongc.ui.profile.SettingFragment
 
 class ActivityMain : AppCompatActivity() {
 //    lateinit var fm: FragmentManager
@@ -38,14 +39,9 @@ class ActivityMain : AppCompatActivity() {
         fun showFragment(fragment: String) {
             NowFragment = fragment
             var fragment = fragmentMap[fragment]
-            Log.e("프래그먼트_1", "${fragment}")
-//            fm.beginTransaction().show(fragment!!).commit()
-//            fm.beginTransaction().hide(AnalysisFragment()!!).commit()
             fragmentMap.values.forEach {
-                Log.e("프래그먼트_2", "${it}")
                 if(it != null) fm.beginTransaction().hide(it!!).commit()
             }
-            Log.e("프래그먼트_3", "${fragment}")
             fm.beginTransaction().show(fragment!!).commit()
         }
     }
@@ -77,6 +73,8 @@ class ActivityMain : AppCompatActivity() {
     override fun onBackPressed() {
         if (NowFragment == FRAGMENT_SOUND) {    // sound 프래그먼트에서 뒤로 가기 누르면 analysis 프래그먼트로 이동
             showFragment(FRAGMENT_ANALYSIS)
+        } else if (NowFragment == FRAGMENT_SETTING) {
+            showFragment(FRAGMENT_PROFILE)
         } else {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("앱 종료")
@@ -100,6 +98,7 @@ class ActivityMain : AppCompatActivity() {
         fragmentMap["premium"] = PremiumFragment()
         fragmentMap["profile"] = ProfileFragment()
         fragmentMap["sound"] = SoundFragment()
+        fragmentMap["setting"] = SettingFragment()
 
         fm = supportFragmentManager
         fragmentMap.values.forEach {

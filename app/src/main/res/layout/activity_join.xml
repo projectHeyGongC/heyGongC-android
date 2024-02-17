@@ -79,7 +79,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/textViewTerms"
             app:layout_constraintBottom_toBottomOf="@id/textViewTerms"
-            android:src="@drawable/arrow_forward"
+            android:src="@drawable/arrow_right"
             android:padding="10dp"/>
 
         <CheckBox
@@ -105,7 +105,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/textViewInfo"
             app:layout_constraintBottom_toBottomOf="@id/textViewInfo"
-            android:src="@drawable/arrow_forward"
+            android:src="@drawable/arrow_right"
             android:padding="10dp"/>
 
         <CheckBox
@@ -131,7 +131,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/textViewMarketing"
             app:layout_constraintBottom_toBottomOf="@id/textViewMarketing"
-            android:src="@drawable/arrow_forward"
+            android:src="@drawable/arrow_right"
             android:padding="10dp"/>
 
 

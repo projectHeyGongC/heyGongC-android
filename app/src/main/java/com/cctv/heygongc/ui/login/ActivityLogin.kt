@@ -1,16 +1,17 @@
-package com.cctv.heygongc.ui.fragment
+package com.cctv.heygongc.ui.login
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.R
-import com.cctv.heygongc.ui.adapter.LoginViewPagerAdapter
 import com.cctv.heygongc.data.LoginPagerData
 import com.cctv.heygongc.databinding.ActivityLoginBinding
-import com.cctv.heygongc.ui.login.LoginGoogle
+import com.cctv.heygongc.ui.fragment.ActivityJoin
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -18,10 +19,12 @@ import com.google.android.gms.common.api.ApiException
 
 
 class ActivityLogin : AppCompatActivity() {
-    // todo : https://jhg3410.tistory.com/m/entry/android-google-login-apioauth2-%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0
+    // oauth2 : https://jhg3410.tistory.com/m/entry/android-google-login-apioauth2-%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0
 
-    private var mBinding: ActivityLoginBinding? = null
-    private val binding get() = mBinding!!
+    lateinit var binding: ActivityLoginBinding
+//    private val binding get() = mBinding!!
+
+    val loginViewModel: LoginViewModel by viewModels()
 
     private val googleSignInClient: GoogleSignInClient by lazy { getGoogleClient() }
     private val googleAuthLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -48,12 +51,14 @@ class ActivityLogin : AppCompatActivity() {
         LoginGoogle(this)
     }
     override fun onCreate(savedInstanceState: Bundle?) {
-        //
         super.onCreate(savedInstanceState)
-        mBinding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+
 
 //        ActivitySplash.setStatusBarTransparent(this)
+
+        binding.viewModel = loginViewModel
+        binding.lifecycleOwner = this
 
 
         var item = ArrayList<LoginPagerData>()
@@ -89,6 +94,8 @@ class ActivityLogin : AppCompatActivity() {
     }
 
     private fun addListener() {
+
+        // 
         binding.buttonMoveJoin.setOnClickListener {
             startActivity(Intent(this, ActivityJoin::class.java))
         }
@@ -97,10 +104,11 @@ class ActivityLogin : AppCompatActivity() {
             startActivity(Intent(this, ActivityMain::class.java))
         }
 
+        // viewModel에서 fun으로 view에 이벤트 연결하고 liveData 변하면 Activity에서 감지해서 화면 이동 하도록 할것
         binding.ImageViewLoginGoogle.setOnClickListener {
-//            googleSignInClient.signOut()
-//            val signInIntent = googleSignInClient.signInIntent
-//            googleAuthLauncher.launch(signInIntent)
+            googleSignInClient.signOut()
+            val signInIntent = googleSignInClient.signInIntent
+            googleAuthLauncher.launch(signInIntent)
 
             loginGoogle.signIn(this)
         }
@@ -117,7 +125,7 @@ class ActivityLogin : AppCompatActivity() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 // Google Sign In was successful, authenticate with Firebase
-                loginGoogle.handleSignInResult(task)
+                loginViewModel.loginGoogle.handleSignInResult(task)
 
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
@@ -125,7 +133,6 @@ class ActivityLogin : AppCompatActivity() {
                 // ...
             }
         }
-
     }
 
     private fun getGoogleClient(): GoogleSignInClient {

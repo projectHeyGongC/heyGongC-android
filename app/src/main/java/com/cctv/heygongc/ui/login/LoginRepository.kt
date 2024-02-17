@@ -6,6 +6,7 @@ import com.cctv.heygongc.R
 import com.cctv.heygongc.data.LoginGoogleRequestModel
 import com.cctv.heygongc.data.LoginGoogleResponseModel
 import com.cctv.heygongc.data.SendAccessTokenModel
+import com.cctv.heygongc.data.UserLoginRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,7 +14,7 @@ import retrofit2.Response
 class LoginRepository(val context: Context) {
 
     private val getAccessTokenBaseUrl = "https://www.googleapis.com"
-    private val sendAccessTokenBaseUrl = "server_base_url"
+    private val loginBaseUrl = "http://13.125.159.97"
 
     fun getAccessToken(authCode:String) {
         LoginService.loginRetrofit(getAccessTokenBaseUrl).getAccessToken(
@@ -28,8 +29,9 @@ class LoginRepository(val context: Context) {
                 if(response.isSuccessful) {
                     val accessToken = response.body()?.access_token.orEmpty()
 
+                    Log.e("로그인","토큰가져오기 성공")
                     // third part 서버로 access token 보내기
-//                    sendAccessToken(accessToken)
+                    login(accessToken)
                 }
             }
             override fun onFailure(call: Call<LoginGoogleResponseModel>, t: Throwable) {
@@ -38,20 +40,66 @@ class LoginRepository(val context: Context) {
         })
     }
 
-    fun sendAccessToken(accessToken:String){
-        LoginService.loginRetrofit(sendAccessTokenBaseUrl).sendAccessToken(
-            accessToken = SendAccessTokenModel(accessToken)
-        ).enqueue(object :Callback<String>{
-            override fun onResponse(call: Call<String>, response: Response<String>) {
+    fun login(accessToken:String){
+        LoginService.loginRetrofit(loginBaseUrl).login(
+            snsType = "google",
+            loginRequest = UserLoginRequest(
+                "testDeviceId",
+                "Android",
+                null,
+                UserLoginRequest.Token(
+                    accessToken,
+                    ""
+                )
+            )
+        ).enqueue(object :Callback<UserLoginRequest.Token>{
+            override fun onResponse(call: Call<UserLoginRequest.Token>, response: Response<UserLoginRequest.Token>) {
+                Log.e("로그인","로그인 성공, response.isSuccessful : ${response.isSuccessful}, ${response.code()}, ${response.message()}")
                 if (response.isSuccessful){
-                    Log.d(TAG, "sendOnResponse: ${response.body()}")
+                    if (response.code() == 204) { // 회원가입 필요
+                        signup(accessToken)
+                    } else if (response.code() == 200) {    // 로그인 성공. 메인화면으로 이동. 여기서 access token, refresh token shared에 저장해야되나?
+
+                    }
                 }
             }
-            override fun onFailure(call: Call<String>, t: Throwable) {
+            override fun onFailure(call: Call<UserLoginRequest.Token>, t: Throwable) {
+                Log.e("로그인","로그인 실패")
                 Log.e(TAG, "sendOnFailure: ${t.fillInStackTrace()}", )
             }
         })
     }
+
+    fun signup(accessToken:String){
+        LoginService.loginRetrofit(loginBaseUrl).signup(
+            snsType = "google",
+            loginRequest = UserLoginRequest(
+                "testDeviceId",
+                "Android",
+                true,
+                UserLoginRequest.Token(
+                    accessToken,
+                    ""
+                )
+            )
+        ).enqueue(object :Callback<UserLoginRequest.Token>{
+            override fun onResponse(call: Call<UserLoginRequest.Token>, response: Response<UserLoginRequest.Token>) {
+                Log.e("로그인","회원가입 성공, response.isSuccessful : ${response.isSuccessful}, ${response.code()}, ${response.message()}")
+                if (response.isSuccessful){
+                    if (response.code() == 200) { // 회원가입 완료되었으니. 토큰 shared에 저장하면서 메인화면으로 이동
+
+                    }
+
+                }
+            }
+            override fun onFailure(call: Call<UserLoginRequest.Token>, t: Throwable) {
+                Log.e("로그인","회원가입 실패")
+                Log.e(TAG, "sendOnFailure: ${t.fillInStackTrace()}", )
+            }
+        })
+    }
+
+
 
     companion object {
         const val TAG = "LoginRepository"

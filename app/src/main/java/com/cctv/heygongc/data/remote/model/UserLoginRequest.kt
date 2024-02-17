@@ -1,4 +1,4 @@
-package com.cctv.heygongc.data
+package com.cctv.heygongc.data.remote.model
 
 data class UserLoginRequest (
     val deviceId: String,

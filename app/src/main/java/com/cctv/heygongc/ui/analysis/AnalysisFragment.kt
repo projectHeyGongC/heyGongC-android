@@ -1,22 +1,17 @@
 package com.cctv.heygongc.ui.analysis
 
 import android.app.Activity
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CalendarView.OnDateChangeListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.cctv.heygongc.ActivityMain
-import com.cctv.heygongc.R
-import com.cctv.heygongc.data.TopDateData
+import com.cctv.heygongc.data.remote.model.TopDateData
 import com.cctv.heygongc.databinding.FragmentAnalysisBinding
 import com.cctv.heygongc.ui.adapter.DateRecyclerViewAdapter
-import com.cctv.heygongc.ui.fragment.MonitoringFragment
 import java.util.Calendar
 
 
@@ -32,7 +27,7 @@ class AnalysisFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = FragmentAnalysisBinding.inflate(inflater, container, false)
 
 

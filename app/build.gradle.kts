@@ -103,6 +103,9 @@ dependencies {
     implementation("androidx.datastore:datastore-core:1.0.0")
     implementation("androidx.datastore:datastore-preferences-core:1.0.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
+
+    //QR
+    implementation("com.journeyapps:zxing-android-embedded:4.2.0")
 }
 kapt {
     correctErrorTypes = true

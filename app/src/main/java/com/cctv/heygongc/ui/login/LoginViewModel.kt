@@ -1,12 +1,7 @@
 package com.cctv.heygongc.ui.login
 
 import android.app.Application
-import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
-import com.cctv.heygongc.ActivityMain
-import com.cctv.heygongc.R
-import com.cctv.heygongc.data.LoginPagerData
-import com.cctv.heygongc.ui.fragment.ActivityJoin
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions

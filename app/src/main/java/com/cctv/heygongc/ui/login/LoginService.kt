@@ -1,16 +1,11 @@
 package com.cctv.heygongc.ui.login
 
-import com.cctv.heygongc.data.LoginGoogleRequestModel
-import com.cctv.heygongc.data.LoginGoogleResponseModel
-import com.cctv.heygongc.data.SendAccessTokenModel
-import com.cctv.heygongc.data.UserLoginRequest
-import com.google.gson.GsonBuilder
+import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
+import com.cctv.heygongc.data.remote.model.LoginGoogleResponseModel
+import com.cctv.heygongc.data.remote.model.SendAccessTokenModel
+import com.cctv.heygongc.data.remote.model.UserLoginRequest
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
-import retrofit2.http.Header
 import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -41,7 +36,7 @@ interface LoginService {
         @Body accessToken: SendAccessTokenModel
     ): Call<String>
 
-    companion object {
+/*    companion object {
 
         private val gson = GsonBuilder().setLenient().create()
 
@@ -53,5 +48,5 @@ interface LoginService {
                 .build()
                 .create(LoginService::class.java)
         }
-    }
+    }*/
 }

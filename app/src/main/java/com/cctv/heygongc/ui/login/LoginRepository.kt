@@ -3,21 +3,21 @@ package com.cctv.heygongc.ui.login
 import android.content.Context
 import android.util.Log
 import com.cctv.heygongc.R
-import com.cctv.heygongc.data.LoginGoogleRequestModel
-import com.cctv.heygongc.data.LoginGoogleResponseModel
-import com.cctv.heygongc.data.SendAccessTokenModel
-import com.cctv.heygongc.data.UserLoginRequest
+import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
+import com.cctv.heygongc.data.remote.model.LoginGoogleResponseModel
+import com.cctv.heygongc.data.remote.model.UserLoginRequest
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
-class LoginRepository(val context: Context) {
+class LoginRepository @Inject constructor(val context: Context, private val loginService: LoginService) {
 
     private val getAccessTokenBaseUrl = "https://www.googleapis.com"
     private val loginBaseUrl = "http://13.125.159.97"
 
     fun getAccessToken(authCode:String) {
-        LoginService.loginRetrofit(getAccessTokenBaseUrl).getAccessToken(
+        loginService.getAccessToken(
             request = LoginGoogleRequestModel(
                 grant_type = "authorization_code",
                 client_id = context.getString(R.string.google_login_client_id),
@@ -41,7 +41,7 @@ class LoginRepository(val context: Context) {
     }
 
     fun login(accessToken:String){
-        LoginService.loginRetrofit(loginBaseUrl).login(
+        loginService.login(
             snsType = "google",
             loginRequest = UserLoginRequest(
                 "testDeviceId",
@@ -71,7 +71,7 @@ class LoginRepository(val context: Context) {
     }
 
     fun signup(accessToken:String){
-        LoginService.loginRetrofit(loginBaseUrl).signup(
+        loginService.signup(
             snsType = "google",
             loginRequest = UserLoginRequest(
                 "testDeviceId",

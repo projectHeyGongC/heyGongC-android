@@ -1,11 +1,10 @@
 package com.cctv.heygongc.ui.adapter
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.cctv.heygongc.data.TopDateData
+import com.cctv.heygongc.data.remote.model.TopDateData
 import com.cctv.heygongc.databinding.RecyclerviewCellTopDateBinding
 
 class DateRecyclerViewAdapter(items: List<TopDateData>) : RecyclerView.Adapter<DateRecyclerViewAdapter.ViewHolder>() {

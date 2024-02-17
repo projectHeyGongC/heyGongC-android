@@ -1,4 +1,4 @@
-package com.cctv.heygongc.data
+package com.cctv.heygongc.data.remote.model
 
 /**
  * ActivityLogin viewPager data

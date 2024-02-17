@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.cctv.heygongc.data.LoginPagerData
+import com.cctv.heygongc.data.remote.model.LoginPagerData
 import com.cctv.heygongc.databinding.ViewpagerLoginBinding
 
 class LoginViewPagerAdapter(context: Context, items: ArrayList<LoginPagerData>) : RecyclerView.Adapter<LoginViewPagerAdapter.PagerViewHolder>() {

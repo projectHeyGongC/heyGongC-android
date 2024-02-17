@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.R
-import com.cctv.heygongc.data.LoginPagerData
+import com.cctv.heygongc.data.remote.model.LoginPagerData
 import com.cctv.heygongc.databinding.ActivityLoginBinding
 import com.cctv.heygongc.ui.fragment.ActivityJoin
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -62,15 +62,21 @@ class ActivityLogin : AppCompatActivity() {
 
 
         var item = ArrayList<LoginPagerData>()
-        item.add(LoginPagerData(resources.getString(R.string.viewpager_page1),
+        item.add(
+            LoginPagerData(resources.getString(R.string.viewpager_page1),
             R.drawable.login_viewpager1
-        ))
-        item.add(LoginPagerData(resources.getString(R.string.viewpager_page2),
+        )
+        )
+        item.add(
+            LoginPagerData(resources.getString(R.string.viewpager_page2),
             R.drawable.login_viewpager2
-        ))
-        item.add(LoginPagerData(resources.getString(R.string.viewpager_page3),
+        )
+        )
+        item.add(
+            LoginPagerData(resources.getString(R.string.viewpager_page3),
             R.drawable.login_viewpager3
-        ))
+        )
+        )
 
         binding.ViewPagerLogin.adapter = LoginViewPagerAdapter(this, item)
         binding.dotsIndicator.attachTo(binding.ViewPagerLogin)

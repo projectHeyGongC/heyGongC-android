@@ -11,7 +11,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class LoginRepository @Inject constructor(val context: Context, private val loginService: LoginService) {
+class LoginRepository (val context: Context) {
+
+    @Inject
+    lateinit var loginService: LoginService
 
     private val getAccessTokenBaseUrl = "https://www.googleapis.com"
     private val loginBaseUrl = "http://13.125.159.97"

@@ -17,7 +17,9 @@ class LoginRepository (val context: Context) {
     lateinit var loginService: LoginService
 
     private val getAccessTokenBaseUrl = "https://www.googleapis.com"
-    private val loginBaseUrl = "http://13.125.159.97"
+//    private val loginBaseUrl = "http://13.125.159.97"
+    private val loginBaseUrl = "https://heygongc-511c4.firebaseapp.com"
+
 
     fun getAccessToken(authCode:String) {
         loginService.getAccessToken(

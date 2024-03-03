@@ -14,8 +14,8 @@ import com.google.android.gms.tasks.Task
 
 class LoginGoogle(val context: Context) {
     private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//        .requestIdToken(context.getString(R.string.google_login_client_id))
-        .requestServerAuthCode(context.getString(R.string.google_login_client_id))  // 이게 access code요청 같은데
+        .requestIdToken(context.getString(R.string.google_login_client_id))
+        .requestServerAuthCode(context.getString(R.string.google_login_client_id))
         .requestEmail()
         .build()
 
@@ -24,6 +24,7 @@ class LoginGoogle(val context: Context) {
     fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode
+            Log.e("로그인_테스트_2","authCode : ${authCode==null}")
             LoginRepository(context).getAccessToken(authCode!!)
         } catch (e: ApiException) {
             Log.w(TAG, "handleSignInResult: error" + e.statusCode)
@@ -31,6 +32,7 @@ class LoginGoogle(val context: Context) {
     }
 
     fun signIn(activity: Activity) {
+        // 로그인순서 1
         val signInIntent: Intent = googleSignInClient.signInIntent
         activity.startActivityForResult(signInIntent, 1000)
 

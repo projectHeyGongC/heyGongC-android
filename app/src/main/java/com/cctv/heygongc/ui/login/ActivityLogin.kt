@@ -16,10 +16,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.common.api.Scope
 
 
 class ActivityLogin : AppCompatActivity() {
-    // oauth2 : https://jhg3410.tistory.com/m/entry/android-google-login-apioauth2-%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0
 
     lateinit var binding: ActivityLoginBinding
 //    private val binding get() = mBinding!!
@@ -28,19 +28,20 @@ class ActivityLogin : AppCompatActivity() {
 
     private val googleSignInClient: GoogleSignInClient by lazy { getGoogleClient() }
     private val googleAuthLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        Log.e("로그인_1","진입");
         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-
+        Log.e("로그인_2","진입");
         try {
             val account = task.getResult(ApiException::class.java)  // 여기가 오류
-
+            Log.e("로그인_3","진입");
             // 이름, 이메일 등이 필요하다면 아래와 같이 account를 통해 각 메소드를 불러올 수 있다.
-            val userName = account.givenName
-            val serverAuth = account.serverAuthCode
-            val id = account.id
-            val email = account.email
-            val idToken = account.idToken
-//            Log.e("구글로그인","성공, userName : ${userName}, serverAuth : ${serverAuth}, id : ${id}, email : ${email}, idToken : ${idToken}")
-            moveSignUpActivity()
+            val userName = account?.givenName
+            val serverAuth = account?.serverAuthCode
+            val id = account?.id
+            val email = account?.email
+            val idToken = account?.idToken
+            Log.e("구글로그인","성공, userName : ${userName}, serverAuth : ${serverAuth}, id : ${id}, email : ${email}, idToken : ${idToken}")
+//            moveSignUpActivity()
 
         } catch (e: ApiException) {
             e.printStackTrace()
@@ -89,7 +90,7 @@ class ActivityLogin : AppCompatActivity() {
         super.onStart()
 
         // 기존의 로그인한 사용자가 있으면 사용자 유지
-        val account = GoogleSignIn.getLastSignedInAccount(this)
+//        val account = GoogleSignIn.getLastSignedInAccount(this)
 //        updateUI(account)
     }
 
@@ -112,24 +113,28 @@ class ActivityLogin : AppCompatActivity() {
 
         // viewModel에서 fun으로 view에 이벤트 연결하고 liveData 변하면 Activity에서 감지해서 화면 이동 하도록 할것
         binding.ImageViewLoginGoogle.setOnClickListener {
-            googleSignInClient.signOut()
-            val signInIntent = googleSignInClient.signInIntent
-            googleAuthLauncher.launch(signInIntent)
+//            googleSignInClient.signOut()
+//            val signInIntent = googleSignInClient.signInIntent
+//            googleAuthLauncher.launch(signInIntent)
 
+            // onActivityResult 사용시
             loginGoogle.signIn(this)
+
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        Log.e("로그인","진입_1")
+        // 로그인순서 2
+        Log.e("로그인","resultCode : ${resultCode == RESULT_OK}, requestCode : ${requestCode}")
         if (requestCode === 1000) {
             if (resultCode !== RESULT_OK) {
                 return
             }
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
+                Log.e("로그인_테스트_1","authCode : ${task==null}")
                 // Google Sign In was successful, authenticate with Firebase
                 loginViewModel.loginGoogle.handleSignInResult(task)
 
@@ -145,7 +150,8 @@ class ActivityLogin : AppCompatActivity() {
         val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //            .requestScopes(Scope("https://www.googleapis.com/auth/pubsub"))
 //            .requestScopes(Scope("https://www.googleapis.com/oauth2/v4/token"))
-//            .requestServerAuthCode(getString(R.string.google_login_client_id)) // string 파일에 저장해둔 client id 를 이용해 server authcode를 요청한다.
+            .requestIdToken(getString(R.string.google_login_client_id))
+            .requestServerAuthCode(getString(R.string.google_login_client_id)) // string 파일에 저장해둔 client id 를 이용해 server authcode를 요청한다.
             .requestEmail() // 이메일도 요청할 수 있다.
             .build()
 

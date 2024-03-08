@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayoutContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/view_background_round_grey"
+    android:orientation="horizontal"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/textViewWhere"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="거실"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textViewMsg"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="오늘 소리가 3번 감지되었습니다" />
+
+</LinearLayout>
+

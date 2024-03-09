@@ -14,9 +14,9 @@ import com.google.android.gms.tasks.Task
 
 class LoginGoogle(val context: Context) {
     private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestIdToken(context.getString(R.string.google_login_client_id))
+//        .requestIdToken(context.getString(R.string.google_login_client_id))
         .requestServerAuthCode(context.getString(R.string.google_login_client_id))
-        .requestEmail()
+//        .requestEmail()
         .build()
 
     private val googleSignInClient = GoogleSignIn.getClient(context, gso)

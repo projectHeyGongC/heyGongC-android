@@ -28,19 +28,16 @@ class ActivityLogin : AppCompatActivity() {
 
     private val googleSignInClient: GoogleSignInClient by lazy { getGoogleClient() }
     private val googleAuthLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        Log.e("로그인_1","진입");
+
         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-        Log.e("로그인_2","진입");
         try {
             val account = task.getResult(ApiException::class.java)  // 여기가 오류
-            Log.e("로그인_3","진입");
-            // 이름, 이메일 등이 필요하다면 아래와 같이 account를 통해 각 메소드를 불러올 수 있다.
             val userName = account?.givenName
             val serverAuth = account?.serverAuthCode
             val id = account?.id
             val email = account?.email
             val idToken = account?.idToken
-            Log.e("구글로그인","성공, userName : ${userName}, serverAuth : ${serverAuth}, id : ${id}, email : ${email}, idToken : ${idToken}")
+            Log.e("토큰","${serverAuth}")
 //            moveSignUpActivity()
 
         } catch (e: ApiException) {
@@ -113,12 +110,12 @@ class ActivityLogin : AppCompatActivity() {
 
         // viewModel에서 fun으로 view에 이벤트 연결하고 liveData 변하면 Activity에서 감지해서 화면 이동 하도록 할것
         binding.ImageViewLoginGoogle.setOnClickListener {
-//            googleSignInClient.signOut()
-//            val signInIntent = googleSignInClient.signInIntent
-//            googleAuthLauncher.launch(signInIntent)
+            googleSignInClient.signOut()
+            val signInIntent = googleSignInClient.signInIntent
+            googleAuthLauncher.launch(signInIntent)
 
             // onActivityResult 사용시
-            loginGoogle.signIn(this)
+//            loginGoogle.signIn(this)
 
         }
     }
@@ -146,16 +143,26 @@ class ActivityLogin : AppCompatActivity() {
         }
     }
 
+//    private fun getGoogleClient(): GoogleSignInClient {
+//        val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+////            .requestScopes(Scope("https://www.googleapis.com/auth/pubsub"))
+////            .requestScopes(Scope("https://www.googleapis.com/oauth2/v4/token"))
+////            .requestIdToken(getString(R.string.google_login_client_id))
+//            .requestServerAuthCode(getString(R.string.google_login_client_id)) // string 파일에 저장해둔 client id 를 이용해 server authcode를 요청한다.
+////            .requestEmail() // 이메일도 요청할 수 있다.
+//            .build()
+//
+//        return GoogleSignIn.getClient(this, googleSignInOption)
+//    }
+
     private fun getGoogleClient(): GoogleSignInClient {
         val googleSignInOption = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //            .requestScopes(Scope("https://www.googleapis.com/auth/pubsub"))
-//            .requestScopes(Scope("https://www.googleapis.com/oauth2/v4/token"))
-            .requestIdToken(getString(R.string.google_login_client_id))
             .requestServerAuthCode(getString(R.string.google_login_client_id)) // string 파일에 저장해둔 client id 를 이용해 server authcode를 요청한다.
-            .requestEmail() // 이메일도 요청할 수 있다.
+//            .requestEmail() // 이메일도 요청할 수 있다.
             .build()
 
-        return GoogleSignIn.getClient(this@ActivityLogin, googleSignInOption)
+        return GoogleSignIn.getClient(this, googleSignInOption)
     }
 
     private fun moveSignUpActivity() {

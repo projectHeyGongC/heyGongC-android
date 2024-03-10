@@ -18,13 +18,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ActivityLogin : AppCompatActivity() {
 
     lateinit var binding: ActivityLoginBinding
 
-//    val loginViewModel: LoginViewModel by viewModels()
+    val loginViewModel: LoginViewModel by viewModels()
 
     private val loginGoogle: LoginGoogle by lazy {
         LoginGoogle(this)
@@ -36,8 +37,8 @@ class ActivityLogin : AppCompatActivity() {
 
 //        ActivitySplash.setStatusBarTransparent(this)
 
-//        binding.viewModel = loginViewModel
-//        binding.lifecycleOwner = this
+        binding.viewModel = loginViewModel
+        binding.lifecycleOwner = this
 
 
         var item = ArrayList<LoginPagerData>()
@@ -107,7 +108,7 @@ class ActivityLogin : AppCompatActivity() {
                 try {
                     // Google Sign In was successful, authenticate with Firebase
                     // get accessToken
-                    loginGoogle.handleSignInResult(task)
+//                    binding.viewModel!!.getAccessToken(task)
 
                 } catch (e: ApiException) {
                     // Google Sign In failed, update UI appropriately

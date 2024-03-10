@@ -12,20 +12,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 
-class LoginGoogle(val context: Context) {
+class LoginGoogle(val activity: Activity) {
     private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//        .requestIdToken(context.getString(R.string.google_login_client_id))
-        .requestServerAuthCode(context.getString(R.string.google_login_client_id))
-//        .requestEmail()
+        .requestServerAuthCode(activity.getString(R.string.google_login_client_id))
+        .requestEmail()
         .build()
 
-    private val googleSignInClient = GoogleSignIn.getClient(context, gso)
+    private val googleSignInClient = GoogleSignIn.getClient(activity, gso)
 
     fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode
-            Log.e("로그인_테스트_2","authCode : ${authCode==null}")
-            LoginRepository(context).getAccessToken(authCode!!)
+            LoginRepository(activity).getAccessToken(authCode!!)
         } catch (e: ApiException) {
             Log.w(TAG, "handleSignInResult: error" + e.statusCode)
         }
@@ -38,10 +36,10 @@ class LoginGoogle(val context: Context) {
 
     }
 
-    fun signOut(context: Context) {
+    fun signOut(activity: Activity) {
         googleSignInClient.signOut()
             .addOnCompleteListener {
-                Toast.makeText(context, "로그아웃 되셨습니다!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "로그아웃 되셨습니다!", Toast.LENGTH_SHORT).show()
             }
     }
 

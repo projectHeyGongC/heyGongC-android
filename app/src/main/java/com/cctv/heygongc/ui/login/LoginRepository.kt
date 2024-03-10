@@ -1,20 +1,23 @@
 package com.cctv.heygongc.ui.login
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import com.cctv.heygongc.R
 import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
 import com.cctv.heygongc.data.remote.model.LoginGoogleResponseModel
 import com.cctv.heygongc.data.remote.model.UserLoginRequest
+import com.cctv.heygongc.ui.fragment.ActivityJoin
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class LoginRepository (val context: Context) {
+class LoginRepository (val context: Activity) {
 
     @Inject
-    lateinit var loginService: LoginService
+    lateinit var loginService: LoginService     // Inject 해줬는데 왜 lateinit 오류가 나오지. todo hilt 공부하기
 
     private val getAccessTokenBaseUrl = "https://www.googleapis.com"
 //    private val loginBaseUrl = "http://13.125.159.97"
@@ -34,7 +37,6 @@ class LoginRepository (val context: Context) {
                 if(response.isSuccessful) {
                     val accessToken = response.body()?.access_token.orEmpty()
 
-                    Log.e("로그인","토큰가져오기 성공")
                     // third part 서버로 access token 보내기
                     login(accessToken)
                 }
@@ -59,12 +61,12 @@ class LoginRepository (val context: Context) {
             )
         ).enqueue(object :Callback<UserLoginRequest.Token>{
             override fun onResponse(call: Call<UserLoginRequest.Token>, response: Response<UserLoginRequest.Token>) {
-                Log.e("로그인","로그인 성공, response.isSuccessful : ${response.isSuccessful}, ${response.code()}, ${response.message()}")
                 if (response.isSuccessful){
                     if (response.code() == 204) { // 회원가입 필요
                         signup(accessToken)
                     } else if (response.code() == 200) {    // 로그인 성공. 메인화면으로 이동. 여기서 access token, refresh token shared에 저장해야되나?
-
+                        context.startActivity(Intent(context, ActivityJoin::class.java))
+                        context.finish()
                     }
                 }
             }

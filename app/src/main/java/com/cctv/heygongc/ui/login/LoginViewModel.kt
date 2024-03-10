@@ -1,5 +1,6 @@
 package com.cctv.heygongc.ui.login
 
+import android.app.Activity
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -8,7 +9,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 
 class LoginViewModel(application: Application) : AndroidViewModel(application) {
 
-    var context = getApplication<Application>().applicationContext
+    //    var context = getApplication<Application>().applicationContext
+    var context = getApplication<Application>().applicationContext as Activity
 
     val loginGoogle: LoginGoogle by lazy {
         LoginGoogle(context)

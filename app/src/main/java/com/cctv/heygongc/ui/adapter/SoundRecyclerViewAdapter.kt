@@ -35,7 +35,7 @@ class SoundRecyclerViewAdapter(items: List<SoundData>) : RecyclerView.Adapter<So
         if (position <= items.size-1) {
             holder.bind(items[position], true)
         } else {
-            holder.bind(SoundData("","기기를 추가하여 리포트를 받아보세요"), false);
+            holder.bind(SoundData("","기기를 추가하여 리포트를 받아보세요"), false)
         }
 
     }

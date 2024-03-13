@@ -19,17 +19,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class ActivityLogin : AppCompatActivity() {
 
     lateinit var binding: ActivityLoginBinding
 
-    val loginViewModel: LoginViewModel by viewModels()
+//    val loginViewModel: LoginViewModel by viewModels()
 
     private val loginGoogle: LoginGoogle by lazy {
         LoginGoogle(this)
     }
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
@@ -37,8 +41,8 @@ class ActivityLogin : AppCompatActivity() {
 
 //        ActivitySplash.setStatusBarTransparent(this)
 
-        binding.viewModel = loginViewModel
-        binding.lifecycleOwner = this
+//        binding.viewModel = loginViewModel
+//        binding.lifecycleOwner = this
 
 
         var item = ArrayList<LoginPagerData>()

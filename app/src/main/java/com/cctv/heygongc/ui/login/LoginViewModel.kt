@@ -57,8 +57,9 @@ class LoginViewModel (application: Application) : AndroidViewModel(application) 
 
     fun signIn() {
         // 로그인순서 1
-        val signInIntent: Intent = googleSignInClient.signInIntent
-        (context as Activity).startActivityForResult(signInIntent, 1000)
+//        val signInIntent: Intent = googleSignInClient.signInIntent
+//        (context as Activity).startActivityForResult(signInIntent, 1000)
+        loginGoogle.signIn()
     }
 
     fun signOut(activity: Activity) {
@@ -71,33 +72,34 @@ class LoginViewModel (application: Application) : AndroidViewModel(application) 
 
 
     fun getAccessToken(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode
-            LoginRepository(context).getAccessToken(authCode!!)
-
-            loginService.getAccessToken(
-                request = LoginGoogleRequestModel(
-                    grant_type = "authorization_code",
-                    client_id = context.getString(R.string.google_login_client_id),
-                    client_secret = context.getString(R.string.google_login_client_secret),
-                    code = authCode.orEmpty()
-                )
-            ).enqueue(object : Callback<LoginGoogleResponseModel> {
-                override fun onResponse(call: Call<LoginGoogleResponseModel>, response: Response<LoginGoogleResponseModel>) {
-                    if(response.isSuccessful) {
-                        val accessToken = response.body()?.access_token.orEmpty()
-
-                        // third part 서버로 access token 보내기
-                        login(accessToken)
-                    }
-                }
-                override fun onFailure(call: Call<LoginGoogleResponseModel>, t: Throwable) {
-                    Log.e(LoginRepository.TAG, "getOnFailure: ",t.fillInStackTrace() )
-                }
-            })
-        } catch (e: ApiException) {
-            Log.w(LoginGoogle.TAG, "handleSignInResult: error" + e.statusCode)
-        }
+//        try {
+//            val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode
+//            LoginRepository(context).getAccessToken(authCode!!)
+//
+//            loginService.getAccessToken(
+//                request = LoginGoogleRequestModel(
+//                    grant_type = "authorization_code",
+//                    client_id = context.getString(R.string.google_login_client_id),
+//                    client_secret = context.getString(R.string.google_login_client_secret),
+//                    code = authCode.orEmpty()
+//                )
+//            ).enqueue(object : Callback<LoginGoogleResponseModel> {
+//                override fun onResponse(call: Call<LoginGoogleResponseModel>, response: Response<LoginGoogleResponseModel>) {
+//                    if(response.isSuccessful) {
+//                        val accessToken = response.body()?.access_token.orEmpty()
+//
+//                        // third part 서버로 access token 보내기
+//                        login(accessToken)
+//                    }
+//                }
+//                override fun onFailure(call: Call<LoginGoogleResponseModel>, t: Throwable) {
+//                    Log.e(LoginRepository.TAG, "getOnFailure: ",t.fillInStackTrace() )
+//                }
+//            })
+//        } catch (e: ApiException) {
+//            e.printStackTrace()
+//        }
+        loginGoogle.getAccessToken(completedTask)
     }
 
     fun login(accessToken:String){

@@ -26,7 +26,7 @@ class ActivityLogin : AppCompatActivity() {
 
     lateinit var binding: ActivityLoginBinding
 
-//    val loginViewModel: LoginViewModel by viewModels()
+    val loginViewModel: LoginViewModel by viewModels()
 
     private val loginGoogle: LoginGoogle by lazy {
         LoginGoogle(this)
@@ -41,8 +41,8 @@ class ActivityLogin : AppCompatActivity() {
 
 //        ActivitySplash.setStatusBarTransparent(this)
 
-//        binding.viewModel = loginViewModel
-//        binding.lifecycleOwner = this
+        binding.viewModel = loginViewModel
+        binding.lifecycleOwner = this
 
 
         var item = ArrayList<LoginPagerData>()
@@ -97,7 +97,7 @@ class ActivityLogin : AppCompatActivity() {
         // viewModel에서 fun으로 view에 이벤트 연결하고 liveData 변하면 Activity에서 감지해서 화면 이동 하도록 할것
         binding.ImageViewLoginGoogle.setOnClickListener {
             // LoginGoogle에서 startActivityForResult 호출하고 ActivityLogin 화면의 onActivityResult로 받는다
-            loginGoogle.signIn(this)
+            loginViewModel.signIn()
 
         }
     }
@@ -112,7 +112,7 @@ class ActivityLogin : AppCompatActivity() {
                 try {
                     // Google Sign In was successful, authenticate with Firebase
                     // get accessToken
-//                    binding.viewModel!!.getAccessToken(task)
+                    loginViewModel.getAccessToken(task)
 
                 } catch (e: ApiException) {
                     // Google Sign In failed, update UI appropriately

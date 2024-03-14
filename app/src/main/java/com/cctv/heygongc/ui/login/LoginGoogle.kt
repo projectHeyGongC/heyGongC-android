@@ -41,7 +41,7 @@ class LoginGoogle(val activity: Activity) {
         }
     }
 
-    fun signIn(activity: Activity) {
+    fun signIn() {
         // 로그인순서 1
         val signInIntent: Intent = googleSignInClient.signInIntent
         activity.startActivityForResult(signInIntent, 1000)

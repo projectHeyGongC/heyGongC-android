@@ -15,15 +15,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class LoginGoogle(val activity: Activity) {
+class LoginGoogle @Inject constructor(
+    private val context: Context,
+    private val loginService: LoginService
+) {
 
-    @Inject
-    lateinit var loginService: LoginService
+//    @Inject
+//    lateinit var loginService: LoginService
+    var activity = context as Activity
 
     private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestServerAuthCode(activity.getString(R.string.google_login_client_id))
@@ -48,7 +54,7 @@ class LoginGoogle(val activity: Activity) {
 
     }
 
-    fun signOut(activity: Activity) {
+    fun signOut() {
         googleSignInClient.signOut()
             .addOnCompleteListener {
                 Toast.makeText(activity, "로그아웃 되셨습니다!", Toast.LENGTH_SHORT).show()

@@ -26,11 +26,10 @@ class ActivityLogin : AppCompatActivity() {
 
     lateinit var binding: ActivityLoginBinding
 
-    val loginViewModel: LoginViewModel by viewModels()
 
-    private val loginGoogle: LoginGoogle by lazy {
-        LoginGoogle(this)
-    }
+    @Inject lateinit var loginViewModel: LoginViewModel
+
+
 
 
 

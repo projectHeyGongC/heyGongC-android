@@ -36,17 +36,17 @@ interface LoginService {
         @Body accessToken: SendAccessTokenModel
     ): Call<String>
 
-/*    companion object {
-
-        private val gson = GsonBuilder().setLenient().create()
-
-        fun loginRetrofit(baseUrl: String): LoginService {
-            return Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .addConverterFactory(ScalarsConverterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-                .create(LoginService::class.java)
-        }
-    }*/
+//    companion object {
+//
+//        private val gson = GsonBuilder().setLenient().create()
+//
+//        fun loginRetrofit(baseUrl: String): LoginService {
+//            return Retrofit.Builder()
+//                .baseUrl(baseUrl)
+//                .addConverterFactory(ScalarsConverterFactory.create())
+//                .addConverterFactory(GsonConverterFactory.create(gson))
+//                .build()
+//                .create(LoginService::class.java)
+//        }
+//    }
 }

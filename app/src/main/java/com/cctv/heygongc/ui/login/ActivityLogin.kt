@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.messaging.FirebaseMessaging
 
 
 class ActivityLogin : AppCompatActivity() {
@@ -54,7 +55,6 @@ class ActivityLogin : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-
 //        ActivitySplash.setStatusBarTransparent(this)
 
         binding.viewModel = loginViewModel
@@ -83,6 +83,13 @@ class ActivityLogin : AppCompatActivity() {
 
         addListener()
 
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                // TODO 토큰을 못 받아왔을 때 처리
+            }
+            val token = task.result
+            Log.e("TAG", "deviceFcmToken: "+token )
+        }
     }
 
     override fun onStart() {
@@ -158,5 +165,4 @@ class ActivityLogin : AppCompatActivity() {
             finish()
         }
     }
-
 }

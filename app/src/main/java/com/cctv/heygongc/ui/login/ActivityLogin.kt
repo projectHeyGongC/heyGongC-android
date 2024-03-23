@@ -1,6 +1,5 @@
 package com.cctv.heygongc.ui.login
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -37,7 +36,6 @@ class ActivityLogin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-
 
 //        ActivitySplash.setStatusBarTransparent(this)
 
@@ -139,5 +137,4 @@ class ActivityLogin : AppCompatActivity() {
             finish()
         }
     }
-
 }

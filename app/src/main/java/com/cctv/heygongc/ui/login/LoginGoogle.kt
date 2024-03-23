@@ -1,7 +1,9 @@
 package com.cctv.heygongc.ui.login
 
 import android.app.Activity
+import android.app.Application
 import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
@@ -29,7 +31,7 @@ class LoginGoogle @Inject constructor(
 
 //    @Inject
 //    lateinit var loginService: LoginService
-    var activity = context as Activity
+    var activity = context as Activity  //todo : 화면 관련 된건 ActivityLogin 에서 처리 하고 나머지는 주입받아서?
 
     private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestServerAuthCode(activity.getString(R.string.google_login_client_id))

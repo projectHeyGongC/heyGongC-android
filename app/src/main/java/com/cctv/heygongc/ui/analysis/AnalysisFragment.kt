@@ -33,7 +33,6 @@ class AnalysisFragment : Fragment() {
     ): View {
         mBinding = FragmentAnalysisBinding.inflate(inflater, container, false)
 
-        // todo : 데이터를 어떻게 넣어 줄것인가. 오늘을 기준으로 2주전까지 데이터를 받아와야함. 소리감지 recyclerview로 다시 만들것.
         val calendar = Calendar.getInstance()
         binding.textViewDate.text = "${calendar.get((Calendar.DATE))}"
         binding.textViewMonth.text = "${mapDay[calendar.get(Calendar.DAY_OF_WEEK)]}\n${calendar.get(Calendar.MONTH)+1} ${calendar.get(Calendar.YEAR)}"

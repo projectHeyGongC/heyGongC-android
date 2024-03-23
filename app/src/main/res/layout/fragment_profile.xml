@@ -120,7 +120,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"/>
 
-            <!-- todo : 기기목록 recyclerview or listview로 만들것 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

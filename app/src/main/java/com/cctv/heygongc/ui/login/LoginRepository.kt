@@ -17,7 +17,7 @@ import javax.inject.Inject
 class LoginRepository (val context: Activity) {
 
     @Inject
-    lateinit var loginService: LoginService     // Inject 해줬는데 왜 lateinit 오류가 나오지. todo hilt 공부하기
+    lateinit var loginService: LoginService     // Inject 해줬는데 왜 lateinit 오류가 나오지.
 
     private val getAccessTokenBaseUrl = "https://www.googleapis.com"
 //    private val loginBaseUrl = "http://13.125.159.97"

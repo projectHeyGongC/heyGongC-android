@@ -71,7 +71,6 @@ class LoginGoogle @Inject constructor(
     fun getAccessToken(completedTask: Task<GoogleSignInAccount>) {
         try {
             val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode
-            // todo : ViewModel에서 힐트를 직접 쓰지 않고 LoginGoogle을 사용해서 로그인 실행
             loginService.getAccessToken(
                 request = LoginGoogleRequestModel(
                     grant_type = "authorization_code",

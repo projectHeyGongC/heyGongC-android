@@ -27,7 +27,8 @@ class ActivityLogin : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
 
 
-    @Inject lateinit var loginViewModel: LoginViewModel
+//    @Inject lateinit var loginViewModel: LoginViewModel
+    val loginViewModel: LoginViewModel by viewModels()
 
 
 
@@ -44,23 +45,7 @@ class ActivityLogin : AppCompatActivity() {
         binding.lifecycleOwner = this
 
 
-        var item = ArrayList<LoginPagerData>()
-        item.add(
-            LoginPagerData(resources.getString(R.string.viewpager_page1),
-            R.drawable.login_viewpager1
-        )
-        )
-        item.add(
-            LoginPagerData(resources.getString(R.string.viewpager_page2),
-            R.drawable.login_viewpager2
-        )
-        )
-        item.add(
-            LoginPagerData(resources.getString(R.string.viewpager_page3),
-            R.drawable.login_viewpager3
-        )
-        )
-
+        var item = setPagerData()
         binding.ViewPagerLogin.adapter = LoginViewPagerAdapter(this, item)
         binding.dotsIndicator.attachTo(binding.ViewPagerLogin)
 
@@ -74,6 +59,31 @@ class ActivityLogin : AppCompatActivity() {
         // 기존의 로그인한 사용자가 있으면 사용자 유지
 //        val account = GoogleSignIn.getLastSignedInAccount(this)
 //        updateUI(account)
+    }
+
+
+    fun setPagerData(): ArrayList<LoginPagerData> {
+        var item = ArrayList<LoginPagerData>()
+        item.add(
+            LoginPagerData(resources.getString(R.string.viewpager_page1),
+                R.drawable.login_viewpager1
+            )
+        )
+        item.add(
+            LoginPagerData(resources.getString(R.string.viewpager_page2),
+                R.drawable.login_viewpager2
+            )
+        )
+        item.add(
+            LoginPagerData(resources.getString(R.string.viewpager_page3),
+                R.drawable.login_viewpager3
+            )
+        )
+        return item
+    }
+
+    fun aaa() {
+
     }
 
     @SuppressLint("MissingSuperCall")

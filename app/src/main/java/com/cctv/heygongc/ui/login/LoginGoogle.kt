@@ -23,7 +23,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class LoginGoogle @Inject constructor(
-    private val context: Context,
+    @ApplicationContext private val context: Context,
     private val loginService: LoginService
 ) {
 

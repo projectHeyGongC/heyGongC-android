@@ -71,7 +71,8 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https:/13.125.159.97/")
+//            .baseUrl("http://15.165.133.184/")     // 이전 우리 서버 주소
+            .baseUrl("https://www.googleapis.com/") // token은 google 서버에서 받아옴
             .client(client)
             .addConverterFactory(scalarsConverterFactory)
             .addConverterFactory(gsonConverterFactory)

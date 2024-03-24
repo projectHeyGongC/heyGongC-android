@@ -1,9 +1,11 @@
 package com.cctv.heygongc.ui.login
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,10 +16,12 @@ import com.cctv.heygongc.data.remote.model.LoginPagerData
 import com.cctv.heygongc.databinding.ActivityLoginBinding
 import com.cctv.heygongc.ui.fragment.ActivityJoin
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.common.api.Scope
+import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -31,8 +35,25 @@ class ActivityLogin : AppCompatActivity() {
     val loginViewModel: LoginViewModel by viewModels()
 
 
+//    private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//        .requestServerAuthCode(getString(R.string.google_login_client_id))
+//        .requestEmail()
+//        .build()
+//
+//    private val googleSignInClient = GoogleSignIn.getClient(this, gso)
 
+    private lateinit var googleSignInOptions: GoogleSignInOptions
+    private lateinit var googleSignInClient: GoogleSignInClient
 
+    private val googleAuthLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        try {
+            loginViewModel.getAccessToken(this, task)
+        } catch (e: ApiException) {
+            e.printStackTrace()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +64,14 @@ class ActivityLogin : AppCompatActivity() {
 
         binding.viewModel = loginViewModel
         binding.lifecycleOwner = this
+
+        googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.google_login_client_id))
+            .requestServerAuthCode(getString(R.string.google_login_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
 
 
         var item = setPagerData()
@@ -82,9 +111,33 @@ class ActivityLogin : AppCompatActivity() {
         return item
     }
 
-    fun aaa() {
-
-    }
+//    fun getAccessToken(completedTask: Task<GoogleSignInAccount>) {
+//        try {
+//            val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode
+//            LoginRepository(this).getAccessToken(authCode!!)
+//        } catch (e: ApiException) {
+//            e.printStackTrace()
+//        }
+//    }
+//
+//    fun signIn() {
+//        // 로그인순서 1
+//        val signInIntent: Intent = googleSignInClient.signInIntent
+//        startActivityForResult(signInIntent, 1000)
+//
+//    }
+//
+//    fun signOut() {
+//        googleSignInClient.signOut()
+//            .addOnCompleteListener {
+//                Toast.makeText(this, "로그아웃 되셨습니다!", Toast.LENGTH_SHORT).show()
+//            }
+//    }
+//
+//    fun isLogin(context: Context): Boolean {
+//        val account = GoogleSignIn.getLastSignedInAccount(context)
+//        return if (account == null) false else (true)
+//    }
 
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
@@ -105,32 +158,32 @@ class ActivityLogin : AppCompatActivity() {
 
         // viewModel에서 fun으로 view에 이벤트 연결하고 liveData 변하면 Activity에서 감지해서 화면 이동 하도록 할것
         binding.ImageViewLoginGoogle.setOnClickListener {
-            // LoginGoogle에서 startActivityForResult 호출하고 ActivityLogin 화면의 onActivityResult로 받는다
-            loginViewModel.signIn()
+            googleSignInClient.signOut()
+            val signInIntent = googleSignInClient.signInIntent
+            googleAuthLauncher.launch(signInIntent)
 
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == RESULT_OK) {
-            // 로그인순서 2
-            if (requestCode === 1000) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                try {
-                    // Google Sign In was successful, authenticate with Firebase
-                    // get accessToken
-                    loginViewModel.getAccessToken(task)
-
-                } catch (e: ApiException) {
-                    // Google Sign In failed, update UI appropriately
-                    e.printStackTrace()
-                }
-            }
-        }
-
-    }
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//
+//        if (resultCode == RESULT_OK) {
+//            // 로그인순서 2
+//            if (requestCode === 1000) {
+//                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+//                try {
+//                    // Google Sign In was successful, authenticate with Firebase
+//                    // get accessToken
+//                    loginViewModel.getAccessToken(this, task)
+//
+//                } catch (e: ApiException) {
+//                    // Google Sign In failed, update UI appropriately
+//                    e.printStackTrace()
+//                }
+//            }
+//        }
+//    }
 
 
     private fun moveSignUpActivity() {

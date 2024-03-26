@@ -38,7 +38,7 @@ class LoginRepository @Inject constructor(private val loginService: LoginService
                 if(response.isSuccessful) {
                     Log.e("로그인_5","진입")
                     val accessToken = response.body()?.access_token.orEmpty()
-                    Log.e("로그인_6","accessToken : ${accessToken}") // todo 
+                    Log.e("로그인_6","accessToken : ${accessToken}") // todo
                     // third part 서버로 access token 보내기
 //                    login(accessToken)
                 } else {

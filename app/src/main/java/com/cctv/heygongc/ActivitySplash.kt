@@ -1,4 +1,4 @@
-package com.cctv.heygongc.ui.fragment
+package com.cctv.heygongc
 
 import android.content.Intent
 import android.os.Build
@@ -7,7 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.WindowManager
 import androidx.core.view.WindowCompat
-import com.cctv.heygongc.R
+import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.ui.login.ActivityLogin
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -43,7 +43,7 @@ class ActivitySplash : AppCompatActivity() {
 
             // FCM 등록 토큰 가져오기
             val token = task.result
-
+            Common.fcmToken = token
             Log.d("ActivitySplash token : ", token+"")
 
         })

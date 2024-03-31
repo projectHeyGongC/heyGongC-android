@@ -158,6 +158,7 @@ class ActivityLogin : AppCompatActivity() {
 
         // viewModel에서 fun으로 view에 이벤트 연결하고 liveData 변하면 Activity에서 감지해서 화면 이동 하도록 할것
         binding.ImageViewLoginGoogle.setOnClickListener {
+            // 구글 로그인
             googleSignInClient.signOut()
             val signInIntent = googleSignInClient.signInIntent
             googleAuthLauncher.launch(signInIntent)

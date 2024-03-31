@@ -4,6 +4,7 @@ import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
 import com.cctv.heygongc.data.remote.model.LoginGoogleResponseModel
 import com.cctv.heygongc.data.remote.model.SendAccessTokenModel
 import com.cctv.heygongc.data.remote.model.UserLoginRequest
+import com.cctv.heygongc.data.remote.model.UserLoginResponse
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -31,7 +32,8 @@ interface LoginService {
     @Headers("content-type: application/json")
     fun login(
         @Body loginRequest: UserLoginRequest,
-    ): Call<UserLoginRequest>
+    ): Call<UserLoginResponse>
+
 
     @POST("v1/users/{path}/register")
     @Headers("content-type: application/json")

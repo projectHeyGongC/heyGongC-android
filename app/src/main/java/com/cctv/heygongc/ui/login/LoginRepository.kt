@@ -10,6 +10,7 @@ import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
 import com.cctv.heygongc.data.remote.model.LoginGoogleResponseModel
 import com.cctv.heygongc.data.remote.model.UserLoginRequest
+import com.cctv.heygongc.data.remote.model.UserLoginResponse
 import com.cctv.heygongc.ui.fragment.ActivityJoin
 import retrofit2.Call
 import retrofit2.Callback
@@ -45,30 +46,31 @@ class LoginRepository @Inject constructor(){
     }
 
     fun login(activity: Activity, accessToken:String){
-        LoginService.loginRetrofit("http://15.165.133.184").login(
+        LoginService.loginRetrofit("http://15.165.133.184/").login(
             loginRequest = UserLoginRequest(
                 "testDeviceId",
-                "Android",
+                "AOS",
                 "GOOGLE",
                 accessToken,
                 Common.fcmToken,
-                false
+                true
             )
-        ).enqueue(object :Callback<UserLoginRequest>{
-            override fun onResponse(call: Call<UserLoginRequest>, response: Response<UserLoginRequest>) {
+        ).enqueue(object :Callback<UserLoginResponse>{
+            override fun onResponse(call: Call<UserLoginResponse>, response: Response<UserLoginResponse>) {
                 Log.e("로그인응답","response : ${response.code()}, ${response.isSuccessful}, ${response.message()}")
                 if (response.isSuccessful){
-                    if (response.code() == 204) { // 회원가입 필요
-                        signup(activity, accessToken)
-                    } else if (response.code() == 200) {    // 로그인 성공. 메인화면으로 이동. 여기서 access token, refresh token shared에 저장해야되나?
+                    if (response.code() == 200) {    // 로그인 성공. 메인화면으로 이동. 여기서 access token, refresh token shared에 저장해야되나?
                         activity.startActivity(Intent(activity, ActivityJoin::class.java))
                         activity.finish()
                     }
                 } else {
-                    Toast.makeText(activity, "로그인이 실패하였습니다", Toast.LENGTH_SHORT)
+                    if (response.code() == 400) { // 회원가입 필요
+                        signup(activity, accessToken)
+                        Toast.makeText(activity, "로그인이 실패하였습니다", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
-            override fun onFailure(call: Call<UserLoginRequest>, t: Throwable) {
+            override fun onFailure(call: Call<UserLoginResponse>, t: Throwable) {
                 Log.e("로그인","로그인 실패")
                 Log.e(TAG, "sendOnFailure: ${t.fillInStackTrace()}", )
             }
@@ -80,11 +82,11 @@ class LoginRepository @Inject constructor(){
             snsType = "google",
             loginRequest = UserLoginRequest(
                 "testDeviceId",
-                "Android",
+                "AOS",
                 "GOOGLE",
                 accessToken,
                 Common.fcmToken,
-                false
+                true
             )
         ).enqueue(object :Callback<UserLoginRequest>{
             override fun onResponse(call: Call<UserLoginRequest>, response: Response<UserLoginRequest>) {

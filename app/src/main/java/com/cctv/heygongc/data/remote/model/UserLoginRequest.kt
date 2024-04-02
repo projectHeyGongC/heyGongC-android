@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName
 
 data class UserLoginRequest (
     @SerializedName("deviceId")
-    private val deviceId: String,
+    val deviceId: String,
     @SerializedName("deviceOs")
-    private val deviceOs: String,
+    val deviceOs: String,
     @SerializedName("snsType")
-    private val snsType: String,
+    val snsType: String,
     @SerializedName("accessToken")
-    private val accessToken: String,
+    val accessToken: String,
     @SerializedName("fcmToken")
-    private val fcmToken: String,
+    val fcmToken: String,
     @SerializedName("ads")
     val ads: Boolean
 )

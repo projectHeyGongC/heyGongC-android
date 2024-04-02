@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
+import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.R
 import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
@@ -12,6 +13,7 @@ import com.cctv.heygongc.data.remote.model.LoginGoogleResponseModel
 import com.cctv.heygongc.data.remote.model.UserLoginRequest
 import com.cctv.heygongc.data.remote.model.UserLoginResponse
 import com.cctv.heygongc.ui.fragment.ActivityJoin
+import com.cctv.heygongc.util.SharedPreferencesManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -60,19 +62,24 @@ class LoginRepository @Inject constructor(){
                 Log.e("로그인응답","response : ${response.code()}, ${response.isSuccessful}, ${response.message()}")
                 if (response.isSuccessful){
                     if (response.code() == 200) {    // 로그인 성공. 메인화면으로 이동. 여기서 access token, refresh token shared에 저장해야되나?
-                        activity.startActivity(Intent(activity, ActivityJoin::class.java))
+
+                        var data: UserLoginResponse? = response.body()
+
+                        var pm = SharedPreferencesManager(activity)
+                        pm.saveData(Common.ACCESS_TOKEN, data?.accessToken ?: "")
+                        pm.saveData(Common.REFRESH_TOKEN, data?.refreshToken ?: "")
+
+                        activity.startActivity(Intent(activity, ActivityMain::class.java))
                         activity.finish()
                     }
                 } else {
                     if (response.code() == 400) { // 회원가입 필요
-                        signup(activity, accessToken)
-                        Toast.makeText(activity, "로그인이 실패하였습니다", Toast.LENGTH_SHORT).show()
+                        activity.startActivity(Intent(activity, ActivityJoin::class.java))
                     }
                 }
             }
             override fun onFailure(call: Call<UserLoginResponse>, t: Throwable) {
-                Log.e("로그인","로그인 실패")
-                Log.e(TAG, "sendOnFailure: ${t.fillInStackTrace()}", )
+                t.printStackTrace()
             }
         })
     }

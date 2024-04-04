@@ -44,7 +44,7 @@ android {
     }
     
     // 뷰바인딩
-    buildFeatures { 
+    buildFeatures {
         viewBinding = true
     }
 

@@ -1,7 +1,6 @@
 package com.cctv.heygongc.ui.login
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
@@ -12,7 +11,7 @@ import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
 import com.cctv.heygongc.data.remote.model.LoginGoogleResponseModel
 import com.cctv.heygongc.data.remote.model.UserLoginRequest
 import com.cctv.heygongc.data.remote.model.UserLoginResponse
-import com.cctv.heygongc.ui.fragment.ActivityJoin
+import com.cctv.heygongc.ui.join.ActivityJoin
 import com.cctv.heygongc.util.SharedPreferencesManager
 import retrofit2.Call
 import retrofit2.Callback

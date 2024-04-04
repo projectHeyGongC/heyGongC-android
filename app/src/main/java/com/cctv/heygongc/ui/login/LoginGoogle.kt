@@ -1,27 +1,8 @@
 package com.cctv.heygongc.ui.login
 
-import android.app.Activity
-import android.app.Application
 import android.content.Context
-import android.content.ContextWrapper
-import android.content.Intent
-import android.util.Log
-import android.widget.Toast
-import com.cctv.heygongc.R
-import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
-import com.cctv.heygongc.data.remote.model.LoginGoogleResponseModel
-import com.cctv.heygongc.data.remote.model.UserLoginRequest
-import com.cctv.heygongc.ui.fragment.ActivityJoin
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 class LoginGoogle @Inject constructor(

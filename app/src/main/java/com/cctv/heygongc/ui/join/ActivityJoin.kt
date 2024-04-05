@@ -25,31 +25,22 @@ class ActivityJoin : AppCompatActivity() {
     }
 
     private fun setObserve() {
-        joinViewModel.radioButton.observe(this) {
-            if (it) {
-                joinViewModel.checkBox1.value = true
-                joinViewModel.checkBox2.value = true
-                joinViewModel.checkBox3.value = true
-            } else {
-                joinViewModel.checkBox1.value = false
-                joinViewModel.checkBox2.value = false
-                joinViewModel.checkBox3.value = false
-            }
-        }
 
         joinViewModel.checkBox1.observe(this) {
-            binding.buttonComfirm.isEnabled = it && joinViewModel.checkBox2.value!!
+            binding.buttonComfirm.isEnabled = it && joinViewModel.checkBox2.value!! // 필수 체크박스1,2 가 체크되면 버튼 활성화
             binding.radioButtonAll.isChecked = it && joinViewModel.checkBox2.value!! &&  joinViewModel.checkBox3.value!!
+            joinViewModel.radioButton.value = it && joinViewModel.checkBox2.value!! &&  joinViewModel.checkBox3.value!!
         }
 
         joinViewModel.checkBox2.observe(this) {
-            binding.buttonComfirm.isEnabled = it && joinViewModel.checkBox1.value!!
+            binding.buttonComfirm.isEnabled = it && joinViewModel.checkBox1.value!! // 필수 체크박스1,2 가 체크되면 버튼 활성화
             binding.radioButtonAll.isChecked = it && joinViewModel.checkBox1.value!! &&  joinViewModel.checkBox3.value!!
+            joinViewModel.radioButton.value = it && joinViewModel.checkBox1.value!! &&  joinViewModel.checkBox3.value!!
         }
 
         joinViewModel.checkBox3.observe(this) {
             binding.radioButtonAll.isChecked = it && joinViewModel.checkBox1.value!! &&  joinViewModel.checkBox2.value!!
-//            joinViewModel.radioButton.value = it && joinViewModel.checkBox1.value!! &&  joinViewModel.checkBox2.value!!
+            joinViewModel.radioButton.value = it && joinViewModel.checkBox1.value!! &&  joinViewModel.checkBox2.value!!
         }
 
 

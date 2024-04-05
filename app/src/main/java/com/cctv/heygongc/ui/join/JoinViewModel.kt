@@ -13,6 +13,15 @@ class JoinViewModel: ViewModel() {
 
     fun clickRadioButton() {
         radioButton.value = !radioButton.value!!
+        if (radioButton.value!!) {
+            checkBox1.value = true
+            checkBox2.value = true
+            checkBox3.value = true
+        } else {
+            checkBox1.value = false
+            checkBox2.value = false
+            checkBox3.value = false
+        }
     }
 
     fun clickButton() {

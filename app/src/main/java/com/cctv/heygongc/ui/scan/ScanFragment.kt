@@ -1,21 +1,20 @@
 package com.cctv.heygongc.ui.scan
 
-import android.app.AlertDialog
-import android.content.pm.PackageManager
-import android.os.Build
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.cctv.heygongc.Manifest
+import com.cctv.heygongc.ActivityMain
+import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.FragmentScanBinding
-
-const val CAMERA_PERMISSION_CODE = 1001
+import com.cctv.heygongc.ui.setdevicename.SetDeviceNameFragment
+import com.google.zxing.integration.android.IntentIntegrator
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.normal.TedPermission
 
 class ScanFragment : Fragment() {
 
@@ -59,8 +58,9 @@ class ScanFragment : Fragment() {
             setBeepEnabled(false)
             captureActivity = ActivityMain::class.java
         }
+        val intent = integrator.createScanIntent()
+        scanLauncher.launch(intent)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,58 +73,15 @@ class ScanFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        checkCameraPermission()
+        checkPermission()
     }
 
-    private fun checkCameraPermission() {
-/*        // Register the permissions callback, which handles the user's response to the
-        // system permissions dialog. Save the return value, an instance of
-        // ActivityResultLauncher. You can use either a val, as shown in this snippet,
-        // or a lateinit var in your onAttach() or onCreate() method.
-        val requestPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-                    // Permission is granted. Continue the action or workflow in your
-                    // app.
-                } else {
-                    // Explain to the user that the feature is unavailable because the
-                    // feature requires a permission that the user has denied. At the
-                    // same time, respect the user's decision. Don't link to system
-                    // settings in an effort to convince the user to change their
-                    // decision.
-                }
-            }*/
-
-        if (Build.VERSION.SDK_INT < 30) {
-            oldVersionRequestPermission()
-        }
-    }
-
-    private fun oldVersionRequestPermission() {
-        if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            startCamera()
-        } else {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(android.Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == CAMERA_PERMISSION_CODE) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startCamera()
-            } else {
-                // Camera permission denied, handle accordingly
-                // You may inform the user about the importance of the permission
-            }
-        }
+    fun checkPermission() {
+        TedPermission.create()
+            .setPermissionListener(permissionlistener)
+            .setDeniedMessage("권한이 거부되었습니다. 설정 > 권한에서 허용해주세요.")
+            .setPermissions(android.Manifest.permission.CAMERA)
+            .check()
     }
 
     override fun onDestroyView() {

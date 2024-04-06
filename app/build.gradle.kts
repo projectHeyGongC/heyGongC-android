@@ -112,6 +112,10 @@ dependencies {
 
     //fcm
     implementation("com.google.firebase:firebase-messaging:23.4.1")
+
+    //TedPermission
+    implementation("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
+    implementation("io.github.ParkSangGwon:tedpermission-coroutine:3.3.0")
 }
 
 kapt {

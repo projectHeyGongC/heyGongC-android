@@ -21,32 +21,43 @@ class ScanFragment : Fragment() {
 
     private var _binding: FragmentScanBinding? = null
     val binding: FragmentScanBinding = _binding!!
-    private val cameraPermissionLauncher : ActivityResultLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            // 권한이 허용된 경우에 실행할 코드
-        } else {
-            // 권한이 거부된 경우에 실행할 코드
+    private val permissionlistener: PermissionListener = object : PermissionListener {
+        override fun onPermissionGranted() {
+            turnOnCamera()
+        }
 
-            // ActivityCompat.shouldShowRequestPermissionRationale
-            //  → 사용자가 권한 요청을 명시적으로 거부한 경우 true를 반환한다.
-            //	→ 사용자가 다시 묻지 않음 선택한 경우 false를 반환한다.
-            if (ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.CAMERA)) {
-                // 권한 요청에 대한 이유를 사용자에게 설명하는 Dialog를 표시
-                AlertDialog.Builder(requireContext())
-                    .setTitle("권한 요청")
-                    .setMessage("카메라 권한이 필요합니다.")
-                    .setPositiveButton("확인") { _, _ ->
-                        requestCameraPermission.launch(Manifest.permission.CAMERA)
+        override fun onPermissionDenied(deniedPermissions: List<String>) {
+            Toast.makeText(
+                requireContext(),
+                "카메라 권한이 거부되었습니다.",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private val scanLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data
+                val scanRes = IntentIntegrator.parseActivityResult(result.resultCode, data)
+                val content = scanRes.contents
+                val setDeviceNameFragment = SetDeviceNameFragment().apply {
+                    arguments = Bundle().apply {
+                        putString("deviceInfo", content)
                     }
-                    .setNegativeButton("취소") { _, _ ->
-                        // Dialog에서 취소 버튼을 누른 경우에 실행할 코드
-                    }
-                    .show()
+                }
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentHost, setDeviceNameFragment).addToBackStack(null).commit()
             } else {
-                // 사용자가 권한 요청 다이얼로그에서 "다시 묻지 않음" 옵션을 선택한 경우에 실행할 코드
+                Toast.makeText(requireContext(), "QR 인식을 실패했습니다.", Toast.LENGTH_SHORT).show()
             }
+        }
+
+    private fun turnOnCamera() {
+        val integrator = IntentIntegrator(requireActivity())
+        with(integrator) {
+            setBeepEnabled(false)
+            captureActivity = ActivityMain::class.java
         }
     }
 

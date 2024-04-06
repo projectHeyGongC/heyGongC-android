@@ -21,12 +21,11 @@ interface LoginService {
         @Body request: LoginGoogleRequestModel
     ): Call<LoginGoogleResponseModel>
 
-    @POST("v1/users/{snsType}/register")
+    @POST("v1/users/register")
     @Headers("content-type: application/json")
     fun signup(
-        @Path ("snsType") snsType: String,
         @Body loginRequest: UserLoginRequest,
-    ): Call<UserLoginRequest>
+    ): Call<UserLoginResponse>
 
     @POST("v1/users/login")
     @Headers("content-type: application/json")

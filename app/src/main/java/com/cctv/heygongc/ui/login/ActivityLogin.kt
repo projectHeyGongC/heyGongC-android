@@ -3,12 +3,16 @@ package com.cctv.heygongc.ui.login
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.cctv.heygongc.ActivityMain
+import com.cctv.heygongc.ActivitySplash
 import com.cctv.heygongc.R
+import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.data.remote.model.LoginPagerData
 import com.cctv.heygongc.databinding.ActivityLoginBinding
 import com.cctv.heygongc.ui.join.ActivityJoin
@@ -40,11 +44,14 @@ class ActivityLogin : AppCompatActivity() {
 
     private val googleAuthLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
 
+        // progress bar
+//        binding.RelativeLayoutPB.visibility = View.VISIBLE
         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
         try {
             loginViewModel.getAccessToken(this, task)
         } catch (e: ApiException) {
             e.printStackTrace()
+            binding.RelativeLayoutPB.visibility = View.INVISIBLE
         }
     }
 
@@ -52,8 +59,7 @@ class ActivityLogin : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-
-//        ActivitySplash.setStatusBarTransparent(this)
+        ActivitySplash.setStatusBarTransparent(this, binding.container, Common.navigationBarHeight)
 
         binding.viewModel = loginViewModel
         binding.lifecycleOwner = this

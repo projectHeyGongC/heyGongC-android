@@ -22,7 +22,8 @@
             android:exported="false" />
         <activity
             android:name=".ActivityMain"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication"/>
         <activity
             android:name=".ui.login.ActivityLogin"
             android:exported="false" />

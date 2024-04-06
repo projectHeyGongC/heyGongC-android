@@ -32,7 +32,7 @@ class LoginViewModel @Inject constructor(
 
     fun getAccessToken(activity: Activity, completedTask: Task<GoogleSignInAccount>) {
         try {
-            val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode
+            val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode   // authcode
             loginRepository.getAccessToken(activity, authCode!!)
         } catch (e: ApiException) {
             e.printStackTrace()

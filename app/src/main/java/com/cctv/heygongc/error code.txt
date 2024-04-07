@@ -1,0 +1,3 @@
+A01 : signup api 200이외 응답
+A02 : signup api 응답 fail
+A03 : signup api onFailure응답

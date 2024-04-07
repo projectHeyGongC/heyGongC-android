@@ -1,11 +1,14 @@
 package com.cctv.heygongc.ui.login
 
 import android.app.Activity
+import android.content.Context
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
 
@@ -14,8 +17,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val loginRepository: LoginRepository
+    @ApplicationContext private val context: Context,
+    var loginRepository: LoginRepository
 ): ViewModel() {
+
+    var flagGoogleAccessToken : MutableLiveData<Int> = MutableLiveData(-1)
+
+//    @Inject
+//    lateinit var loginRepository: LoginRepository
 
 //    fun signIn() {
 //        // 로그인순서 1
@@ -30,10 +39,10 @@ class LoginViewModel @Inject constructor(
 
 
 
-    fun getAccessToken(activity: Activity, completedTask: Task<GoogleSignInAccount>) {
+    fun getGoogleAccessToken(activity: Activity, completedTask: Task<GoogleSignInAccount>) {
         try {
             val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode   // authcode
-            loginRepository.getAccessToken(activity, authCode!!)
+            loginRepository.getAccessToken(context, flagGoogleAccessToken, authCode!!)
         } catch (e: ApiException) {
             e.printStackTrace()
         }

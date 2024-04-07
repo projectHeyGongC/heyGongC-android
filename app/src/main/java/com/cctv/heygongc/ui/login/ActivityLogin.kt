@@ -3,13 +3,11 @@ package com.cctv.heygongc.ui.login
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.ActivitySplash
 import com.cctv.heygongc.R
 import com.cctv.heygongc.data.local.Common
@@ -48,7 +46,7 @@ class ActivityLogin : AppCompatActivity() {
 //        binding.RelativeLayoutPB.visibility = View.VISIBLE
         val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
         try {
-            loginViewModel.getAccessToken(this, task)
+            loginViewModel.getGoogleAccessToken(this, task)
         } catch (e: ApiException) {
             e.printStackTrace()
             binding.RelativeLayoutPB.visibility = View.INVISIBLE
@@ -77,7 +75,7 @@ class ActivityLogin : AppCompatActivity() {
         binding.ViewPagerLogin.adapter = LoginViewPagerAdapter(this, item)
         binding.dotsIndicator.attachTo(binding.ViewPagerLogin)
 
-        addListener()
+        setListener()
 
     }
 
@@ -144,16 +142,16 @@ class ActivityLogin : AppCompatActivity() {
         System.exit(0)
     }
 
-    private fun addListener() {
+    private fun setListener() {
 
         // 
-        binding.buttonMoveJoin.setOnClickListener {
-            startActivity(Intent(this, ActivityJoin::class.java))
-        }
-
-        binding.buttonMoveMain.setOnClickListener {
-            startActivity(Intent(this, ActivityMain::class.java))
-        }
+//        binding.buttonMoveJoin.setOnClickListener {
+//            startActivity(Intent(this, ActivityJoin::class.java))
+//        }
+//
+//        binding.buttonMoveMain.setOnClickListener {
+//            startActivity(Intent(this, ActivityMain::class.java))
+//        }
 
         // viewModel에서 fun으로 view에 이벤트 연결하고 liveData 변하면 Activity에서 감지해서 화면 이동 하도록 할것
         binding.ImageViewLoginGoogle.setOnClickListener {
@@ -165,25 +163,10 @@ class ActivityLogin : AppCompatActivity() {
         }
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//
-//        if (resultCode == RESULT_OK) {
-//            // 로그인순서 2
-//            if (requestCode === 1000) {
-//                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-//                try {
-//                    // Google Sign In was successful, authenticate with Firebase
-//                    // get accessToken
-//                    loginViewModel.getAccessToken(this, task)
-//
-//                } catch (e: ApiException) {
-//                    // Google Sign In failed, update UI appropriately
-//                    e.printStackTrace()
-//                }
-//            }
-//        }
-//    }
+    private fun setObserve() {
+        // todo : logintoken 응답 성공후 처리
+        loginViewModel.flagGoogleAccessToken
+    }
 
 
     private fun moveSignUpActivity() {

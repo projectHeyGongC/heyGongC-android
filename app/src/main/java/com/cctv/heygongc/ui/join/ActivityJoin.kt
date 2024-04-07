@@ -36,60 +36,43 @@ class ActivityJoin : AppCompatActivity() {
 
     private fun setObserve() {
 
+        //체크박스1
         joinViewModel.checkBox1.observe(this) {
             binding.buttonComfirm.isEnabled = it && joinViewModel.checkBox2.value!! // 필수 체크박스1,2 가 체크되면 버튼 활성화
             binding.radioButtonAll.isChecked = it && joinViewModel.checkBox2.value!! &&  joinViewModel.checkBox3.value!!
             joinViewModel.radioButton.value = it && joinViewModel.checkBox2.value!! &&  joinViewModel.checkBox3.value!!
         }
 
+        //체크박스2
         joinViewModel.checkBox2.observe(this) {
             binding.buttonComfirm.isEnabled = it && joinViewModel.checkBox1.value!! // 필수 체크박스1,2 가 체크되면 버튼 활성화
             binding.radioButtonAll.isChecked = it && joinViewModel.checkBox1.value!! &&  joinViewModel.checkBox3.value!!
             joinViewModel.radioButton.value = it && joinViewModel.checkBox1.value!! &&  joinViewModel.checkBox3.value!!
         }
 
+        //체크박스3
         joinViewModel.checkBox3.observe(this) {
             binding.radioButtonAll.isChecked = it && joinViewModel.checkBox1.value!! &&  joinViewModel.checkBox2.value!!
             joinViewModel.radioButton.value = it && joinViewModel.checkBox1.value!! &&  joinViewModel.checkBox2.value!!
         }
 
+
         joinViewModel.confirmButton.observe(this) {
-            // 확인버튼 클릭 이벤트
-            // 회원가입 api
-            LoginService.loginRetrofit("http://15.165.133.184/").signup(
-                loginRequest = UserLoginRequest(
-                    "testDeviceId",
-                    "AOS",
-                    "GOOGLE",
-                    Common.accessToken,
-                    Common.fcmToken,
-                    true
-                )
-            ).enqueue(object : Callback<UserLoginResponse> {
-                override fun onResponse(call: Call<UserLoginResponse>, response: Response<UserLoginResponse>) {
-                    Log.e("로그인응답","response : ${response.code()}, ${response.isSuccessful}, ${response.message()}")
-                    if (response.isSuccessful){
-                        var data: UserLoginResponse? = response.body()
-                        if (response.code() == 200) {    // 로그인 성공. 메인화면으로 이동. 여기서 access token, refresh token shared에 저장해야되나?
-
-                            var pm = SharedPreferencesManager(this@ActivityJoin)
-                            pm.saveData(Common.ACCESS_TOKEN, data?.accessToken ?: "")
-                            pm.saveData(Common.REFRESH_TOKEN, data?.refreshToken ?: "")
-
-                            startActivity(Intent(this@ActivityJoin, ActivityMain::class.java))
-                            finish()
-                        } else {
-                            Toast.makeText(this@ActivityJoin, "회원가입에 실패하였습니다", Toast.LENGTH_SHORT).show()
-                        }
-                    } else {
-                        var data: UserLoginResponse? = response.body()
-                        Toast.makeText(this@ActivityJoin, "회원가입에 실패하였습니다\n${data?.message}", Toast.LENGTH_SHORT).show()
-                    }
+            when(it) {
+                0 -> {  // 회원가입 성공
+                    startActivity(Intent(this@ActivityJoin, ActivityMain::class.java))
+                    finish()
                 }
-                override fun onFailure(call: Call<UserLoginResponse>, t: Throwable) {
-                    t.printStackTrace()
+                1 -> {
+                    Toast.makeText(this@ActivityJoin, "회원가입에 실패하였습니다\nA01", Toast.LENGTH_SHORT).show()
                 }
-            })
+                2 -> {
+                    Toast.makeText(this@ActivityJoin, "회원가입에 실패하였습니다\nA02", Toast.LENGTH_SHORT).show()
+                }
+                3 -> {
+                    Toast.makeText(this@ActivityJoin, "회원가입에 실패하였습니다\nA03", Toast.LENGTH_SHORT).show()
+                }
+            }
 
         }
 

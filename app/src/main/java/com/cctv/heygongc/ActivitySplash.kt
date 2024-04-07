@@ -24,8 +24,12 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ActivitySplash : AppCompatActivity() {
 
+    @Inject
+    lateinit var loginRepository: LoginRepository
+
     companion object {
-        fun setStatusBarTransparent(context: AppCompatActivity, container: View, navigationHeight: Int) {   // 상태바까지 화면 확장
+        // 상태바까지 화면 확장
+        fun setStatusBarTransparent(context: AppCompatActivity, container: View, navigationHeight: Int) {
             context.window.apply {
                 setFlags(
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
@@ -38,6 +42,7 @@ class ActivitySplash : AppCompatActivity() {
             setNavigationBarPadding(container, navigationHeight)
         }
 
+        // 하단 네비게이션바 만큼 패딩주기
         private fun setNavigationBarPadding(container: View, navigationHeight: Int) {
             container.setPadding(
                 0,
@@ -48,8 +53,7 @@ class ActivitySplash : AppCompatActivity() {
         }
     }
 
-    @Inject
-    lateinit var loginRepository: LoginRepository
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +62,7 @@ class ActivitySplash : AppCompatActivity() {
         var container = findViewById<ConstraintLayout>(R.id.container)
         Common.navigationBarHeight = getNavigationHeight()
 
-        setStatusBarTransparent(this, container, Common.navigationBarHeight)
+        setStatusBarTransparent(this, container, 0)
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -74,7 +78,7 @@ class ActivitySplash : AppCompatActivity() {
         })
 
         var sp = SharedPreferencesManager(this)
-        var accessToken = sp.loadData(Common.ACCESS_TOKEN,"")
+        var accessToken = sp.loadData(Common.LOGIN_TOKEN,"")
         var fcm = sp.loadData(Common.FCM_TOKEN, "")
         if (fcm.isNotEmpty()) Common.fcmToken = fcm
 
@@ -91,8 +95,6 @@ class ActivitySplash : AppCompatActivity() {
                 }
             }
         }, 3000)
-
-
 
 
     }

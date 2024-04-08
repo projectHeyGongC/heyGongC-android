@@ -6,7 +6,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.FragmentSetDeviceNameBinding
-import com.cctv.heygongc.ui.fragment.MonitoringFragment
+import com.cctv.heygongc.ui.monitoring.MonitoringFragment
 
 class SetDeviceNameFragment : Fragment() {
 

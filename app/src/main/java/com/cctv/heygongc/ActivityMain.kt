@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentManager
 import com.cctv.heygongc.databinding.ActivityMainBinding
 import com.cctv.heygongc.ui.analysis.AnalysisFragment
 import com.cctv.heygongc.ui.analysis.SoundFragment
-import com.cctv.heygongc.ui.fragment.MonitoringFragment
+import com.cctv.heygongc.ui.monitoring.MonitoringFragment
 import com.cctv.heygongc.ui.fragment.PremiumFragment
 import com.cctv.heygongc.ui.profile.ProfileFragment
 import com.cctv.heygongc.ui.profile.SettingFragment

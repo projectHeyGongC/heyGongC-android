@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.ActivityJoinBinding
+import com.cctv.heygongc.util.AlertOneButton
 
 class ActivityJoin : AppCompatActivity() {
     lateinit var binding: ActivityJoinBinding
@@ -55,13 +56,16 @@ class ActivityJoin : AppCompatActivity() {
                     finish()
                 }
                 1 -> {
-                    Toast.makeText(this@ActivityJoin, "회원가입에 실패하였습니다\nA01", Toast.LENGTH_SHORT).show()
+                    var alertOneButton = AlertOneButton(this@ActivityJoin, "", "회원가입에 실패하였습니다\nA09","확인",null)
+                    alertOneButton.show()
                 }
                 2 -> {
-                    Toast.makeText(this@ActivityJoin, "회원가입에 실패하였습니다\nA02", Toast.LENGTH_SHORT).show()
+                    var alertOneButton = AlertOneButton(this@ActivityJoin, "", "회원가입에 실패하였습니다\nA010","확인",null)
+                    alertOneButton.show()
                 }
                 3 -> {
-                    Toast.makeText(this@ActivityJoin, "회원가입에 실패하였습니다\nA03", Toast.LENGTH_SHORT).show()
+                    var alertOneButton = AlertOneButton(this@ActivityJoin, "", "회원가입에 실패하였습니다\nA11","확인",null)
+                    alertOneButton.show()
                 }
             }
 

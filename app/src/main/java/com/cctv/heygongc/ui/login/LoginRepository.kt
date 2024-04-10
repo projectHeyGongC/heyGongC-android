@@ -87,7 +87,7 @@ class LoginRepository @Inject constructor(
     }
 
     fun googleSignup(flagGoogleSignup: MutableLiveData<Int>){
-        LoginService.loginRetrofit("http://15.165.133.184/").signup(
+        LoginService.loginRetrofit("http://15.165.133.184/").googleSignup(
             loginRequest = UserLoginRequest(
                 "testDeviceId",     // todo
                 "AOS",
@@ -104,14 +104,17 @@ class LoginRepository @Inject constructor(
                         var data: UserLoginResponse? = response.body()
 
                         savePreference(data)
-
                         flagGoogleSignup.value = 0
+                    } else {
+                        flagGoogleSignup.value = 1
                     }
+                } else {
+                    flagGoogleSignup.value = 2
                 }
             }
             override fun onFailure(call: Call<UserLoginResponse>, t: Throwable) {
                 t.printStackTrace()
-                flagGoogleSignup.value = 1
+                flagGoogleSignup.value = 3
             }
         })
     }

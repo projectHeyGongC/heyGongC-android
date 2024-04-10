@@ -12,7 +12,7 @@ class LoginGoogle @Inject constructor(
 
 //    @Inject
 //    lateinit var loginService: LoginService
-//    var activity = context as Activity  //todo : 화면 관련 된건 ActivityLogin 에서 처리 하고 나머지는 주입받아서?
+//    var activity = context as Activity
 
 //    private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
 //        .requestServerAuthCode(activity.getString(R.string.google_login_client_id))

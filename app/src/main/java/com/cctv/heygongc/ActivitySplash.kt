@@ -9,9 +9,12 @@ import android.view.View
 import android.view.WindowManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.MutableLiveData
 import com.cctv.heygongc.data.local.Common
+import com.cctv.heygongc.ui.join.ActivityJoin
 import com.cctv.heygongc.ui.login.ActivityLogin
 import com.cctv.heygongc.ui.login.LoginRepository
+import com.cctv.heygongc.util.AlertOneButton
 import com.cctv.heygongc.util.SharedPreferencesManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -25,6 +28,8 @@ class ActivitySplash : AppCompatActivity() {
 
     @Inject
     lateinit var loginRepository: LoginRepository
+
+    var flagGoogleLogin : MutableLiveData<Int> = MutableLiveData(-1)
 
     companion object {
         // 상태바까지 화면 확장
@@ -77,7 +82,7 @@ class ActivitySplash : AppCompatActivity() {
         })
 
         var sp = SharedPreferencesManager(this)
-        var accessToken = sp.loadData(Common.LOGIN_TOKEN,"")
+        Common.loginToken = sp.loadData(Common.LOGIN_TOKEN,"")
         var fcm = sp.loadData(Common.FCM_TOKEN, "")
         if (fcm.isNotEmpty()) Common.fcmToken = fcm
 
@@ -85,17 +90,36 @@ class ActivitySplash : AppCompatActivity() {
 
         Timer().schedule(object : TimerTask() {
             override fun run() {
-                if (accessToken != "") {    // 토큰이 이미 있다. 로그인시도 하고 성공하면 메인으로
-                    Log.e("로그인응답,splash","token : ${accessToken}\nfcm_token : ${Common.fcmToken}")
-//                    loginRepository.googleLogin()     // todo
+                if (Common.loginToken != "") {    // 토큰이 이미 있다. 로그인시도 하고 성공하면 메인으로
+                    Log.e("로그인응답,splash","Common.loginToken : ${Common.loginToken}\nfcm_token : ${Common.fcmToken}")
+                    loginRepository.googleLogin(flagGoogleLogin)     // todo
                 } else {
                     val intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
                     startActivity(intent)
                 }
             }
-        }, 3000)
+        }, 2000)
 
+        setObserve()
+    }
 
+    private fun setObserve() {
+        flagGoogleLogin.observe(this) {
+            Log.e("로그인","$it")
+            when(it) {
+                -1 ->{}   // 기본값이므로 아무처리 안하기
+                0 -> {  // 로그인 성공. 메인화면으로 이동
+                    var intent = Intent(this@ActivitySplash, ActivityMain::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                else -> {
+                    var intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }
+        }
     }
 
     fun getNavigationHeight(): Int {

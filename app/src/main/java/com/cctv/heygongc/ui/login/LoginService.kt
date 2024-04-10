@@ -22,7 +22,7 @@ interface LoginService {
 
     @POST("v1/users/register")
     @Headers("content-type: application/json")
-    fun signup(
+    fun googleSignup(
         @Body loginRequest: UserLoginRequest,
     ): Call<UserLoginResponse>
 

@@ -1,14 +1,9 @@
 package com.cctv.heygongc.ui.join
 
-import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.data.remote.model.UserLoginRequest
 import com.cctv.heygongc.data.remote.model.UserLoginResponse
@@ -16,7 +11,6 @@ import com.cctv.heygongc.ui.login.LoginRepository
 import com.cctv.heygongc.ui.login.LoginService
 import com.cctv.heygongc.util.SharedPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Call
 import retrofit2.Callback
@@ -39,7 +33,7 @@ class JoinViewModel @Inject constructor(
     var checkBox2 : MutableLiveData<Boolean> = MutableLiveData(false)
     var checkBox3 : MutableLiveData<Boolean> = MutableLiveData(false)
 
-    var confirmButton : MutableLiveData<Int> = MutableLiveData(0)
+    var flagGoogleSignup : MutableLiveData<Int> = MutableLiveData(0)
 
     fun clickRadioButton() {
         radioButton.value = !radioButton.value!!
@@ -57,38 +51,41 @@ class JoinViewModel @Inject constructor(
     fun clickButton() {
         // 확인버튼 클릭 이벤트
         // 회원가입 api
-        LoginService.loginRetrofit("http://15.165.133.184/").signup(
-            loginRequest = UserLoginRequest(
-                "testDeviceId",
-                "AOS",
-                "GOOGLE",
-                Common.accessToken,
-                Common.fcmToken,
-                true
-            )
-        ).enqueue(object : Callback<UserLoginResponse> {
-            override fun onResponse(call: Call<UserLoginResponse>, response: Response<UserLoginResponse>) {
-                Log.e("로그인응답","response : ${response.code()}, ${response.isSuccessful}, ${response.message()}")
-                if (response.isSuccessful){
-                    var data: UserLoginResponse? = response.body()
-                    if (response.code() == 200) {    // 로그인 성공. 메인화면으로 이동. 여기서 access token, refresh token shared에 저장해야되나?
-                        var pm = SharedPreferencesManager(context)
-                        pm.saveData(Common.ACCESS_TOKEN, data?.accessToken ?: "")
-                        pm.saveData(Common.REFRESH_TOKEN, data?.refreshToken ?: "")
+        loginRepository.googleSignup(flagGoogleSignup)
 
-                        confirmButton.value = 0
 
-                    } else {
-                        confirmButton.value = 1
-                    }
-                } else {
-                    confirmButton.value = 2
-                }
-            }
-            override fun onFailure(call: Call<UserLoginResponse>, t: Throwable) {
-                confirmButton.value = 3
-                t.printStackTrace()
-            }
-        })
+//        LoginService.loginRetrofit("http://15.165.133.184/").signup(
+//            loginRequest = UserLoginRequest(
+//                "testDeviceId",
+//                "AOS",
+//                "GOOGLE",
+//                Common.loginToken,
+//                Common.fcmToken,
+//                true
+//            )
+//        ).enqueue(object : Callback<UserLoginResponse> {
+//            override fun onResponse(call: Call<UserLoginResponse>, response: Response<UserLoginResponse>) {
+//                Log.e("로그인응답","response : ${response.code()}, ${response.isSuccessful}, ${response.message()}")
+//                if (response.isSuccessful){
+//                    var data: UserLoginResponse? = response.body()
+//                    if (response.code() == 200) {    // 로그인 성공. 메인화면으로 이동. 여기서 access token, refresh token shared에 저장해야되나?
+//                        var pm = SharedPreferencesManager(context)
+//                        pm.saveData(Common.ACCESS_TOKEN, data?.accessToken ?: "")
+//                        pm.saveData(Common.REFRESH_TOKEN, data?.refreshToken ?: "")
+//
+//                        flagGoogleSignup.value = 0
+//
+//                    } else {
+//                        flagGoogleSignup.value = 1
+//                    }
+//                } else {
+//                    flagGoogleSignup.value = 2
+//                }
+//            }
+//            override fun onFailure(call: Call<UserLoginResponse>, t: Throwable) {
+//                flagGoogleSignup.value = 3
+//                t.printStackTrace()
+//            }
+//        })
     }
 }

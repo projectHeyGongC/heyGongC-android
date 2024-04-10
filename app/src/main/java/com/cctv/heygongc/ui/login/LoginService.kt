@@ -13,7 +13,6 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
-import retrofit2.http.Path
 
 interface LoginService {
     @POST("oauth2/v4/token")
@@ -29,7 +28,7 @@ interface LoginService {
 
     @POST("v1/users/login")
     @Headers("content-type: application/json")
-    fun login(
+    fun googleLogin(
         @Body loginRequest: UserLoginRequest,
     ): Call<UserLoginResponse>
 

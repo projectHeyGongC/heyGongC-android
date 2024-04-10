@@ -9,7 +9,7 @@ class Common {
         const val FCM_TOKEN = "fcm_token"
 
         var fcmToken = ""
-        var accessToken = ""
+        var loginToken = ""
         var navigationBarHeight = 0
 
     }

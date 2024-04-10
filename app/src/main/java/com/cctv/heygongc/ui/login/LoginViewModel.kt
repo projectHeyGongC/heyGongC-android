@@ -1,6 +1,5 @@
 package com.cctv.heygongc.ui.login
 
-import android.app.Activity
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,6 +21,8 @@ class LoginViewModel @Inject constructor(
 ): ViewModel() {
 
     var flagGoogleAccessToken : MutableLiveData<Int> = MutableLiveData(-1)
+    var flagGoogleLogin : MutableLiveData<Int> = MutableLiveData(-1)
+
 
 //    @Inject
 //    lateinit var loginRepository: LoginRepository
@@ -39,13 +40,17 @@ class LoginViewModel @Inject constructor(
 
 
 
-    fun getGoogleAccessToken(activity: Activity, completedTask: Task<GoogleSignInAccount>) {
+    fun getGoogleAccessToken(completedTask: Task<GoogleSignInAccount>) {
         try {
             val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode   // authcode
-            loginRepository.getAccessToken(context, flagGoogleAccessToken, authCode!!)
+            loginRepository.getGoogleAccessToken(flagGoogleAccessToken, authCode!!)
         } catch (e: ApiException) {
             e.printStackTrace()
         }
+    }
+
+    fun googleLogin() {
+        loginRepository.googleLogin(flagGoogleLogin)
     }
 
 

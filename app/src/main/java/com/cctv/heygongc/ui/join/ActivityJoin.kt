@@ -3,21 +3,12 @@ package com.cctv.heygongc.ui.join
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.R
-import com.cctv.heygongc.data.local.Common
-import com.cctv.heygongc.data.remote.model.UserLoginRequest
-import com.cctv.heygongc.data.remote.model.UserLoginResponse
 import com.cctv.heygongc.databinding.ActivityJoinBinding
-import com.cctv.heygongc.ui.login.LoginService
-import com.cctv.heygongc.util.SharedPreferencesManager
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ActivityJoin : AppCompatActivity() {
     lateinit var binding: ActivityJoinBinding
@@ -57,7 +48,7 @@ class ActivityJoin : AppCompatActivity() {
         }
 
 
-        joinViewModel.confirmButton.observe(this) {
+        joinViewModel.flagGoogleSignup.observe(this) {
             when(it) {
                 0 -> {  // 회원가입 성공
                     startActivity(Intent(this@ActivityJoin, ActivityMain::class.java))

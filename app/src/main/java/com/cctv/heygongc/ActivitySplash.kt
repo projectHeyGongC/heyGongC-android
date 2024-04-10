@@ -9,7 +9,6 @@ import android.view.View
 import android.view.WindowManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
-import androidx.databinding.DataBindingUtil
 import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.ui.login.ActivityLogin
 import com.cctv.heygongc.ui.login.LoginRepository
@@ -88,7 +87,7 @@ class ActivitySplash : AppCompatActivity() {
             override fun run() {
                 if (accessToken != "") {    // 토큰이 이미 있다. 로그인시도 하고 성공하면 메인으로
                     Log.e("로그인응답,splash","token : ${accessToken}\nfcm_token : ${Common.fcmToken}")
-                    loginRepository.login(this@ActivitySplash, accessToken)
+//                    loginRepository.googleLogin()     // todo
                 } else {
                     val intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
                     startActivity(intent)

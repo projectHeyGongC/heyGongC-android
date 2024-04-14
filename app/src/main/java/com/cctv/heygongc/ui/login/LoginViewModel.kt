@@ -16,29 +16,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    @ApplicationContext private val context: Context,
     var loginRepository: LoginRepository
 ): ViewModel() {
 
     var flagGoogleAccessToken : MutableLiveData<Int> = MutableLiveData(-1)
     var flagGoogleLogin : MutableLiveData<Int> = MutableLiveData(-1)
-
-
-//    @Inject
-//    lateinit var loginRepository: LoginRepository
-
-//    fun signIn() {
-//        // 로그인순서 1
-//        val signInIntent: Intent = googleSignInClient.signInIntent
-//        (context as Activity).startActivityForResult(signInIntent, 1000)
-//        loginGoogle.signIn()
-//    }
-//
-//    fun signOut(activity: Activity) {
-//        loginGoogle.signOut()
-//    }
-
-
 
     fun getGoogleAccessToken(completedTask: Task<GoogleSignInAccount>) {
         try {
@@ -53,11 +35,5 @@ class LoginViewModel @Inject constructor(
     fun googleLogin() {
         loginRepository.googleLogin(flagGoogleLogin)
     }
-
-
-
-
-
-
 
 }

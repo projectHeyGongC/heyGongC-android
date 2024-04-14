@@ -26,6 +26,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ActivitySplash : AppCompatActivity() {
 
+    // Splash에서는 필드 @Inject로 썼음
     @Inject
     lateinit var loginRepository: LoginRepository
 
@@ -90,8 +91,7 @@ class ActivitySplash : AppCompatActivity() {
 
         Timer().schedule(object : TimerTask() {
             override fun run() {
-                if (Common.loginToken != "") {    // 토큰이 이미 있다. 로그인시도 하고 성공하면 메인으로
-                    Log.e("로그인응답,splash","Common.loginToken : ${Common.loginToken}\nfcm_token : ${Common.fcmToken}")
+                if (Common.loginToken != "") {    // 토큰이 이미 있는건 로그인 이력이 있는거기 때문에 로그인시도
                     loginRepository.googleLogin(flagGoogleLogin)
                 } else {
                     val intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
@@ -105,9 +105,8 @@ class ActivitySplash : AppCompatActivity() {
 
     private fun setObserve() {
         flagGoogleLogin.observe(this) {
-            Log.e("로그인","$it")
             when(it) {
-                -1 ->{}   // 기본값이므로 아무처리 안하기
+                -1 -> {}   // 기본값이므로 아무처리 안하기
                 0 -> {  // 로그인 성공. 메인화면으로 이동
                     var intent = Intent(this@ActivitySplash, ActivityMain::class.java)
                     startActivity(intent)

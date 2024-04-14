@@ -3,12 +3,9 @@ package com.cctv.heygongc.ui.login
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.cctv.heygongc.ActivityMain
@@ -32,7 +29,7 @@ class ActivityLogin : AppCompatActivity() {
 
 
 //    @Inject lateinit var loginViewModel: LoginViewModel
-    val loginViewModel: LoginViewModel by viewModels()
+    val viewModel: LoginViewModel by viewModels()
 
 
 //    private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -52,7 +49,7 @@ class ActivityLogin : AppCompatActivity() {
 
         try {
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            loginViewModel.getGoogleAccessToken(task)
+            viewModel.getGoogleAccessToken(task)
         } catch (e: ApiException) {
             e.printStackTrace()
             binding.RelativeLayoutPB.visibility = View.INVISIBLE
@@ -65,7 +62,7 @@ class ActivityLogin : AppCompatActivity() {
 
         ActivitySplash.setStatusBarTransparent(this, binding.container, Common.navigationBarHeight)
 
-        binding.viewModel = loginViewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
         googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -141,10 +138,10 @@ class ActivityLogin : AppCompatActivity() {
     }
 
     private fun setObserve() {
-        loginViewModel.flagGoogleAccessToken.observe(this) {
+        viewModel.flagGoogleAccessToken.observe(this) {
             when(it) {
                 0 -> {  // loginToken으로 login시도
-                    loginViewModel.googleLogin()
+                    viewModel.googleLogin()
                 }
                 1 -> {
                     var alertOneButton = AlertOneButton(this@ActivityLogin, "", "로그인에 실패하였습니다\nA04","확인",null)
@@ -159,7 +156,7 @@ class ActivityLogin : AppCompatActivity() {
             }
         }
 
-        loginViewModel.flagGoogleLogin.observe(this) {
+        viewModel.flagGoogleLogin.observe(this) {
             when(it) {
                 0 -> {  // 로그인 성공. 메인화면으로 이동
                     var intent = Intent(this@ActivityLogin, ActivityMain::class.java)

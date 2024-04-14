@@ -32,12 +32,6 @@ class ActivityLogin : AppCompatActivity() {
     val viewModel: LoginViewModel by viewModels()
 
 
-//    private val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//        .requestServerAuthCode(getString(R.string.google_login_client_id))
-//        .requestEmail()
-//        .build()
-//
-//    private val googleSignInClient = GoogleSignIn.getClient(this, gso)
 
     private lateinit var googleSignInOptions: GoogleSignInOptions
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -121,13 +115,13 @@ class ActivityLogin : AppCompatActivity() {
     private fun setListener() {
 
         // 
-//        binding.buttonMoveJoin.setOnClickListener {
-//            startActivity(Intent(this, ActivityJoin::class.java))
-//        }
-//
-//        binding.buttonMoveMain.setOnClickListener {
-//            startActivity(Intent(this, ActivityMain::class.java))
-//        }
+        binding.buttonMoveJoin.setOnClickListener {
+            startActivity(Intent(this, ActivityJoin::class.java))
+        }
+
+        binding.buttonMoveMain.setOnClickListener {
+            startActivity(Intent(this, ActivityMain::class.java))
+        }
 
         // 구글 로그인 클릭
         binding.ImageViewLoginGoogle.setOnClickListener {
@@ -156,35 +150,6 @@ class ActivityLogin : AppCompatActivity() {
             }
         }
 
-        viewModel.flagGoogleLogin.observe(this) {
-            when(it) {
-                0 -> {  // 로그인 성공. 메인화면으로 이동
-                    var intent = Intent(this@ActivityLogin, ActivityMain::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-                1 -> {
-                    var alertOneButton = AlertOneButton(this@ActivityLogin, "", "로그인에 실패하였습니다\nA06","확인",null)
-                    alertOneButton.show()
-                    binding.RelativeLayoutPB.visibility = View.GONE
-                }
-                2 -> {  // 회원가입
-                    var intent = Intent(this@ActivityLogin, ActivityJoin::class.java)
-                    startActivity(intent)
-                    binding.RelativeLayoutPB.visibility = View.GONE
-                }
-                3 -> {
-                    var alertOneButton = AlertOneButton(this@ActivityLogin, "", "로그인에 실패하였습니다\nA07","확인",null)
-                    alertOneButton.show()
-                    binding.RelativeLayoutPB.visibility = View.GONE
-                }
-                4 -> {
-                    var alertOneButton = AlertOneButton(this@ActivityLogin, "", "로그인에 실패하였습니다\nA08","확인",null)
-                    alertOneButton.show()
-                    binding.RelativeLayoutPB.visibility = View.GONE
-                }
-            }
-        }
     }
 
 

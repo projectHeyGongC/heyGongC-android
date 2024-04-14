@@ -92,7 +92,7 @@ class ActivitySplash : AppCompatActivity() {
             override fun run() {
                 if (Common.loginToken != "") {    // 토큰이 이미 있다. 로그인시도 하고 성공하면 메인으로
                     Log.e("로그인응답,splash","Common.loginToken : ${Common.loginToken}\nfcm_token : ${Common.fcmToken}")
-                    loginRepository.googleLogin(flagGoogleLogin)     // todo
+                    loginRepository.googleLogin(flagGoogleLogin)
                 } else {
                     val intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
                     startActivity(intent)

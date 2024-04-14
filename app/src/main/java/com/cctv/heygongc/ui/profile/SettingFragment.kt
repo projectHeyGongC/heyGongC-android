@@ -21,7 +21,7 @@ class SettingFragment : Fragment() {
         mBinding = FragmentSettingBinding.inflate(inflater, container, false)
 
 
-
+        // todo : 세팅에서 뒤로 누르기 하면 프로필 화면으로 이동하도록 설정, 로그아웃, 회원탈퇴 로직 적용하기
 
 
         return binding.root

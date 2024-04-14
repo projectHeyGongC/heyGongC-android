@@ -46,6 +46,7 @@ class LoginViewModel @Inject constructor(
             loginRepository.getGoogleAccessToken(flagGoogleAccessToken, authCode!!)
         } catch (e: ApiException) {
             e.printStackTrace()
+            flagGoogleAccessToken.value = 1
         }
     }
 

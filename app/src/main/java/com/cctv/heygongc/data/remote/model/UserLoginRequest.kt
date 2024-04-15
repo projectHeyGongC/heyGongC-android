@@ -1,14 +1,18 @@
 package com.cctv.heygongc.data.remote.model
 
-data class UserLoginRequest (
-    val deviceId: String,
-    val deviceOs: String,
-    val ads: Boolean?,
-    val token: Token
-) {
+import com.google.gson.annotations.SerializedName
 
-    data class Token(
-        val accessToken: String,
-        val refreshToken: String
-    )
-}
+data class UserLoginRequest (
+    @SerializedName("deviceId")
+    val deviceId: String,
+    @SerializedName("deviceOs")
+    val deviceOs: String,
+    @SerializedName("snsType")
+    val snsType: String,
+    @SerializedName("accessToken")
+    val accessToken: String,
+    @SerializedName("fcmToken")
+    val fcmToken: String,
+    @SerializedName("ads")
+    val ads: Boolean
+)

@@ -2,6 +2,7 @@ package com.cctv.heygongc
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -60,13 +61,28 @@ class ActivityMain : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        handleInactiveAppNotificationIntent(intent)
 
 
 
 //        binding.bottomNavi.labelVisibilityMode = LABEL_VISIBILITY_LABELED   // label 항상 보이기
         initFragmentMap()
         initBottomNavigation()
+    }
+
+    private fun handleInactiveAppNotificationIntent(intent: Intent?) {
+        if (intent?.hasExtra("type") == true) {
+
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        handleNotificationIntent(intent)
+    }
+
+    private fun handleNotificationIntent(intent: Intent?) {
+
     }
 
     @SuppressLint("MissingSuperCall")

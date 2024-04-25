@@ -84,11 +84,11 @@ class ActivityLogin : AppCompatActivity() {
 
     }
 
-    @SuppressLint("MissingSuperCall")
+    /*@SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         finishAffinity()
         System.exit(0)
-    }
+    }*/
 
     private fun addListener() {
 

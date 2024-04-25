@@ -6,6 +6,10 @@ plugins {
     id("com.google.gms.google-services")
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 android {
     namespace = "com.cctv.heygongc"
     compileSdk = 34
@@ -30,8 +34,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 //    buildFeatures {
 //        compose = true
@@ -40,7 +44,7 @@ android {
 //        kotlinCompilerExtensionVersion = "1.1.1"
 //    }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     
     // 뷰바인딩

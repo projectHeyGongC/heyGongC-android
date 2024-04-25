@@ -1,24 +1,26 @@
 package com.cctv.heygongc.ui.login
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.cctv.heygongc.ActivityMain
+import com.cctv.heygongc.ActivitySplash
 import com.cctv.heygongc.R
+import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.data.remote.model.LoginPagerData
 import com.cctv.heygongc.databinding.ActivityLoginBinding
-import com.cctv.heygongc.ui.fragment.ActivityJoin
+import com.cctv.heygongc.ui.join.ActivityJoin
+import com.cctv.heygongc.util.AlertOneButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.Scope
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class ActivityLogin : AppCompatActivity() {
@@ -27,27 +29,51 @@ class ActivityLogin : AppCompatActivity() {
 
 
 //    @Inject lateinit var loginViewModel: LoginViewModel
-    val loginViewModel: LoginViewModel by viewModels()
+    val viewModel: LoginViewModel by viewModels()
 
 
 
+    private lateinit var googleSignInOptions: GoogleSignInOptions
+    private lateinit var googleSignInClient: GoogleSignInClient
 
+    private val googleAuthLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+        // progress bar
+        binding.RelativeLayoutPB.visibility = View.VISIBLE
+
+        try {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            viewModel.getGoogleAccessToken(task)
+        } catch (e: ApiException) {
+            e.printStackTrace()
+            binding.RelativeLayoutPB.visibility = View.INVISIBLE
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
-//        ActivitySplash.setStatusBarTransparent(this)
+        ActivitySplash.setStatusBarTransparent(this, binding.container, Common.navigationBarHeight)
 
-        binding.viewModel = loginViewModel
+        binding.viewModel = viewModel
         binding.lifecycleOwner = this
+
+        googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.google_login_client_id))
+            .requestServerAuthCode(getString(R.string.google_login_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions)
 
 
         var item = setPagerData()
         binding.ViewPagerLogin.adapter = LoginViewPagerAdapter(this, item)
         binding.dotsIndicator.attachTo(binding.ViewPagerLogin)
 
-        addListener()
+        setListener()
+        setObserve()
 
     }
 
@@ -80,17 +106,13 @@ class ActivityLogin : AppCompatActivity() {
         return item
     }
 
-    fun aaa() {
-
-    }
-
-    /*@SuppressLint("MissingSuperCall")
+    @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
         finishAffinity()
         System.exit(0)
-    }*/
+    }
 
-    private fun addListener() {
+    private fun setListener() {
 
         // 
         binding.buttonMoveJoin.setOnClickListener {
@@ -101,29 +123,29 @@ class ActivityLogin : AppCompatActivity() {
             startActivity(Intent(this, ActivityMain::class.java))
         }
 
-        // viewModel에서 fun으로 view에 이벤트 연결하고 liveData 변하면 Activity에서 감지해서 화면 이동 하도록 할것
+        // 구글 로그인 클릭
         binding.ImageViewLoginGoogle.setOnClickListener {
-            // LoginGoogle에서 startActivityForResult 호출하고 ActivityLogin 화면의 onActivityResult로 받는다
-            loginViewModel.signIn()
-
+            googleSignInClient.signOut()
+            val signInIntent = googleSignInClient.signInIntent
+            googleAuthLauncher.launch(signInIntent)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == RESULT_OK) {
-            // 로그인순서 2
-            if (requestCode === 1000) {
-                val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-                try {
-                    // Google Sign In was successful, authenticate with Firebase
-                    // get accessToken
-                    loginViewModel.getAccessToken(task)
-
-                } catch (e: ApiException) {
-                    // Google Sign In failed, update UI appropriately
-                    e.printStackTrace()
+    private fun setObserve() {
+        viewModel.flagGoogleAccessToken.observe(this) {
+            when(it) {
+                0 -> {  // loginToken으로 login시도
+                    viewModel.googleLogin()
+                }
+                1 -> {
+                    var alertOneButton = AlertOneButton(this@ActivityLogin, "", "로그인에 실패하였습니다\nA04","확인",null)
+                    alertOneButton.show()
+                    binding.RelativeLayoutPB.visibility = View.GONE
+                }
+                2 -> {
+                    var alertOneButton = AlertOneButton(this@ActivityLogin, "", "로그인에 실패하였습니다\nA05","확인",null)
+                    alertOneButton.show()
+                    binding.RelativeLayoutPB.visibility = View.GONE
                 }
             }
         }
@@ -137,4 +159,5 @@ class ActivityLogin : AppCompatActivity() {
             finish()
         }
     }
+
 }

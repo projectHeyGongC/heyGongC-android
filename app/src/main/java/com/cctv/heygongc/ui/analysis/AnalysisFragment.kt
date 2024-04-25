@@ -68,8 +68,8 @@ class AnalysisFragment : Fragment() {
         smoothScroller.targetPosition = arrayDate.size
         binding.recyclerDate.layoutManager?.startSmoothScroll(smoothScroller)
 
+        // 바텀 시트 알러트 생성
         binding.imageViewCalendar.setOnClickListener {
-            // 바텀 시트 알러트 생성
             bottomSheet.show(requireFragmentManager(), bottomSheet.tag)
         }
 

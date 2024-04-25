@@ -26,62 +26,63 @@ object NetworkModule {
         return HeaderInterceptor(localDataStoreManager)
     }
 
-    @Singleton
-    @Provides
-    fun provideConverterFactory(): GsonConverterFactory {
-        val DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"
-        return GsonConverterFactory.create(
-            GsonBuilder()
-                .setDateFormat(DATE_FORMAT)
-                .serializeNulls()
-                .setPrettyPrinting()
-                .create()
-        )
-    }
-
-    @Singleton
-    @Provides
-    fun provideScalarsConverterFactory(): ScalarsConverterFactory {
-        return ScalarsConverterFactory.create()
-    }
-
-    @Singleton
-    @Provides
-    fun provideOkHttpClient(): OkHttpClient {
-        val logger = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        }
-
-        val header = Interceptor { chain ->
-            val newRequest = chain.request().newBuilder().build()
-            chain.proceed(newRequest)
-        }
-
-        return OkHttpClient.Builder()
-            .addInterceptor(logger)
-            .addInterceptor(header)
-            .build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideRetrofit(
-        client: OkHttpClient,
-        scalarsConverterFactory: ScalarsConverterFactory,
-        gsonConverterFactory: GsonConverterFactory
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https:/13.125.159.97/")
-            .client(client)
-            .addConverterFactory(scalarsConverterFactory)
-            .addConverterFactory(gsonConverterFactory)
-            .addCallAdapterFactory(ApiCallAdapterFactory.create())
-            .build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideLoginService(retrofit: Retrofit): LoginService {
-        return retrofit.create(LoginService::class.java)
-    }
+//    @Singleton
+//    @Provides
+//    fun provideConverterFactory(): GsonConverterFactory {
+//        val DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss"
+//        return GsonConverterFactory.create(
+//            GsonBuilder()
+//                .setDateFormat(DATE_FORMAT)
+//                .serializeNulls()
+//                .setPrettyPrinting()
+//                .create()
+//        )
+//    }
+//
+//    @Singleton
+//    @Provides
+//    fun provideScalarsConverterFactory(): ScalarsConverterFactory {
+//        return ScalarsConverterFactory.create()
+//    }
+//
+//    @Singleton
+//    @Provides
+//    fun provideOkHttpClient(): OkHttpClient {
+//        val logger = HttpLoggingInterceptor().apply {
+//            level = HttpLoggingInterceptor.Level.BODY
+//        }
+//
+//        val header = Interceptor { chain ->
+//            val newRequest = chain.request().newBuilder().build()
+//            chain.proceed(newRequest)
+//        }
+//
+//        return OkHttpClient.Builder()
+//            .addInterceptor(logger)
+//            .addInterceptor(header)
+//            .build()
+//    }
+//
+//    @Singleton
+//    @Provides
+//    fun provideRetrofit(
+//        client: OkHttpClient,
+//        scalarsConverterFactory: ScalarsConverterFactory,
+//        gsonConverterFactory: GsonConverterFactory
+//    ): Retrofit {
+//        return Retrofit.Builder()
+////            .baseUrl("http://15.165.133.184/")     // 이전 우리 서버 주소
+//            .baseUrl("https://www.googleapis.com/") // token은 google 서버에서 받아옴
+//            .client(client)
+//            .addConverterFactory(scalarsConverterFactory)
+//            .addConverterFactory(gsonConverterFactory)
+//            .addCallAdapterFactory(ApiCallAdapterFactory.create())
+//            .build()
+//    }
+//
+//    @Singleton
+//    @Provides
+//    fun provideLoginService(retrofit: Retrofit): LoginService {
+//        return retrofit.create(LoginService::class.java)
+//    }
 }

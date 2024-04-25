@@ -1,0 +1,13 @@
+- A 에러 (로그인관련)
+A01 : signup api 200이외 응답
+A02 : signup api 응답 fail
+A03 : signup api onFailure응답
+A04 : getAccessToken api 200이외 응답
+A05 : getAccessToken api onFailure응답
+A06 : googleLogin api 200이외 응답
+A07 : googleLogin api 응답 fail 400이외
+A08 : googleLogin api onFailure응답
+A09 : googleSignup api 200이외 응답
+A10 : googleSignup api 응답 fail
+A11 : googleSignup api onFailure응답
+

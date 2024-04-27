@@ -53,7 +53,16 @@ class MonitoringFragment : Fragment(), DeviceClickListener {
 
     }
 
-    override fun onDeviceClick(device: DeviceDetail) {
+    override fun onDeviceItemClick(device: DeviceDetail) {
         //TODO(디바이스 상세 화면으로 넘어간다! 또는 모니터링 화면으로?)
+    }
+
+    override fun onTurnOnDeviceClick(device: DeviceDetail) {
+        //TODO(CONNECT STATUS -> 앱이 꺼졌는지 켜졌는지?)
+        viewLifecycleOwner.lifecycleScope.launch {
+            val controlType =
+                if (device.connectStatus == "true") "REMOTE_SHUTDOWN" else "REMOTE_EXECUTION"
+            monitoringViewModel.controlRemoteDevice(device.deviceId, controlType, null)
+        }
     }
 }

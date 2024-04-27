@@ -4,5 +4,7 @@ import com.cctv.heygongc.data.model.DeviceDetail
 
 interface DeviceClickListener {
 
-    fun onDeviceClick(device: DeviceDetail)
+    fun onDeviceItemClick(device: DeviceDetail)
+
+    fun onTurnOnDeviceClick(device: DeviceDetail)
 }

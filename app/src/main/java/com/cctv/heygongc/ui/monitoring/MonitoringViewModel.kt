@@ -36,4 +36,17 @@ class MonitoringViewModel @Inject constructor(private val deviceRepository: Devi
             }
         }
     }
+
+    fun controlRemoteDevice(deviceId: String, controlType: String, controlMode: String?) {
+        viewModelScope.launch {
+            deviceRepository.controlRemoteDevice(
+                onComplete = { _isLoading.value = false },
+                onError = {
+                    _isError.value = true
+                },
+                deviceId, controlType, controlMode
+            ).collectLatest { it ->
+            }
+        }
+    }
 }

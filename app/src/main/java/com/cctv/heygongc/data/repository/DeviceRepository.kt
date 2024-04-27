@@ -56,4 +56,23 @@ class DeviceRepository @Inject constructor(
     }.onCompletion {
         onComplete()
     }
+
+    suspend fun controlRemoteDevice(
+        onComplete: () -> Unit,
+        onError: () -> Unit,
+        deviceId: String, controlType: String, controlMode: String?
+    ): Flow<Boolean> = flow {
+        val response = deviceDataSource.controlRemoteDevice(deviceId, controlType, controlMode)
+        response.onSuccess { response ->
+            if (response?.msg?.isNullOrEmpty() == true) emit(true)
+        }.onError { code, message ->
+            onError()
+            emit(false)
+        }.onException {
+            onError()
+            emit(false)
+        }
+    }.onCompletion {
+        onComplete()
+    }
 }

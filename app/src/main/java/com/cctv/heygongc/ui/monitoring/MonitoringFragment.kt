@@ -5,14 +5,19 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.cctv.heygongc.data.model.DeviceDetail
 import com.cctv.heygongc.databinding.FragmentMonitoringBinding
-import com.cctv.heygongc.ui.model.DeviceStatus
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class MonitoringFragment : Fragment(), DeviceClickListener {
 
     private var _binding: FragmentMonitoringBinding? = null
     private val binding get() = _binding!!
     private val deviceItemAdapter = DeviceItemAdapter(this)
+    private val monitoringViewModel: MonitoringViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,7 +34,15 @@ class MonitoringFragment : Fragment(), DeviceClickListener {
 
     private fun setDeviceAdapter() {
         binding.rvMonitoringDevices.adapter = deviceItemAdapter
-        //TODO(device list 받아서 adapter에 넘겨주기)
+        //TODO(device list API 받아서 adapter에  -> TEST)
+        viewLifecycleOwner.lifecycleScope.launch {
+            monitoringViewModel.allDeviceList.collectLatest {
+                if (it.isNotEmpty()) deviceItemAdapter.submitList(it)
+            }
+        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            monitoringViewModel.getAllDevices()
+        }
     }
 
     override fun onDestroyView() {
@@ -38,7 +51,7 @@ class MonitoringFragment : Fragment(), DeviceClickListener {
 
     }
 
-    override fun onDeviceClick(device: DeviceStatus) {
+    override fun onDeviceClick(device: DeviceDetail) {
         //TODO(디바이스 상세 화면으로 넘어간다! 또는 모니터링 화면으로?)
     }
 }

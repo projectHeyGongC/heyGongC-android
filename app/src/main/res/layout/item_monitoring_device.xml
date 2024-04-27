@@ -124,7 +124,7 @@
         android:text="@string/label_turn_on_sense_sound"
         android:textAlignment="viewStart"
         android:textColor="@color/black"
-        app:icon="@drawable/ic_home_sound_sensing"
+        app:icon="@drawable/selector_sound_sensor_status"
         app:iconGravity="textStart"
         app:iconTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"

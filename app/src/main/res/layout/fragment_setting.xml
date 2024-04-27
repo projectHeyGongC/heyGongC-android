@@ -36,7 +36,7 @@
             android:src="@drawable/arrow_left"
             android:layout_marginLeft="-10dp"
             android:padding="10dp"
-            android:onClick="@{() -> viewModel.}"
+            android:onClick="@{() -> viewModel}"
             app:layout_constraintTop_toTopOf="@id/textViewTitle"
             app:layout_constraintBottom_toBottomOf="@id/textViewTitle"
             app:layout_constraintLeft_toLeftOf="parent" />

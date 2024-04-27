@@ -10,7 +10,9 @@ import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.FragmentProfileBinding
 import com.cctv.heygongc.databinding.FragmentSettingBinding
 import com.cctv.heygongc.ui.fragment.FragmentViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SettingFragment : Fragment() {
     private var mBinding: FragmentSettingBinding? = null
     private val binding get() = mBinding!!

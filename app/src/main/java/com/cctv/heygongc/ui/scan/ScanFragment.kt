@@ -15,7 +15,9 @@ import com.cctv.heygongc.ui.setdevicename.SetDeviceNameFragment
 import com.google.zxing.integration.android.IntentIntegrator
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ScanFragment : Fragment() {
 
     private var _binding: FragmentScanBinding? = null

@@ -9,9 +9,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.cctv.heygongc.data.model.DeviceDetail
 import com.cctv.heygongc.databinding.FragmentMonitoringBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class MonitoringFragment : Fragment(), DeviceClickListener {
 
     private var _binding: FragmentMonitoringBinding? = null
@@ -34,7 +36,7 @@ class MonitoringFragment : Fragment(), DeviceClickListener {
 
     private fun setDeviceAdapter() {
         binding.rvMonitoringDevices.adapter = deviceItemAdapter
-        //TODO(device list API 받아서 adapter에  -> TEST)
+        //TODO(test device list getAllDevices adapter에 )
         viewLifecycleOwner.lifecycleScope.launch {
             monitoringViewModel.allDeviceList.collectLatest {
                 if (it.isNotEmpty()) deviceItemAdapter.submitList(it)

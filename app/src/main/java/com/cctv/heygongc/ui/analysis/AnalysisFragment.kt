@@ -14,9 +14,10 @@ import com.cctv.heygongc.data.remote.model.TopDateData
 import com.cctv.heygongc.databinding.FragmentAnalysisBinding
 import com.cctv.heygongc.ui.adapter.DateRecyclerViewAdapter
 import com.cctv.heygongc.ui.adapter.SoundRecyclerViewAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 
-
+@AndroidEntryPoint
 class AnalysisFragment : Fragment() {
     private var mBinding: FragmentAnalysisBinding? = null
     private val binding get() = mBinding!!

@@ -19,7 +19,9 @@ import com.cctv.heygongc.ui.fragment.PremiumFragment
 import com.cctv.heygongc.ui.profile.ProfileFragment
 import com.cctv.heygongc.ui.profile.SettingFragment
 import com.cctv.heygongc.util.SharedPreferencesManager
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ActivityMain : AppCompatActivity() {
 //    lateinit var fm: FragmentManager
 //    lateinit var fragmentMap: MutableMap<String, Fragment>

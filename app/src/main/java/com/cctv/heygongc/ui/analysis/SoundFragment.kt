@@ -20,8 +20,9 @@ import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class SoundFragment : Fragment() {
     private var mBinding: FragmentSoundBinding? = null
     private val binding get() = mBinding!!

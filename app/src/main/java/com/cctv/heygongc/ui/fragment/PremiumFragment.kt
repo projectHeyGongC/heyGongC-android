@@ -9,7 +9,9 @@ import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.FragmentAnalysisBinding
 import com.cctv.heygongc.databinding.FragmentMonitoringBinding
 import com.cctv.heygongc.databinding.FragmentPremiumBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PremiumFragment : Fragment() {
     private var mBinding: FragmentPremiumBinding? = null
     private val binding get() = mBinding!!

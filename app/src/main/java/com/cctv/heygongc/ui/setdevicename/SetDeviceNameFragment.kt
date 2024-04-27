@@ -9,8 +9,10 @@ import androidx.lifecycle.lifecycleScope
 import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.FragmentSetDeviceNameBinding
 import com.cctv.heygongc.ui.monitoring.MonitoringFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class SetDeviceNameFragment : Fragment() {
 
     private var _binding: FragmentSetDeviceNameBinding? = null

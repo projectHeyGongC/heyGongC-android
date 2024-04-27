@@ -10,7 +10,9 @@ import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.ActivityJoinBinding
 import com.cctv.heygongc.util.AlertOneButton
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ActivityJoin : AppCompatActivity() {
     lateinit var binding: ActivityJoinBinding
     val joinViewModel: JoinViewModel by viewModels()

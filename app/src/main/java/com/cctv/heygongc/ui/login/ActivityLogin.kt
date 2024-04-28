@@ -53,6 +53,8 @@ class ActivityLogin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.e("로그인_ActivityLogin","진입")
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         ActivitySplash.setStatusBarTransparent(this, binding.container, Common.navigationBarHeight)
@@ -152,9 +154,10 @@ class ActivityLogin : AppCompatActivity() {
         }
 
         viewModel.flagGoogleLogin.observe(this) {
-            Log.e("회원가입_2","it : $it")
+            Log.e("로그인_flagGoogleLogin","it : $it")
             when (it) {
                 0 -> {  // 로그인 성공. 메인화면으로 이동
+                    Log.e("로그인_flagGoogleLogin","성공진입")
                     var intent = Intent(this@ActivityLogin, ActivityMain::class.java)
                     startActivity(intent)
                     finish()

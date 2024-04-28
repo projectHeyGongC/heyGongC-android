@@ -96,14 +96,18 @@ class ActivitySplash : AppCompatActivity() {
             // FCM 등록 토큰 가져오기
             val token = task.result
             Common.fcmToken = token
-            Log.d("ActivitySplash token : ", token+"")
+            Log.d("ActivitySplash token 로그인 : ", token+"")
 
         })
 
         var sp = SharedPreferencesManager(this)
         Common.loginToken = sp.loadData(Common.LOGIN_TOKEN,"")
         var fcm = sp.loadData(Common.FCM_TOKEN, "")
-        if (fcm.isNotEmpty()) Common.fcmToken = fcm
+        if (fcm != "") {
+            Common.fcmToken = fcm
+        }
+
+        Log.e("로그인_4 푸시토큰","${Common.fcmToken}")
     }
 
     private fun setObserve() {

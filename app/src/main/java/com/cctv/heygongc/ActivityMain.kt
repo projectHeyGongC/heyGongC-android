@@ -63,6 +63,8 @@ class ActivityMain : AppCompatActivity() {
     private var beforeFragment: Int = R.id.monitoringFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.e("로그인_ActivityMain","진입")
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

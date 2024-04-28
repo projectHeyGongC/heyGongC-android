@@ -27,6 +27,7 @@ class LoginViewModel @Inject constructor(
     fun getGoogleAccessToken(completedTask: Task<GoogleSignInAccount>) {
         try {
             val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode   // authcode
+            Log.e("로그인_3","진입333")  // todo : 로그인해도 프로그레스바 실행되고 아무 반응 없음
             loginRepository.getGoogleAccessToken(flagGoogleAccessToken, authCode!!)
         } catch (e: ApiException) {
             e.printStackTrace()
@@ -35,7 +36,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun googleLogin() {
-        Log.e("로그인_1","로그인토큰 : ${Common.loginToken} / 푸시토큰 : ${Common.fcmToken}")
+        Log.e("로그인_1","로그인토큰 : ${Common.loginToken}\n 푸시토큰 : ${Common.fcmToken}")
         loginRepository.googleLogin(flagGoogleLogin)
     }
 

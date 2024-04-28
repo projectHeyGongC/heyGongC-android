@@ -3,6 +3,7 @@ package com.cctv.heygongc.ui.join
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
@@ -19,6 +20,9 @@ class ActivityJoin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Log.e("회원가입","진입")
+
         binding = DataBindingUtil.setContentView(this, R.layout.activity_join)
 
         binding.joinViewModel = joinViewModel
@@ -29,6 +33,8 @@ class ActivityJoin : AppCompatActivity() {
     }
 
     private fun setObserve() {
+
+        // todo : 미란님 mvvm 패턴 방식 보고 적용 하기
 
         //체크박스1
         joinViewModel.checkBox1.observe(this) {

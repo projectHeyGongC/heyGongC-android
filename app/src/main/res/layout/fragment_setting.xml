@@ -36,7 +36,7 @@
             android:src="@drawable/arrow_left"
             android:layout_marginLeft="-10dp"
             android:padding="10dp"
-            android:onClick="@{() -> viewModel}"
+            android:onClick="@{() -> viewModel.goBackSettingFragment()}"
             app:layout_constraintTop_toTopOf="@id/textViewTitle"
             app:layout_constraintBottom_toBottomOf="@id/textViewTitle"
             app:layout_constraintLeft_toLeftOf="parent" />
@@ -80,6 +80,7 @@
             android:id="@+id/linearLayoutLogout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.logout()}"
             android:padding="20dp"
             android:background="@drawable/view_background_round_grey"
             android:layout_marginTop="20dp"

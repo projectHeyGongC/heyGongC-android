@@ -3,6 +3,7 @@ package com.cctv.heygongc.ui.login
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -151,6 +152,7 @@ class ActivityLogin : AppCompatActivity() {
         }
 
         viewModel.flagGoogleLogin.observe(this) {
+            Log.e("회원가입_2","it : $it")
             when (it) {
                 0 -> {  // 로그인 성공. 메인화면으로 이동
                     var intent = Intent(this@ActivityLogin, ActivityMain::class.java)

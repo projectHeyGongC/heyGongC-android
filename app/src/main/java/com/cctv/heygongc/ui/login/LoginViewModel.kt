@@ -1,8 +1,10 @@
 package com.cctv.heygongc.ui.login
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.cctv.heygongc.data.local.Common
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
@@ -33,6 +35,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun googleLogin() {
+        Log.e("로그인_1","로그인토큰 : ${Common.loginToken} / 푸시토큰 : ${Common.fcmToken}")
         loginRepository.googleLogin(flagGoogleLogin)
     }
 

@@ -1,15 +1,22 @@
 package com.cctv.heygongc.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.R
+import com.cctv.heygongc.data.local.Common
+import com.cctv.heygongc.data.remote.model.UserLoginResponse
 import com.cctv.heygongc.databinding.FragmentProfileBinding
 import com.cctv.heygongc.databinding.FragmentSettingBinding
 import com.cctv.heygongc.ui.fragment.FragmentViewModel
+import com.cctv.heygongc.ui.login.ActivityLogin
+import com.cctv.heygongc.util.SharedPreferencesManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,10 +33,13 @@ class SettingFragment : Fragment() {
         mBinding = FragmentSettingBinding.inflate(inflater, container, false)
         model = ViewModelProvider(requireActivity()).get(FragmentViewModel::class.java)     // fragment들 viewmodel 공유
 
+        binding.viewModel = model
+
 
         // todo : 세팅에서 뒤로 누르기 하면 프로필 화면으로 이동하도록 설정, 로그아웃, 회원탈퇴 로직 적용하기
 
 
+        setObserve()
 
         return binding.root
     }
@@ -40,7 +50,46 @@ class SettingFragment : Fragment() {
     }
 
     private fun setObserve() {
+        model.flagLogout.observe(viewLifecycleOwner) {
+            resetPreference()
+
+            var intent = Intent(requireActivity(), ActivityLogin::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
+        model.flagGoBack.observe(viewLifecycleOwner) {
+            when (it) {
+                0 -> {
+                    Log.e("뒤로가기", "진입")
+                    onBackPressed()
+                }
+            }
+
+        }
+
 
     }
+
+
+    private fun setListener() {
+        binding.imageViewGoBack
+    }
+
+    private fun onBackPressed() {
+        ActivityMain.showFragment(ActivityMain.FRAGMENT_PROFILE)
+    }
+
+    fun resetPreference() {
+        var pm = SharedPreferencesManager(requireContext())
+        pm.saveData(Common.LOGIN_TOKEN, "")  // authcode로 얻은 accessToken
+        pm.saveData(Common.ACCESS_TOKEN, "")  // api accessToken
+        pm.saveData(Common.REFRESH_TOKEN, "")
+        pm.saveData(Common.FCM_TOKEN, "")
+
+        Common.loginToken = ""
+        Common.fcmToken = ""
+    }
+
 
 }

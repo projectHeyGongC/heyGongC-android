@@ -69,6 +69,24 @@ class ActivitySplash : AppCompatActivity() {
 
         setStatusBarTransparent(this, container, 0)
 
+        Timer().schedule(object : TimerTask() {
+            override fun run() {
+                Log.e("로그인토큰","로그인토큰 : ${Common.loginToken}\n푸시토큰 : ${Common.fcmToken}")
+                if (Common.loginToken != "") {    // 토큰이 이미 있는건 로그인 이력이 있는거기 때문에 로그인시도
+                    loginRepository.googleLogin(flagGoogleLogin)
+                } else {
+                    val intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
+                    startActivity(intent)
+                }
+            }
+        }, 2000)
+
+        setObserve()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("ActivitySplash", "Fetching FCM registration token failed", task.exception)
@@ -86,21 +104,6 @@ class ActivitySplash : AppCompatActivity() {
         Common.loginToken = sp.loadData(Common.LOGIN_TOKEN,"")
         var fcm = sp.loadData(Common.FCM_TOKEN, "")
         if (fcm.isNotEmpty()) Common.fcmToken = fcm
-
-//        accessToken = ""
-
-        Timer().schedule(object : TimerTask() {
-            override fun run() {
-                if (Common.loginToken != "") {    // 토큰이 이미 있는건 로그인 이력이 있는거기 때문에 로그인시도
-                    loginRepository.googleLogin(flagGoogleLogin)
-                } else {
-                    val intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
-                    startActivity(intent)
-                }
-            }
-        }, 2000)
-
-        setObserve()
     }
 
     private fun setObserve() {

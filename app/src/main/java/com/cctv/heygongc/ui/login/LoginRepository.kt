@@ -79,6 +79,7 @@ class LoginRepository @Inject constructor(
                     }
                 }
             }
+
             override fun onFailure(call: Call<UserLoginResponse>, t: Throwable) {
                 flagGoogleLogin.value = 4
                 t.printStackTrace()
@@ -112,6 +113,7 @@ class LoginRepository @Inject constructor(
                     flagGoogleSignup.value = 2
                 }
             }
+
             override fun onFailure(call: Call<UserLoginResponse>, t: Throwable) {
                 t.printStackTrace()
                 flagGoogleSignup.value = 3

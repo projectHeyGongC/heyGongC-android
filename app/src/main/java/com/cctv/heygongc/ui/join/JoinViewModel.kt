@@ -33,7 +33,7 @@ class JoinViewModel @Inject constructor(
     var checkBox2 : MutableLiveData<Boolean> = MutableLiveData(false)
     var checkBox3 : MutableLiveData<Boolean> = MutableLiveData(false)
 
-    var flagGoogleSignup : MutableLiveData<Int> = MutableLiveData(0)
+    var flagGoogleSignup : MutableLiveData<Int> = MutableLiveData(-1)
 
     fun clickRadioButton() {
         radioButton.value = !radioButton.value!!

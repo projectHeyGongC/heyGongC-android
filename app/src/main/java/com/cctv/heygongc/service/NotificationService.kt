@@ -23,31 +23,33 @@ class NotificationService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
-        Log.e("TAG", "onMessageReceived: ${Gson().toJson(message)}")
 
-        var title = "헤이, 공씨"
-        var body = "앱을 확인해주세요"
-        message.notification?.let {
-            title = it.title.toString()
-            body = it.body.toString()
-        }
-        message.data["title"]?.let {
-            title = it
-        }
-        message.data["body"]?.let {
-            body = it
-        }
-
-        val type = "type"/*when (message.data["type"]) {
-
-        }*/
-        val foreignKey = message.data["foreignKey"]?.toInt() ?: 0
-
-        val intent = Intent(this, ActivityMain::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        intent.putExtra("type", message.data["type"])
-        intent.putExtra("foreignKey", foreignKey)
-        sendNotification(intent, title, body, type)
+        Log.e("푸시","타이틀 : ${message.data["action"].toString()} / 바디 : ${message.data["content"].toString()}")
+//        Log.e("TAG", "onMessageReceived: ${Gson().toJson(message)}")
+//
+//        var title = "헤이, 공씨"
+//        var body = "앱을 확인해주세요"
+//        message.notification?.let {
+//            title = it.title.toString()
+//            body = it.body.toString()
+//        }
+//        message.data["title"]?.let {
+//            title = it
+//        }
+//        message.data["body"]?.let {
+//            body = it
+//        }
+//
+//        val type = "type"/*when (message.data["type"]) {
+//
+//        }*/
+//        val foreignKey = message.data["foreignKey"]?.toInt() ?: 0
+//
+//        val intent = Intent(this, ActivityMain::class.java)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//        intent.putExtra("type", message.data["type"])
+//        intent.putExtra("foreignKey", foreignKey)
+//        sendNotification(intent, title, body, type)
     }
 
     private fun sendNotification(intent: Intent, title: String, body: String, type: String) {

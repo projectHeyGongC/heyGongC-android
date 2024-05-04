@@ -1,8 +1,13 @@
-package com.cctv.heygongc.util
+package com.cctv.heygongc.data.local
 
 import android.content.Context
 
 class SharedPreferencesManager(private val context: Context) {
+
+    val LOGIN_TOKEN = "LOGIN_TOKEN"
+    val ACCESS_TOKEN = "ACCESS_TOKEN"
+    val REFRESH_TOKEN = "REFRESH_TOKEN"
+    val FCM_TOKEN = "FCM_TOKEN"
 
     private val sharedPreferences = context.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
 

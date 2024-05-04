@@ -9,14 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.cctv.heygongc.ActivityMain
-import com.cctv.heygongc.R
 import com.cctv.heygongc.data.local.Common
-import com.cctv.heygongc.data.remote.model.UserLoginResponse
-import com.cctv.heygongc.databinding.FragmentProfileBinding
 import com.cctv.heygongc.databinding.FragmentSettingBinding
 import com.cctv.heygongc.ui.fragment.FragmentViewModel
 import com.cctv.heygongc.ui.login.ActivityLogin
-import com.cctv.heygongc.util.SharedPreferencesManager
+import com.cctv.heygongc.data.local.SharedPreferencesManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -82,10 +79,10 @@ class SettingFragment : Fragment() {
 
     fun resetPreference() {
         var pm = SharedPreferencesManager(requireContext())
-        pm.saveData(Common.LOGIN_TOKEN, "")  // authcode로 얻은 accessToken
-        pm.saveData(Common.ACCESS_TOKEN, "")  // api accessToken
-        pm.saveData(Common.REFRESH_TOKEN, "")
-        pm.saveData(Common.FCM_TOKEN, "")
+        pm.saveData(pm.LOGIN_TOKEN, "")  // authcode로 얻은 accessToken
+        pm.saveData(pm.ACCESS_TOKEN, "")  // api accessToken
+        pm.saveData(pm.REFRESH_TOKEN, "")
+        pm.saveData(pm.FCM_TOKEN, "")
 
         Common.loginToken = ""
         Common.fcmToken = ""

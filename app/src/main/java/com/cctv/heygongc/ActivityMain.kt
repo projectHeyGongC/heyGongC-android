@@ -18,7 +18,7 @@ import com.cctv.heygongc.ui.monitoring.MonitoringFragment
 import com.cctv.heygongc.ui.fragment.PremiumFragment
 import com.cctv.heygongc.ui.profile.ProfileFragment
 import com.cctv.heygongc.ui.profile.SettingFragment
-import com.cctv.heygongc.util.SharedPreferencesManager
+import com.cctv.heygongc.data.local.SharedPreferencesManager
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -76,10 +76,11 @@ class ActivityMain : AppCompatActivity() {
         initFragmentMap()
         initBottomNavigation()
 
-        var sp = SharedPreferencesManager(this)
-        var a = sp.loadData(Common.ACCESS_TOKEN, "")
-        var b = sp.loadData(Common.REFRESH_TOKEN, "")
+        var pm = SharedPreferencesManager(this)
+        var a = pm.loadData(pm.ACCESS_TOKEN, "")
+        var b = pm.loadData(pm.REFRESH_TOKEN, "")
 
+        Log.e("ActivityMain","진입")
     }
 
     private fun handleInactiveAppNotificationIntent(intent: Intent?) {

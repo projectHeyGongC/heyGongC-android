@@ -1,20 +1,11 @@
 package com.cctv.heygongc.ui.join
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.cctv.heygongc.data.local.Common
-import com.cctv.heygongc.data.remote.model.UserLoginRequest
-import com.cctv.heygongc.data.remote.model.UserLoginResponse
 import com.cctv.heygongc.ui.login.LoginRepository
-import com.cctv.heygongc.ui.login.LoginService
-import com.cctv.heygongc.util.SharedPreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel

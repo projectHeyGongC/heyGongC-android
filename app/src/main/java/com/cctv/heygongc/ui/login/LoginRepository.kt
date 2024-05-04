@@ -9,7 +9,7 @@ import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
 import com.cctv.heygongc.data.remote.model.LoginGoogleResponseModel
 import com.cctv.heygongc.data.remote.model.UserLoginRequest
 import com.cctv.heygongc.data.remote.model.UserLoginResponse
-import com.cctv.heygongc.util.SharedPreferencesManager
+import com.cctv.heygongc.data.local.SharedPreferencesManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Call
 import retrofit2.Callback
@@ -51,7 +51,7 @@ class LoginRepository @Inject constructor(
     fun googleLogin(flagGoogleLogin: MutableLiveData<Int>){
         LoginService.loginRetrofit("http://15.165.133.184/").googleLogin(
             loginRequest = UserLoginRequest(
-                "testDeviceId", // todo uuid로 넣기
+                Common.deviceId, // todo uuid로 넣기
                 "AOS",
                 "GOOGLE",
                 Common.loginToken,
@@ -90,7 +90,7 @@ class LoginRepository @Inject constructor(
     fun googleSignup(flagGoogleSignup: MutableLiveData<Int>){
         LoginService.loginRetrofit("http://15.165.133.184/").googleSignup(
             loginRequest = UserLoginRequest(
-                "testDeviceId",     // todo
+                Common.deviceId,     // todo
                 "AOS",
                 "GOOGLE",
                 Common.loginToken,
@@ -123,10 +123,10 @@ class LoginRepository @Inject constructor(
 
     fun savePreference(data: UserLoginResponse?) {
         var pm = SharedPreferencesManager(context)
-        pm.saveData(Common.LOGIN_TOKEN, Common.loginToken ?: "")  // authcode로 얻은 accessToken
-        pm.saveData(Common.ACCESS_TOKEN, data?.accessToken ?: "")  // api accessToken
-        pm.saveData(Common.REFRESH_TOKEN, data?.refreshToken ?: "")
-        pm.saveData(Common.FCM_TOKEN, Common.fcmToken ?: "")
+        pm.saveData(pm.LOGIN_TOKEN, Common.loginToken ?: "")  // authcode로 얻은 accessToken
+        pm.saveData(pm.ACCESS_TOKEN, data?.accessToken ?: "")  // api accessToken
+        pm.saveData(pm.REFRESH_TOKEN, data?.refreshToken ?: "")
+        pm.saveData(pm.FCM_TOKEN, Common.fcmToken ?: "")
     }
 
 

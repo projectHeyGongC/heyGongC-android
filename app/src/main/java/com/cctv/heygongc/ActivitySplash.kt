@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
@@ -11,11 +12,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.MutableLiveData
 import com.cctv.heygongc.data.local.Common
-import com.cctv.heygongc.ui.join.ActivityJoin
 import com.cctv.heygongc.ui.login.ActivityLogin
 import com.cctv.heygongc.ui.login.LoginRepository
-import com.cctv.heygongc.util.AlertOneButton
-import com.cctv.heygongc.util.SharedPreferencesManager
+import com.cctv.heygongc.data.local.SharedPreferencesManager
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,6 +68,19 @@ class ActivitySplash : AppCompatActivity() {
 
         setStatusBarTransparent(this, container, 0)
 
+
+
+        setObserve()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // 디바이스 식별자
+        val deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
+        Common.deviceId = deviceId
+        Log.e("uuid", "uuid : ${deviceId}")
+
         Timer().schedule(object : TimerTask() {
             override fun run() {
                 Log.e("로그인토큰","로그인토큰 : ${Common.loginToken}\n푸시토큰 : ${Common.fcmToken}")
@@ -80,12 +92,6 @@ class ActivitySplash : AppCompatActivity() {
                 }
             }
         }, 2000)
-
-        setObserve()
-    }
-
-    override fun onResume() {
-        super.onResume()
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -100,9 +106,9 @@ class ActivitySplash : AppCompatActivity() {
 
         })
 
-        var sp = SharedPreferencesManager(this)
-        Common.loginToken = sp.loadData(Common.LOGIN_TOKEN,"")
-        var fcm = sp.loadData(Common.FCM_TOKEN, "")
+        var pm = SharedPreferencesManager(this)
+        Common.loginToken = pm.loadData(pm.LOGIN_TOKEN,"")
+        var fcm = pm.loadData(pm.FCM_TOKEN, "")
         if (fcm != "") {
             Common.fcmToken = fcm
         }

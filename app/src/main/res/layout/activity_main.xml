@@ -6,40 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".ActivityMain">
 
-    <!--android:name="com.cctv.heygongc.fragment.MonitoringFragment"-->
-<!--    <fragment-->
-<!--        android:id="@+id/fragmentHost"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/bottomNavi"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-    <FrameLayout android:layout_width="0dp"
-        android:layout_height="0dp"
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentHost"
-        app:layout_constraintTop_toTopOf="parent"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavi"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/nav_graph" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavi"
+        style="@style/Widget.MaterialComponents.BottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/Widget.MaterialComponents.BottomNavigationView"
-        android:theme="@style/Theme.NavigationBottom"
-        app:menu="@menu/navi_menu"
         android:clickable="false"
+        android:theme="@style/Theme.NavigationBottom"
         app:itemIconTint="@drawable/menu_click_color"
         app:itemTextColor="@drawable/menu_click_color"
+        app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:labelVisibilityMode="labeled"
-        />
-
-
+        app:menu="@menu/navi_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

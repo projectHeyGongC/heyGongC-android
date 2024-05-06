@@ -121,6 +121,7 @@ class LoginRepository @Inject constructor(
         })
     }
 
+    // 프리퍼런스 저장 Activity or Fragment에서 할것
     fun savePreference(data: UserLoginResponse?) {
         var pm = SharedPreferencesManager(context)
         pm.saveData(pm.LOGIN_TOKEN, Common.loginToken ?: "")  // authcode로 얻은 accessToken

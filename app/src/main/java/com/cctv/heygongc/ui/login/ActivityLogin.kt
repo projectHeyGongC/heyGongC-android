@@ -77,12 +77,14 @@ class ActivityLogin : AppCompatActivity() {
 
         setListener()
         setObserve()
+        
+        // todo : Activity에서 viewModel로 retrofit 파라미터 데이터 넘기고 viewModel에서 레트로핏 호출, 응답 처리 한후에 데이터값 옵저버로 액티비티에 연결
 
     }
 
     override fun onStart() {
         super.onStart()
-
+    
         // 기존의 로그인한 사용자가 있으면 사용자 유지
 //        val account = GoogleSignIn.getLastSignedInAccount(this)
 //        updateUI(account)

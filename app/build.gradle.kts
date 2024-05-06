@@ -4,6 +4,7 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 kotlin {
@@ -121,6 +122,10 @@ dependencies {
     //TedPermission
     implementation("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
     implementation("io.github.ParkSangGwon:tedpermission-coroutine:3.3.0")
+
+    //Jetpack Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 }
 
 kapt {

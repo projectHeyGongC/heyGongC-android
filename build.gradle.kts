@@ -4,6 +4,8 @@ buildscript {
         classpath("com.google.dagger:hilt-android-gradle-plugin:2.50")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.0")
         classpath("com.google.gms:google-services:4.4.1")
+        val navVersion = "2.7.7"
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:$navVersion")
     }
     repositories {
         mavenCentral()

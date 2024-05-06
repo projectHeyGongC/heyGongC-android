@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.FragmentScanBinding
@@ -21,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ScanFragment : Fragment() {
 
     private var _binding: FragmentScanBinding? = null
-    val binding: FragmentScanBinding = _binding!!
+    val binding get() = _binding!!
     private val permissionlistener: PermissionListener = object : PermissionListener {
         override fun onPermissionGranted() {
             turnOnCamera()
@@ -76,6 +77,9 @@ class ScanFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         checkPermission()
+        binding.ivClose.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     fun checkPermission() {

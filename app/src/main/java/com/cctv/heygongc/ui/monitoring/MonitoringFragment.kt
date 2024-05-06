@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.cctv.heygongc.data.model.DeviceDetail
 import com.cctv.heygongc.databinding.FragmentMonitoringBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +33,10 @@ class MonitoringFragment : Fragment(), DeviceClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setDeviceAdapter()
+        binding.ivAddDeviceBackground.setOnClickListener {
+            val action = MonitoringFragmentDirections.actionMonitoringFragmentToScanFragment()
+            findNavController().navigate(action)
+        }
     }
 
     private fun setDeviceAdapter() {

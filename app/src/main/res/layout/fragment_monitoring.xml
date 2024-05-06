@@ -49,14 +49,12 @@
             android:id="@+id/tv_add_device"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingBottom="14dp"
             android:text="@string/btn_label_add_device"
             android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/iv_add_device_background"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/iv_add_device_background"
             app:layout_constraintStart_toEndOf="@id/iv_icon_add_device"
             app:layout_constraintTop_toTopOf="@id/iv_add_device_background" />
 
@@ -67,7 +65,7 @@
             android:layout_marginStart="29dp"
             android:layout_marginTop="49dp"
             android:layout_marginEnd="29dp"
-            android:background="@drawable/bg_black_outlined"
+            android:background="@drawable/bg_stroke_black_r10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_monitoring_devices" />
@@ -76,12 +74,12 @@
             android:id="@+id/iv_icon_add_device"
             android:layout_width="26dp"
             android:layout_height="26dp"
-            android:layout_marginTop="3dp"
             android:layout_marginEnd="4dp"
             android:src="@drawable/ic_add"
             app:layout_constraintBottom_toBottomOf="@id/iv_add_device_background"
             app:layout_constraintEnd_toStartOf="@id/tv_add_device"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/iv_add_device_background"
             app:layout_constraintTop_toTopOf="@id/iv_add_device_background" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

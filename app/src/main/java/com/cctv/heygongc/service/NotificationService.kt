@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.cctv.heygongc.ActivityMain
+import com.cctv.heygongc.data.local.Common
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
@@ -18,8 +19,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NotificationService : FirebaseMessagingService() {
 
+    // 앱 데이터 지우면 token 갱신되어 onNewToken 호출됨
     override fun onNewToken(token: String) {
         super.onNewToken(token)
+        Log.e("onNewToken 푸시토큰","token : ${token}")
+        Common.fcmToken = token
     }
 
     override fun onMessageReceived(message: RemoteMessage) {

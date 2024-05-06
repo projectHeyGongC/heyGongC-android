@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.data.remote.model.SoundData
 import com.cctv.heygongc.data.remote.model.TopDateData
 import com.cctv.heygongc.databinding.RecyclerviewCellTopDateBinding
@@ -22,11 +23,13 @@ class SoundRecyclerViewAdapter(items: List<SoundData>) : RecyclerView.Adapter<So
                 binding.linearLayoutContainer.setOnClickListener {
                     // 클릭
                     Log.e("클릭","${item.where}")
+                    ActivityMain.showFragment(ActivityMain.FRAGMENT_SOUND)
                 }
             }
         }
     }
 
+    // recyclerview_sound.xml 파일 이름으로 RecyclerviewSoundBinding이 자동 생성 됨
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(RecyclerviewSoundBinding.inflate(LayoutInflater.from(parent.context),parent,false))
 
     override fun getItemCount(): Int = 3

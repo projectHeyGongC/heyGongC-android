@@ -64,7 +64,7 @@ class ActivityMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.e("로그인_ActivityMain","진입")
+        Log.e("ActivityMain_1","진입")
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -73,14 +73,15 @@ class ActivityMain : AppCompatActivity() {
 
 
 //        binding.bottomNavi.labelVisibilityMode = LABEL_VISIBILITY_LABELED   // label 항상 보이기
-        initFragmentMap()
+
+        initFragmentMap()     // todo 이거 주석처리 하면 main 안팅김
         initBottomNavigation()
 
         var pm = SharedPreferencesManager(this)
         var a = pm.loadData(pm.ACCESS_TOKEN, "")
         var b = pm.loadData(pm.REFRESH_TOKEN, "")
 
-        Log.e("ActivityMain","진입")
+        Log.e("ActivityMain_2","진입")
     }
 
     private fun handleInactiveAppNotificationIntent(intent: Intent?) {
@@ -127,7 +128,7 @@ class ActivityMain : AppCompatActivity() {
         fragmentMap["premium"] = PremiumFragment()
         fragmentMap["profile"] = ProfileFragment()
         fragmentMap["sound"] = SoundFragment()
-        fragmentMap["setting"] = SettingFragment()
+        fragmentMap["setting"] = SettingFragment()    // 세팅이 문제. 세팅 프래그먼트 포함 시키면 main에서 팅김
 
         fm = supportFragmentManager
         fragmentMap.values.forEach {
@@ -154,7 +155,10 @@ class ActivityMain : AppCompatActivity() {
 //        fm.beginTransaction().replace(R.id.fragmentHost,monitoringFragment!!).commit()
 //        beforeFragment = R.id.monitoringFragment
 
+        // 모니터 http://15.165.133.184/v1/devices api 401 응답 오기 때문에 세팅 화면으로 초기 세팅
         showFragment(FRAGMENT_MONITORING)
+//        showFragment(FRAGMENT_SETTING)
+
         binding.bottomNavi.setOnItemSelectedListener {
 
             when(it.itemId){

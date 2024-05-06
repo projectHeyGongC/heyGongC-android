@@ -21,16 +21,16 @@ class SettingFragment : Fragment() {
     private var mBinding: FragmentSettingBinding? = null
     private val binding get() = mBinding!!
 
-    lateinit var model: FragmentViewModel
+//    lateinit var model: FragmentViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         mBinding = FragmentSettingBinding.inflate(inflater, container, false)
-        model = ViewModelProvider(requireActivity()).get(FragmentViewModel::class.java)     // fragment들 viewmodel 공유
-
-        binding.viewModel = model
+//        model = ViewModelProvider(requireActivity()).get(FragmentViewModel::class.java)     // fragment들 viewmodel 공유
+//
+//        binding.viewModel = model
 
 
         // todo : 세팅에서 뒤로 누르기 하면 프로필 화면으로 이동하도록 설정, 로그아웃, 회원탈퇴 로직 적용하기
@@ -47,23 +47,23 @@ class SettingFragment : Fragment() {
     }
 
     private fun setObserve() {
-        model.flagLogout.observe(viewLifecycleOwner) {
-            resetPreference()
-
-            var intent = Intent(requireActivity(), ActivityLogin::class.java)
-            startActivity(intent)
-            requireActivity().finish()
-        }
-
-        model.flagGoBack.observe(viewLifecycleOwner) {
-            when (it) {
-                0 -> {
-                    Log.e("뒤로가기", "진입")
-                    onBackPressed()
-                }
-            }
-
-        }
+//        model.flagLogout.observe(viewLifecycleOwner) {
+//            resetPreference()
+//
+//            var intent = Intent(requireActivity(), ActivityLogin::class.java)
+//            startActivity(intent)
+//            requireActivity().finish()
+//        }
+//
+//        model.flagGoBack.observe(viewLifecycleOwner) {
+//            when (it) {
+//                0 -> {
+//                    Log.e("뒤로가기", "진입")
+//                    onBackPressed()
+//                }
+//            }
+//
+//        }
 
 
     }

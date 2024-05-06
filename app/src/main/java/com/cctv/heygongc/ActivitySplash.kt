@@ -102,9 +102,12 @@ class ActivitySplash : AppCompatActivity() {
             // FCM 등록 토큰 가져오기
             val token = task.result
             Common.fcmToken = token
-            Log.d("ActivitySplash token 로그인 : ", token+"")
+            Log.d("ActivitySplash 푸시토큰 : ", token+"")  // todo : 푸시토큰 발급 안될때 A07 뜬다. 푸시토큰 발급 안되는 경우 보완 할것. 푸시토큰 발급 무조건 되도록 설정 안되나?
 
         })
+
+//        var token = FirebaseMessaging.getInstance().token.result
+//        Log.e("fcm token", "token : ${token}")
 
         var pm = SharedPreferencesManager(this)
         Common.loginToken = pm.loadData(pm.LOGIN_TOKEN,"")

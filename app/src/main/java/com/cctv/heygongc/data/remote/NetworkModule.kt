@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.cctv.heygongc.data.local.LocalDataStoreManager
 import com.cctv.heygongc.data.remote.apicalladapter.ApiCallAdapterFactory
 import com.cctv.heygongc.data.remote.service.DeviceService
+import com.cctv.heygongc.ui.login.GoogleAccessService
 import com.cctv.heygongc.ui.login.LoginService
 import dagger.Module
 import dagger.Provides
@@ -64,6 +65,25 @@ object NetworkModule {
             .build()
     }
 
+    // 우리 서버는 Retrofit으로 Provices 만들어 쓰고 Google Access는 Interface로 Provides 만들어서 씀
+    @Singleton
+    @Provides
+    fun provideGoogleAccessRetrofit(
+        client: OkHttpClient,
+        scalarsConverterFactory: ScalarsConverterFactory,
+        gsonConverterFactory: GsonConverterFactory
+    ): GoogleAccessService {
+        return Retrofit.Builder()
+            .baseUrl("https://www.googleapis.com/")     // token은 google 서버에서 받아옴
+            .client(client)
+            .addConverterFactory(scalarsConverterFactory)
+            .addConverterFactory(gsonConverterFactory)
+            .addCallAdapterFactory(ApiCallAdapterFactory.create())
+            .build()
+            .create(GoogleAccessService::class.java)
+
+    }
+
     @Singleton
     @Provides
     fun provideRetrofit(
@@ -80,6 +100,9 @@ object NetworkModule {
             .addCallAdapterFactory(ApiCallAdapterFactory.create())
             .build()
     }
+
+
+
 
     @Singleton
     @Provides

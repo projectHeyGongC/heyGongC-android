@@ -11,23 +11,29 @@ import android.view.WindowManager
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.ui.login.ActivityLogin
 import com.cctv.heygongc.ui.login.LoginRepository
 import com.cctv.heygongc.data.local.SharedPreferencesManager
+import com.cctv.heygongc.data.remote.model.UserLoginRequest
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.Timer
 import java.util.TimerTask
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ActivitySplash : AppCompatActivity() {
+class ActivitySplash @Inject constructor(
+    private val loginRepository: LoginRepository
+) : AppCompatActivity() {
 
     // Splash에서는 필드 @Inject로 썼음
-    @Inject
-    lateinit var loginRepository: LoginRepository
+//    @Inject
+//    lateinit var loginRepository: LoginRepository
 
     var flagGoogleLogin : MutableLiveData<Int> = MutableLiveData(-1)
 
@@ -76,22 +82,13 @@ class ActivitySplash : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        // 디바이스 식별자
+        // 디바이스 식별자. 갱신 되는 조건
+        // 1. 디바이스가 최초 부팅 시에 생성됨
+        // 2. 초기화 전까지는 삭제 되지 않고 저장되어 있어 디바이스 식별에 유용
+        // 3. 기기를 초기화하면 값이 바뀜
         val deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         Common.deviceId = deviceId
         Log.e("uuid", "uuid : ${deviceId}")
-
-        Timer().schedule(object : TimerTask() {
-            override fun run() {
-                Log.e("로그인토큰","로그인토큰 : ${Common.loginToken}\n푸시토큰 : ${Common.fcmToken}")
-                if (Common.loginToken != "") {    // 토큰이 이미 있는건 로그인 이력이 있는거기 때문에 로그인시도
-                    loginRepository.googleLogin(flagGoogleLogin)
-                } else {
-                    val intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
-                    startActivity(intent)
-                }
-            }
-        }, 2000)
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -115,6 +112,42 @@ class ActivitySplash : AppCompatActivity() {
         if (fcm != "") {
             Common.fcmToken = fcm
         }
+
+        Timer().schedule(object : TimerTask() {
+            override fun run() {
+                lifecycleScope.launch {
+                    Log.e("로그인토큰","로그인토큰 : ${Common.loginToken}\n푸시토큰 : ${Common.fcmToken}")
+                    if (Common.loginToken != "") {    // 토큰이 이미 있는건 로그인 이력이 있는거기 때문에 로그인시도
+                        var userLoginRequest = UserLoginRequest(
+                            deviceId = Common.deviceId,
+                            deviceOs = "AOS",
+                            snsType = "GOOGLE",
+                            accessToken = Common.loginToken,
+                            fcmToken = Common.fcmToken,
+                            ads = true
+                        )
+
+                        val response = loginRepository.googleLogin(userLoginRequest)
+
+                        Log.e("스플래시","${response.isSuccessful}")    // todo : splash 에서 에러가 나는데 Log 찍어서 어디서 오류 나는지 확인할것
+                        if (response.isSuccessful) {
+                            // 프리퍼런스 데이터 저장 하고 메인으로 이동
+//                            var intent = Intent(this@ActivitySplash, ActivityMain::class.java)
+//                            startActivity(intent)
+//                            finish()
+                        } else {
+//                            var intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
+//                            startActivity(intent)
+//                            finish()
+                        }
+                    } else {
+//                        val intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
+//                        startActivity(intent)
+//                        finish()
+                    }
+                }
+            }
+        }, 2000)
 
         Log.e("로그인_4 푸시토큰","${Common.fcmToken}")
     }

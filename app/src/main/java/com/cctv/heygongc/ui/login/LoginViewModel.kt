@@ -4,12 +4,15 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.cctv.heygongc.data.local.Common
+import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -24,11 +27,22 @@ class LoginViewModel @Inject constructor(
     var flagGoogleAccessToken : MutableLiveData<Int> = MutableLiveData(-1)
     var flagGoogleLogin : MutableLiveData<Int> = MutableLiveData(-1)
 
-    fun getGoogleAccessToken(completedTask: Task<GoogleSignInAccount>) {
+    fun getGoogleAccessToken(loginGoogleRequestModel: LoginGoogleRequestModel) {
+
+
         try {
-            val authCode: String? = completedTask.getResult(ApiException::class.java)?.serverAuthCode   // authcode
-            Log.e("로그인_3","진입333")  // todo : 로그인해도 프로그레스바 실행되고 아무 반응 없음
-            loginRepository.getGoogleAccessToken(flagGoogleAccessToken, authCode!!)
+            viewModelScope.launch {
+                val response = loginRepository.getGoogleAccessToken(loginGoogleRequestModel)
+
+                if (response.isSuccessful) {
+                    // 구글 엑세스 토큰 얻었으니 우리 서버 로그인 시도
+                    Log.e("토큰", "진입")
+                } else {
+
+                }
+
+            }
+
         } catch (e: ApiException) {
             e.printStackTrace()
             flagGoogleAccessToken.value = 1
@@ -37,7 +51,7 @@ class LoginViewModel @Inject constructor(
 
     fun googleLogin() {
         Log.e("로그인_1","로그인토큰 : ${Common.loginToken}\n 푸시토큰 : ${Common.fcmToken}")
-        loginRepository.googleLogin(flagGoogleLogin)
+//        loginRepository.googleLogin(flagGoogleLogin)
     }
 
 }

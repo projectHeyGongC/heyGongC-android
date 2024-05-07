@@ -124,6 +124,10 @@ dependencies {
     //TedPermission
     implementation("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
     implementation("io.github.ParkSangGwon:tedpermission-coroutine:3.3.0")
+
+    //coroutine
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5")
 }
 
 kapt {

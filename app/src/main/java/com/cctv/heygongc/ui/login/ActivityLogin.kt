@@ -13,6 +13,7 @@ import com.cctv.heygongc.ActivityMain
 import com.cctv.heygongc.ActivitySplash
 import com.cctv.heygongc.R
 import com.cctv.heygongc.data.local.Common
+import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
 import com.cctv.heygongc.data.remote.model.LoginPagerData
 import com.cctv.heygongc.databinding.ActivityLoginBinding
 import com.cctv.heygongc.ui.join.ActivityJoin
@@ -43,8 +44,17 @@ class ActivityLogin : AppCompatActivity() {
         binding.RelativeLayoutPB.visibility = View.VISIBLE
 
         try {
-            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            viewModel.getGoogleAccessToken(task)
+
+
+            val authCode = GoogleSignIn.getSignedInAccountFromIntent(result.data).getResult(ApiException::class.java)?.serverAuthCode
+
+            var loginGoogleRequestModel = LoginGoogleRequestModel(
+                grant_type = "authorization_code",
+                client_id = applicationContext.getString(R.string.google_login_client_id),
+                client_secret = applicationContext.getString(R.string.google_login_client_secret),
+                code = authCode.orEmpty()
+            )
+            viewModel.getGoogleAccessToken(loginGoogleRequestModel)
         } catch (e: ApiException) {
             e.printStackTrace()
             binding.RelativeLayoutPB.visibility = View.INVISIBLE
@@ -79,6 +89,7 @@ class ActivityLogin : AppCompatActivity() {
         setObserve()
         
         // todo : Activity에서 viewModel로 retrofit 파라미터 데이터 넘기고 viewModel에서 레트로핏 호출, 응답 처리 한후에 데이터값 옵저버로 액티비티에 연결
+        // DeviceService Missing binding usage 에러뜸
 
     }
 

@@ -42,7 +42,7 @@ class JoinViewModel @Inject constructor(
     fun clickButton() {
         // 확인버튼 클릭 이벤트
         // 회원가입 api
-        loginRepository.googleSignup(flagGoogleSignup)
+//        loginRepository.googleSignup(flagGoogleSignup)    // todo
 
 
 //        LoginService.loginRetrofit("http://15.165.133.184/").signup(

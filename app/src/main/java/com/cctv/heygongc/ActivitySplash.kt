@@ -31,9 +31,10 @@ class ActivitySplash @Inject constructor(
     private val loginRepository: LoginRepository
 ) : AppCompatActivity() {
 
+    // todo view model 써야하나?
+
     // Splash에서는 필드 @Inject로 썼음
 //    @Inject
-//    lateinit var loginRepository: LoginRepository
 
     var flagGoogleLogin : MutableLiveData<Int> = MutableLiveData(-1)
 
@@ -89,6 +90,7 @@ class ActivitySplash @Inject constructor(
         val deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         Common.deviceId = deviceId
         Log.e("uuid", "uuid : ${deviceId}")
+        Log.e("오류_1", "진입")
 
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
@@ -102,6 +104,7 @@ class ActivitySplash @Inject constructor(
             Log.d("ActivitySplash 푸시토큰 : ", token+"")  // todo : 푸시토큰 발급 안될때 A07 뜬다. 푸시토큰 발급 안되는 경우 보완 할것. 푸시토큰 발급 무조건 되도록 설정 안되나?
 
         })
+        Log.e("오류_2", "진입")
 
 //        var token = FirebaseMessaging.getInstance().token.result
 //        Log.e("fcm token", "token : ${token}")
@@ -112,6 +115,7 @@ class ActivitySplash @Inject constructor(
         if (fcm != "") {
             Common.fcmToken = fcm
         }
+        Log.e("오류_3", "진입")
 
         Timer().schedule(object : TimerTask() {
             override fun run() {
@@ -150,6 +154,7 @@ class ActivitySplash @Inject constructor(
         }, 2000)
 
         Log.e("로그인_4 푸시토큰","${Common.fcmToken}")
+        Log.e("오류_4", "진입")
     }
 
     private fun setObserve() {

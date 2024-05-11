@@ -6,9 +6,11 @@ import com.cctv.heygongc.data.remote.apicalladapter.ApiCallAdapterFactory
 import com.cctv.heygongc.data.remote.service.DeviceService
 import com.cctv.heygongc.ui.login.GoogleAccessService
 import com.cctv.heygongc.ui.login.LoginService
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -109,6 +111,10 @@ object NetworkModule {
     fun provideLoginService(retrofit: Retrofit): LoginService {
         return retrofit.create(LoginService::class.java)
     }
+
+
+
+
 
     @Singleton
     @Provides

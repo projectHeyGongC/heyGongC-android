@@ -6,6 +6,7 @@ import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
 
+// Class 'ApiCall' is not abstract and does not implement abstract member public abstract fun timeout(): Timeout! defined in retrofit2.Call 오류 수정하기
 class ApiCall<T : Any>(private val call: Call<T>) : Call<ApiResponse<T>> {
     override fun enqueue(callback: Callback<ApiResponse<T>>) {
         call.enqueue(object : Callback<T> {

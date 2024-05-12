@@ -31,9 +31,14 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-
-
-
+        }
+        debug {
+            isDebuggable = true
+            isMinifyEnabled = false
+            proguardFiles (
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -88,14 +93,14 @@ dependencies {
 //    implementation("com.google.firebase:firebase-bom:32.0.0")
 
     // Retrofit 라이브러리
-    implementation("com.squareup.retrofit2:retrofit:2.6.4")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     // Gson 변환기 라이브러리
-    implementation("com.squareup.retrofit2:converter-gson:2.6.4")
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 
     // Scalars 변환기 라이브러리
-    implementation("com.squareup.retrofit2:converter-scalars:2.6.4")
+    implementation("com.squareup.retrofit2:converter-scalars:2.11.0")
 
     // by viewModels() 사용
     implementation("androidx.fragment:fragment-ktx:1.6.2")

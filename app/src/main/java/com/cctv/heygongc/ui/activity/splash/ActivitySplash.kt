@@ -19,11 +19,15 @@ import com.cctv.heygongc.ui.activity.login.ActivityLogin
 import com.cctv.heygongc.ui.activity.login.LoginRepository
 import com.cctv.heygongc.data.local.SharedPreferencesManager
 import com.cctv.heygongc.data.remote.model.UserLoginRequest
+import com.cctv.heygongc.data.remote.model.UserLoginResponse
 import com.cctv.heygongc.ui.activity.main.ActivityMain
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Response
 import java.util.Timer
 import java.util.TimerTask
 import javax.inject.Inject
@@ -37,6 +41,8 @@ class ActivitySplash : AppCompatActivity() {
 
     @Inject
     lateinit var loginRepository: LoginRepository
+
+
 
     var flagGoogleLogin : MutableLiveData<Int> = MutableLiveData(-1)
 
@@ -85,6 +91,8 @@ class ActivitySplash : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
+        // todo : Splash viewmodel에서 hilt사용 가능하면 splashViewmodel에서 인터넷 연결 상태 확인 클래스 hilt로 주입해서 사용 할것
+
         // 디바이스 식별자. 갱신 되는 조건
         // 1. 디바이스가 최초 부팅 시에 생성됨
         // 2. 초기화 전까지는 삭제 되지 않고 저장되어 있어 디바이스 식별에 유용
@@ -103,7 +111,6 @@ class ActivitySplash : AppCompatActivity() {
             // FCM 등록 토큰 가져오기
             val token = task.result
             Common.fcmToken = token
-
 
             if (token.isEmpty()) Toast.makeText(this@ActivitySplash, "토큰값 없음", Toast.LENGTH_SHORT).show()
             else Toast.makeText(this@ActivitySplash, "토큰값 발급완료", Toast.LENGTH_SHORT).show()
@@ -126,18 +133,21 @@ class ActivitySplash : AppCompatActivity() {
         Timer().schedule(object : TimerTask() {
             override fun run() {
                 lifecycleScope.launch {
-                    Log.e("로그인토큰","로그인토큰 : ${Common.loginToken}\n푸시토큰 : ${Common.fcmToken}")
+                    Log.e("로그인토큰111","로그인토큰 : ${Common.loginToken}\n푸시토큰 : ${Common.fcmToken}")
                     if (Common.loginToken != "") {    // 토큰이 이미 있는건 로그인 이력이 있는거기 때문에 로그인시도
-                        var userLoginRequest = UserLoginRequest(
-                            deviceId = Common.deviceId,
-                            deviceOs = "AOS",
-                            snsType = "GOOGLE",
-                            accessToken = Common.loginToken,
-                            fcmToken = Common.fcmToken,
-                            ads = true
-                        )
+//                        var userLoginRequest = UserLoginRequest(
+//                            deviceId = Common.deviceId,
+//                            deviceOs = "AOS",
+//                            snsType = "GOOGLE",
+//                            accessToken = Common.loginToken,
+//                            fcmToken = Common.fcmToken,
+//                            ads = true
+//                        )
+//
+//                        val response = loginRepository.googleLogin(userLoginRequest)
 
-                        val response = loginRepository.googleLogin(userLoginRequest)
+                        Log.e("힐트_1","진입")
+                        val response = googleLogin()
 
                         Log.e("스플래시","${response.isSuccessful}")    // todo : splash 에서 에러가 나는데 Log 찍어서 어디서 오류 나는지 확인할것
                         if (response.isSuccessful) {
@@ -151,9 +161,10 @@ class ActivitySplash : AppCompatActivity() {
 //                            finish()
                         }
                     } else {
-//                        val intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
-//                        startActivity(intent)
-//                        finish()
+                        Log.e("힐트_2","진입")
+                        val intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
+                        startActivity(intent)
+                        finish()
                     }
                 }
             }
@@ -178,6 +189,23 @@ class ActivitySplash : AppCompatActivity() {
                     finish()
                 }
             }
+        }
+    }
+
+    suspend fun googleLogin(): Response<UserLoginResponse> {
+        return withContext(Dispatchers.Default) {
+            // 비동기 작업을 처리하고 결과를 반환
+
+            var userLoginRequest = UserLoginRequest(
+                deviceId = Common.deviceId,
+                deviceOs = "AOS",
+                snsType = "GOOGLE",
+                accessToken = Common.loginToken,
+                fcmToken = Common.fcmToken,
+                ads = true
+            )
+
+            return@withContext loginRepository.googleLogin(userLoginRequest)
         }
     }
 

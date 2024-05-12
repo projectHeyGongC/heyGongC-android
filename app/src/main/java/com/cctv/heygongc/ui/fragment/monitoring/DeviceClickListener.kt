@@ -1,4 +1,4 @@
-package com.cctv.heygongc.ui.monitoring
+package com.cctv.heygongc.ui.fragment.monitoring
 
 import com.cctv.heygongc.data.model.DeviceDetail
 

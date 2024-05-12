@@ -20,17 +20,17 @@
         tools:targetApi="31"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.join.ActivityJoin"
+            android:name=".ui.activity.join.ActivityJoin"
             android:exported="false" />
         <activity
-            android:name=".ActivityMain"
+            android:name=".ui.activity.main.ActivityMain"
             android:exported="false"
             android:theme="@style/Theme.MyApplication"/>
         <activity
-            android:name=".ui.login.ActivityLogin"
+            android:name=".ui.activity.login.ActivityLogin"
             android:exported="false" />
         <activity
-            android:name=".ActivitySplash"
+            android:name=".ui.activity.splash.ActivitySplash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,16 +1,13 @@
-package com.cctv.heygongc.ui.analysis
+package com.cctv.heygongc.ui.fragment.analysis
 
-import android.app.Activity
-import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import com.cctv.heygongc.ActivityMain
+import com.cctv.heygongc.ui.activity.main.ActivityMain
 import com.cctv.heygongc.databinding.FragmentSoundBinding
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.Description

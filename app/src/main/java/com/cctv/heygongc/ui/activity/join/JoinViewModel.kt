@@ -1,9 +1,9 @@
-package com.cctv.heygongc.ui.join
+package com.cctv.heygongc.ui.activity.join
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.cctv.heygongc.ui.login.LoginRepository
+import com.cctv.heygongc.ui.activity.login.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.cctv.heygongc
+package com.cctv.heygongc.ui.activity.splash
 
 import android.content.Context
 import android.util.Log
@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
-import com.cctv.heygongc.ui.login.LoginRepository
+import com.cctv.heygongc.ui.activity.login.LoginRepository
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task

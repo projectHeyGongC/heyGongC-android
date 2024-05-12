@@ -6,14 +6,14 @@
     <data>
         <variable
             name="viewModel"
-            type="com.cctv.heygongc.ui.login.LoginViewModel" />
+            type="com.cctv.heygongc.ui.activity.login.LoginViewModel" />
     </data>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.login.ActivityLogin">
+        tools:context=".ui.activity.login.ActivityLogin">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"

@@ -1,4 +1,4 @@
-package com.cctv.heygongc
+package com.cctv.heygongc.ui.activity.splash
 
 import android.content.Intent
 import android.os.Build
@@ -8,33 +8,35 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
+import com.cctv.heygongc.R
 import com.cctv.heygongc.data.local.Common
-import com.cctv.heygongc.ui.login.ActivityLogin
-import com.cctv.heygongc.ui.login.LoginRepository
+import com.cctv.heygongc.ui.activity.login.ActivityLogin
+import com.cctv.heygongc.ui.activity.login.LoginRepository
 import com.cctv.heygongc.data.local.SharedPreferencesManager
 import com.cctv.heygongc.data.remote.model.UserLoginRequest
+import com.cctv.heygongc.ui.activity.main.ActivityMain
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.Timer
 import java.util.TimerTask
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ActivitySplash @Inject constructor(
-    private val loginRepository: LoginRepository
-) : AppCompatActivity() {
+class ActivitySplash : AppCompatActivity() {
 
     // todo view model 써야하나?
 
     // Splash에서는 필드 @Inject로 썼음
-//    @Inject
+
+    @Inject
+    lateinit var loginRepository: LoginRepository
 
     var flagGoogleLogin : MutableLiveData<Int> = MutableLiveData(-1)
 
@@ -101,7 +103,11 @@ class ActivitySplash @Inject constructor(
             // FCM 등록 토큰 가져오기
             val token = task.result
             Common.fcmToken = token
-            Log.d("ActivitySplash 푸시토큰 : ", token+"")  // todo : 푸시토큰 발급 안될때 A07 뜬다. 푸시토큰 발급 안되는 경우 보완 할것. 푸시토큰 발급 무조건 되도록 설정 안되나?
+
+
+            if (token.isEmpty()) Toast.makeText(this@ActivitySplash, "토큰값 없음", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(this@ActivitySplash, "토큰값 발급완료", Toast.LENGTH_SHORT).show()
+            Log.d("ActivitySplash 푸시토큰 : ", token+"\ntoken빈값 : ${token==""}\nempty : ${token.isEmpty()} ")  // todo : 푸시토큰 발급 안될때 A07 뜬다. 푸시토큰 발급 안되는 경우 보완 할것. 푸시토큰 발급 무조건 되도록 설정 안되나?
 
         })
         Log.e("오류_2", "진입")

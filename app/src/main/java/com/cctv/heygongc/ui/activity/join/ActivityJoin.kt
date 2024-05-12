@@ -1,13 +1,12 @@
-package com.cctv.heygongc.ui.join
+package com.cctv.heygongc.ui.activity.join
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
-import com.cctv.heygongc.ActivityMain
+import com.cctv.heygongc.ui.activity.main.ActivityMain
 import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.ActivityJoinBinding
 import com.cctv.heygongc.util.AlertOneButton

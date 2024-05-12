@@ -1,4 +1,4 @@
-package com.cctv.heygongc.ui.login
+package com.cctv.heygongc.ui.activity.login
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -9,14 +9,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.cctv.heygongc.ActivityMain
-import com.cctv.heygongc.ActivitySplash
+import com.cctv.heygongc.ui.activity.main.ActivityMain
+import com.cctv.heygongc.ui.activity.splash.ActivitySplash
 import com.cctv.heygongc.R
 import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
 import com.cctv.heygongc.data.remote.model.LoginPagerData
 import com.cctv.heygongc.databinding.ActivityLoginBinding
-import com.cctv.heygongc.ui.join.ActivityJoin
+import com.cctv.heygongc.ui.activity.join.ActivityJoin
 import com.cctv.heygongc.util.AlertOneButton
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

@@ -1,4 +1,4 @@
-package com.cctv.heygongc
+package com.cctv.heygongc.ui.activity.main
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
@@ -10,14 +10,14 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.cctv.heygongc.data.local.Common
+import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.ActivityMainBinding
-import com.cctv.heygongc.ui.analysis.AnalysisFragment
-import com.cctv.heygongc.ui.analysis.SoundFragment
-import com.cctv.heygongc.ui.monitoring.MonitoringFragment
+import com.cctv.heygongc.ui.fragment.analysis.AnalysisFragment
+import com.cctv.heygongc.ui.fragment.analysis.SoundFragment
+import com.cctv.heygongc.ui.fragment.monitoring.MonitoringFragment
 import com.cctv.heygongc.ui.fragment.PremiumFragment
-import com.cctv.heygongc.ui.profile.ProfileFragment
-import com.cctv.heygongc.ui.profile.SettingFragment
+import com.cctv.heygongc.ui.fragment.profile.ProfileFragment
+import com.cctv.heygongc.ui.fragment.profile.SettingFragment
 import com.cctv.heygongc.data.local.SharedPreferencesManager
 import dagger.hilt.android.AndroidEntryPoint
 

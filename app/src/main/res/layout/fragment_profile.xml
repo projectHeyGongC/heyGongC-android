@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.monitoring.MonitoringFragment"
+    tools:context=".ui.fragment.monitoring.MonitoringFragment"
     android:padding="15dp">
 
     <TextView

@@ -1,4 +1,4 @@
-package com.cctv.heygongc.ui.login
+package com.cctv.heygongc.ui.activity.login
 
 import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
 import com.cctv.heygongc.data.remote.model.LoginGoogleResponseModel

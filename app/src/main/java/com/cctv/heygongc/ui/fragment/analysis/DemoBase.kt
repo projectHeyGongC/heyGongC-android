@@ -1,4 +1,4 @@
-package com.cctv.heygongc.ui.analysis
+package com.cctv.heygongc.ui.fragment.analysis
 
 import android.Manifest
 import android.R

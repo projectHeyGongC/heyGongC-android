@@ -1,14 +1,11 @@
 package com.cctv.heygongc.ui.adapter
 
-import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.cctv.heygongc.ActivityMain
+import com.cctv.heygongc.ui.activity.main.ActivityMain
 import com.cctv.heygongc.data.remote.model.SoundData
-import com.cctv.heygongc.data.remote.model.TopDateData
-import com.cctv.heygongc.databinding.RecyclerviewCellTopDateBinding
 import com.cctv.heygongc.databinding.RecyclerviewSoundBinding
 
 class SoundRecyclerViewAdapter(items: List<SoundData>) : RecyclerView.Adapter<SoundRecyclerViewAdapter.ViewHolder>() {

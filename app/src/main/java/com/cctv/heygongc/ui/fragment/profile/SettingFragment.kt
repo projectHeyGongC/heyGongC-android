@@ -1,18 +1,13 @@
-package com.cctv.heygongc.ui.profile
+package com.cctv.heygongc.ui.fragment.profile
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
-import com.cctv.heygongc.ActivityMain
+import com.cctv.heygongc.ui.activity.main.ActivityMain
 import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.databinding.FragmentSettingBinding
-import com.cctv.heygongc.ui.fragment.FragmentViewModel
-import com.cctv.heygongc.ui.login.ActivityLogin
 import com.cctv.heygongc.data.local.SharedPreferencesManager
 import dagger.hilt.android.AndroidEntryPoint
 

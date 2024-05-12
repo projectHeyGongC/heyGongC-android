@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import com.cctv.heygongc.ActivityMain
+import com.cctv.heygongc.ui.activity.main.ActivityMain
 import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.FragmentScanBinding
 import com.cctv.heygongc.ui.setdevicename.SetDeviceNameFragment

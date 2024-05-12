@@ -4,8 +4,8 @@ import com.google.gson.GsonBuilder
 import com.cctv.heygongc.data.local.LocalDataStoreManager
 import com.cctv.heygongc.data.remote.apicalladapter.ApiCallAdapterFactory
 import com.cctv.heygongc.data.remote.service.DeviceService
-import com.cctv.heygongc.ui.login.GoogleAccessService
-import com.cctv.heygongc.ui.login.LoginService
+import com.cctv.heygongc.ui.activity.login.GoogleAccessService
+import com.cctv.heygongc.ui.activity.login.LoginService
 import dagger.Binds
 import dagger.Module
 import dagger.Provides

@@ -1,4 +1,4 @@
-package com.cctv.heygongc.ui.analysis
+package com.cctv.heygongc.ui.fragment.analysis
 
 import android.app.Activity
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import com.cctv.heygongc.ActivityMain
+import com.cctv.heygongc.ui.activity.main.ActivityMain
 import com.cctv.heygongc.data.remote.model.SoundData
 import com.cctv.heygongc.data.remote.model.TopDateData
 import com.cctv.heygongc.databinding.FragmentAnalysisBinding

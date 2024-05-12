@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.cctv.heygongc.R
 import com.cctv.heygongc.databinding.FragmentSetDeviceNameBinding
-import com.cctv.heygongc.ui.monitoring.MonitoringFragment
+import com.cctv.heygongc.ui.fragment.monitoring.MonitoringFragment
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

@@ -3,7 +3,7 @@ package com.cctv.heygongc.ui.fragment
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.cctv.heygongc.ui.login.LoginRepository
+import com.cctv.heygongc.ui.activity.login.LoginRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

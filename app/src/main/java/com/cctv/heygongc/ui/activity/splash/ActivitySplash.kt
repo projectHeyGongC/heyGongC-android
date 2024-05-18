@@ -216,5 +216,11 @@ class ActivitySplash : AppCompatActivity() {
         else 0
     }
 
+//    inner class SplashLogin @Inject constructor(): LoginIF {
+//        override suspend fun startLogin(fcmTokne: String) {
+//            googleLogin()
+//        }
+//    }
+
 
 }

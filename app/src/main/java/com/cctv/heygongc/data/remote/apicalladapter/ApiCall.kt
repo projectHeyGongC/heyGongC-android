@@ -1,12 +1,12 @@
 package com.cctv.heygongc.data.remote.apicalladapter
 
 import okhttp3.Request
+import okio.Timeout
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
 
-// Class 'ApiCall' is not abstract and does not implement abstract member public abstract fun timeout(): Timeout! defined in retrofit2.Call 오류 수정하기
 class ApiCall<T : Any>(private val call: Call<T>) : Call<ApiResponse<T>> {
     override fun enqueue(callback: Callback<ApiResponse<T>>) {
         call.enqueue(object : Callback<T> {
@@ -51,4 +51,7 @@ class ApiCall<T : Any>(private val call: Call<T>) : Call<ApiResponse<T>> {
     override fun isCanceled(): Boolean = call.isCanceled
 
     override fun request(): Request = call.request()
+    override fun timeout(): Timeout {
+        TODO("Not yet implemented")
+    }
 }

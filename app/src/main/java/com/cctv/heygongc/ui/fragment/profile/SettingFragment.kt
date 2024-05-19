@@ -5,10 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import com.cctv.heygongc.R
 import com.cctv.heygongc.ui.activity.main.ActivityMain
 import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.databinding.FragmentSettingBinding
 import com.cctv.heygongc.data.local.SharedPreferencesManager
+import com.cctv.heygongc.ui.fragment.monitoring.MonitoringViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,14 +22,25 @@ class SettingFragment : Fragment() {
 
 //    lateinit var model: FragmentViewModel
 
+
+
+    private val viewModel: SettingViewModel by viewModels()
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        mBinding = FragmentSettingBinding.inflate(inflater, container, false)
+//        mBinding = FragmentSettingBinding.inflate(inflater, container, false)
+//        binding.viewModel = viewModel
+//        viewLifecycleOwner = this
+
 //        model = ViewModelProvider(requireActivity()).get(FragmentViewModel::class.java)     // fragment들 viewmodel 공유
 //
-//        binding.viewModel = model
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
+        binding.viewModel = viewModel
+
+
 
 
         // todo : 세팅에서 뒤로 누르기 하면 프로필 화면으로 이동하도록 설정, 로그아웃, 회원탈퇴 로직 적용하기
@@ -58,6 +73,14 @@ class SettingFragment : Fragment() {
 //            }
 //
 //        }
+
+        viewModel.flagBackButton.observe(viewLifecycleOwner) {
+            if (it) {
+                ActivityMain.showFragment(ActivityMain.FRAGMENT_PROFILE)
+            }
+        }
+
+
 
 
     }

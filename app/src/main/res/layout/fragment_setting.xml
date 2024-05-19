@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.cctv.heygongc.ui.fragment.FragmentViewModel" />
+            type="com.cctv.heygongc.ui.fragment.profile.SettingViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

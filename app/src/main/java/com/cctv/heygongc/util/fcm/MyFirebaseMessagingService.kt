@@ -21,7 +21,6 @@
 //    override fun onMessageReceived(remoteMessage: RemoteMessage) {
 //        super.onMessageReceived(remoteMessage)
 //
-//        Log.e("푸시","타이틀 : ${remoteMessage.data["title"]} / 바디 : ${remoteMessage.data["body"]}")
 //
 //        // 메시지에 데이터 페이로드가 포함 되어 있는지 확인한다.
 //        // 페이로드란 전송된 데이터를 의미한다.

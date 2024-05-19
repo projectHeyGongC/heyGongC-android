@@ -20,7 +20,6 @@ class FragmentViewModel @Inject constructor(
     }
 
     fun goBackSettingFragment() {
-        Log.e("뒤로가기","진입")
         flagGoBack.value = 0
     }
 

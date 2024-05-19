@@ -20,6 +20,7 @@ import com.cctv.heygongc.ui.activity.login.LoginRepository
 import com.cctv.heygongc.data.local.SharedPreferencesManager
 import com.cctv.heygongc.data.remote.model.UserLoginRequest
 import com.cctv.heygongc.data.remote.model.UserLoginResponse
+import com.cctv.heygongc.ui.activity.join.ActivityJoin
 import com.cctv.heygongc.ui.activity.main.ActivityMain
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
@@ -41,8 +42,6 @@ class ActivitySplash : AppCompatActivity() {
 
     @Inject
     lateinit var loginRepository: LoginRepository
-
-
 
     var flagGoogleLogin : MutableLiveData<Int> = MutableLiveData(-1)
 
@@ -83,9 +82,7 @@ class ActivitySplash : AppCompatActivity() {
 
         setStatusBarTransparent(this, container, 0)
 
-
-
-        setObserve()
+//        setObserve()
     }
 
     override fun onResume() {
@@ -99,69 +96,61 @@ class ActivitySplash : AppCompatActivity() {
         // 3. 기기를 초기화하면 값이 바뀜
         val deviceId = Settings.Secure.getString(contentResolver, Settings.Secure.ANDROID_ID)
         Common.deviceId = deviceId
-        Log.e("uuid", "uuid : ${deviceId}")
-        Log.e("오류_1", "진입")
-
-        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
-            if (!task.isSuccessful) {
-                Log.w("ActivitySplash", "Fetching FCM registration token failed", task.exception)
-                return@OnCompleteListener
-            }
-
-            // FCM 등록 토큰 가져오기
-            val token = task.result
-            Common.fcmToken = token
-
-            if (token.isEmpty()) Toast.makeText(this@ActivitySplash, "토큰값 없음", Toast.LENGTH_SHORT).show()
-            else Toast.makeText(this@ActivitySplash, "토큰값 발급완료", Toast.LENGTH_SHORT).show()
-            Log.d("ActivitySplash 푸시토큰 : ", token+"\ntoken빈값 : ${token==""}\nempty : ${token.isEmpty()} ")  // todo : 푸시토큰 발급 안될때 A07 뜬다. 푸시토큰 발급 안되는 경우 보완 할것. 푸시토큰 발급 무조건 되도록 설정 안되나?
-
-        })
-        Log.e("오류_2", "진입")
 
 //        var token = FirebaseMessaging.getInstance().token.result
 //        Log.e("fcm token", "token : ${token}")
 
         var pm = SharedPreferencesManager(this)
         Common.loginToken = pm.loadData(pm.LOGIN_TOKEN,"")
-        var fcm = pm.loadData(pm.FCM_TOKEN, "")
-        if (fcm != "") {
-            Common.fcmToken = fcm
+        Common.fcmToken = pm.loadData(pm.FCM_TOKEN, "")
+        if (Common.fcmToken == "") {
+            getFcmToken()
         }
-        Log.e("오류_3", "진입")
 
         Timer().schedule(object : TimerTask() {
             override fun run() {
                 lifecycleScope.launch {
-                    Log.e("로그인토큰111","로그인토큰 : ${Common.loginToken}\n푸시토큰 : ${Common.fcmToken}")
-                    if (Common.loginToken != "") {    // 토큰이 이미 있는건 로그인 이력이 있는거기 때문에 로그인시도
-//                        var userLoginRequest = UserLoginRequest(
-//                            deviceId = Common.deviceId,
-//                            deviceOs = "AOS",
-//                            snsType = "GOOGLE",
-//                            accessToken = Common.loginToken,
-//                            fcmToken = Common.fcmToken,
-//                            ads = true
-//                        )
-//
-//                        val response = loginRepository.googleLogin(userLoginRequest)
+                    if (Common.loginToken != "" && Common.fcmToken != "") {    // 토큰이 이미 있는건 로그인 이력이 있는거기 때문에 로그인시도
 
-                        Log.e("힐트_1","진입")
-                        val response = googleLogin()
+                        val response_login = googleLogin()
 
-                        Log.e("스플래시","${response.isSuccessful}")    // todo : splash 에서 에러가 나는데 Log 찍어서 어디서 오류 나는지 확인할것
-                        if (response.isSuccessful) {
+                        if (response_login.isSuccessful) {
+
+                            when (response_login.code()) {
+                                200 -> {
+                                    var data: UserLoginResponse = response_login.body()!!
+                                    Common.accessToken = data.accessToken
+                                    Common.refreshToken = data.refreshToken
+
+                                    savePreference()
+
+                                    var intent = Intent(this@ActivitySplash, ActivityMain::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                else -> {
+                                    var intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            }
                             // 프리퍼런스 데이터 저장 하고 메인으로 이동
-//                            var intent = Intent(this@ActivitySplash, ActivityMain::class.java)
-//                            startActivity(intent)
-//                            finish()
+
                         } else {
-//                            var intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
-//                            startActivity(intent)
-//                            finish()
+                            when (response_login.code()) {
+                                400 -> {    // 회원가입 화면으로 이동
+                                    var intent = Intent(this@ActivitySplash, ActivityJoin::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                                else -> {
+                                    var intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            }
                         }
                     } else {
-                        Log.e("힐트_2","진입")
                         val intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
                         startActivity(intent)
                         finish()
@@ -169,28 +158,25 @@ class ActivitySplash : AppCompatActivity() {
                 }
             }
         }, 2000)
-
-        Log.e("로그인_4 푸시토큰","${Common.fcmToken}")
-        Log.e("오류_4", "진입")
     }
 
-    private fun setObserve() {
-        flagGoogleLogin.observe(this) {
-            when(it) {
-                -1 -> {}   // 기본값이므로 아무처리 안하기
-                0 -> {  // 로그인 성공. 메인화면으로 이동
-                    var intent = Intent(this@ActivitySplash, ActivityMain::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-                else -> {
-                    var intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-            }
-        }
-    }
+//    private fun setObserve() {
+//        flagGoogleLogin.observe(this) {
+//            when(it) {
+//                -1 -> {}   // 기본값이므로 아무처리 안하기
+//                0 -> {  // 로그인 성공. 메인화면으로 이동
+//                    var intent = Intent(this@ActivitySplash, ActivityMain::class.java)
+//                    startActivity(intent)
+//                    finish()
+//                }
+//                else -> {
+//                    var intent = Intent(this@ActivitySplash, ActivityLogin::class.java)
+//                    startActivity(intent)
+//                    finish()
+//                }
+//            }
+//        }
+//    }
 
     suspend fun googleLogin(): Response<UserLoginResponse> {
         return withContext(Dispatchers.Default) {
@@ -214,6 +200,32 @@ class ActivitySplash : AppCompatActivity() {
 
         return if (resourceId > 0) resources.getDimensionPixelSize(resourceId)
         else 0
+    }
+
+    fun getFcmToken() {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("ActivitySplash", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // FCM 등록 토큰 가져오기
+            val token = task.result
+            Common.fcmToken = token
+
+            if (token.isEmpty()) Toast.makeText(this@ActivitySplash, "토큰값 없음", Toast.LENGTH_SHORT).show()
+            else Toast.makeText(this@ActivitySplash, "토큰값 발급완료", Toast.LENGTH_SHORT).show()
+            Log.d("ActivitySplash 푸시토큰 : ", "토큰값 : "+token+"\ntoken빈값 : ${token==""}\nempty : ${token.isEmpty()} ")  // todo : 푸시토큰 발급 안될때 A07 뜬다. 푸시토큰 발급 안되는 경우 보완 할것. 푸시토큰 발급 무조건 되도록 설정 안되나?
+
+        })
+    }
+
+    fun savePreference() {
+        var pm = SharedPreferencesManager(this)
+        pm.saveData(pm.LOGIN_TOKEN, Common.loginToken ?: "")  // authcode로 얻은 accessToken
+        pm.saveData(pm.ACCESS_TOKEN, Common.accessToken ?: "")  // api accessToken
+        pm.saveData(pm.REFRESH_TOKEN, Common.refreshToken ?: "")
+        pm.saveData(pm.FCM_TOKEN, Common.fcmToken ?: "")
     }
 
 //    inner class SplashLogin @Inject constructor(): LoginIF {

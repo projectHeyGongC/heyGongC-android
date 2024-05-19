@@ -53,7 +53,6 @@ class SettingFragment : Fragment() {
 //        model.flagGoBack.observe(viewLifecycleOwner) {
 //            when (it) {
 //                0 -> {
-//                    Log.e("뒤로가기", "진입")
 //                    onBackPressed()
 //                }
 //            }

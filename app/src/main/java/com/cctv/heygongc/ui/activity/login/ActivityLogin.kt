@@ -13,6 +13,7 @@ import com.cctv.heygongc.ui.activity.main.ActivityMain
 import com.cctv.heygongc.ui.activity.splash.ActivitySplash
 import com.cctv.heygongc.R
 import com.cctv.heygongc.data.local.Common
+import com.cctv.heygongc.data.local.SharedPreferencesManager
 import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
 import com.cctv.heygongc.data.remote.model.LoginPagerData
 import com.cctv.heygongc.databinding.ActivityLoginBinding
@@ -64,7 +65,6 @@ class ActivityLogin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.e("로그인_ActivityLogin","진입")
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         ActivitySplash.setStatusBarTransparent(this, binding.container, Common.navigationBarHeight)
@@ -150,9 +150,9 @@ class ActivityLogin : AppCompatActivity() {
     private fun setObserve() {
         viewModel.flagGoogleAccessToken.observe(this) {
             when(it) {
-                0 -> {  // loginToken으로 login시도
-                    viewModel.googleLogin()
-                }
+//                0 -> {  // loginToken으로 login시도
+//                    viewModel.googleLogin()
+//                }
                 1 -> {
                     var alertOneButton = AlertOneButton(this@ActivityLogin, "", "로그인에 실패하였습니다\nA04","확인",null)
                     alertOneButton.show()
@@ -167,10 +167,10 @@ class ActivityLogin : AppCompatActivity() {
         }
 
         viewModel.flagGoogleLogin.observe(this) {
-            Log.e("로그인_flagGoogleLogin","it : $it")
             when (it) {
                 0 -> {  // 로그인 성공. 메인화면으로 이동
-                    Log.e("로그인_flagGoogleLogin","성공진입")
+
+                    savePreference()
                     var intent = Intent(this@ActivityLogin, ActivityMain::class.java)
                     startActivity(intent)
                     finish()
@@ -213,6 +213,15 @@ class ActivityLogin : AppCompatActivity() {
             startActivity(Intent(this@ActivityLogin, ActivityJoin::class.java))
             finish()
         }
+    }
+
+    // 프리퍼런스 저장 Activity or Fragment에서 할것
+    fun savePreference() {
+        var pm = SharedPreferencesManager(this)
+        pm.saveData(pm.LOGIN_TOKEN, Common.loginToken ?: "")  // authcode로 얻은 accessToken
+        pm.saveData(pm.ACCESS_TOKEN, Common.accessToken ?: "")  // api accessToken
+        pm.saveData(pm.REFRESH_TOKEN, Common.refreshToken ?: "")
+        pm.saveData(pm.FCM_TOKEN, Common.fcmToken ?: "")
     }
 
 }

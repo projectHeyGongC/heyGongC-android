@@ -37,7 +37,6 @@ class SplashViewModel @Inject constructor(
 
                 if (response.isSuccessful) {
                     // 구글 엑세스 토큰 얻었으니 우리 서버 로그인 시도
-                    Log.e("토큰", "진입")
                 } else {
 
                 }
@@ -51,7 +50,6 @@ class SplashViewModel @Inject constructor(
     }
 
     fun googleLogin() {
-        Log.e("로그인_1","로그인토큰 : ${Common.loginToken}\n 푸시토큰 : ${Common.fcmToken}")
 //        loginRepository.googleLogin(flagGoogleLogin)
     }
 

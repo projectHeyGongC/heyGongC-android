@@ -49,7 +49,7 @@ class LoginRepository @Inject constructor(
 //        })
 //    }
 
-    fun getGoogleAccessToken(loginGoogleRequestModel: LoginGoogleRequestModel) = googleAccessService.getAccessToken(loginGoogleRequestModel)
+    suspend fun getGoogleAccessToken(loginGoogleRequestModel: LoginGoogleRequestModel) = googleAccessService.getAccessToken(loginGoogleRequestModel)
 
 //    fun googleLogin(flagGoogleLogin: MutableLiveData<Int>){
 //        loginService.loginRetrofit("http://15.165.133.184/").googleLogin(

@@ -64,7 +64,6 @@ class ActivityMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.e("ActivityMain_1","진입")
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -81,7 +80,6 @@ class ActivityMain : AppCompatActivity() {
         var a = pm.loadData(pm.ACCESS_TOKEN, "")
         var b = pm.loadData(pm.REFRESH_TOKEN, "")
 
-        Log.e("ActivityMain_2","진입")
     }
 
     private fun handleInactiveAppNotificationIntent(intent: Intent?) {
@@ -132,7 +130,6 @@ class ActivityMain : AppCompatActivity() {
 
         fm = supportFragmentManager
         fragmentMap.values.forEach {
-            Log.e("프래그먼트Map","${it}")
             fm.beginTransaction().add(R.id.fragmentHost, it!!).commit()
         }
 

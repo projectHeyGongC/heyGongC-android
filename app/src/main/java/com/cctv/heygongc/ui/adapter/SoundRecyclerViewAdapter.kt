@@ -19,7 +19,6 @@ class SoundRecyclerViewAdapter(items: List<SoundData>) : RecyclerView.Adapter<So
             if (deviceExist) {
                 binding.linearLayoutContainer.setOnClickListener {
                     // 클릭
-                    Log.e("클릭","${item.where}")
                     ActivityMain.showFragment(ActivityMain.FRAGMENT_SOUND)
                 }
             }

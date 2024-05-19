@@ -20,8 +20,6 @@ class ActivityJoin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.e("회원가입","진입")
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_join)
 
         binding.joinViewModel = joinViewModel

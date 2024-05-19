@@ -102,7 +102,6 @@ class LoginGoogle @Inject constructor(
 //                }
 //            }
 //            override fun onFailure(call: Call<UserLoginRequest.Token>, t: Throwable) {
-//                Log.e("로그인","로그인 실패")
 //                Log.e(LoginRepository.TAG, "sendOnFailure: ${t.fillInStackTrace()}", )
 //            }
 //        })

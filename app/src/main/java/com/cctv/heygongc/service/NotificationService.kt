@@ -25,7 +25,6 @@ class NotificationService : FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(message: RemoteMessage) {
-
         Log.e("푸시","타이틀 : ${message.data["action"].toString()} / 바디 : ${message.data["content"].toString()}")
 //        Log.e("TAG", "onMessageReceived: ${Gson().toJson(message)}")
 //

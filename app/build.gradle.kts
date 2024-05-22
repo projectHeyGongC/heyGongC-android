@@ -4,6 +4,11 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("com.google.gms.google-services")
+    id("androidx.navigation.safeargs.kotlin")
+}
+
+kotlin {
+    jvmToolchain(17)
 }
 
 android {
@@ -30,8 +35,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 //    buildFeatures {
 //        compose = true
@@ -40,7 +45,7 @@ android {
 //        kotlinCompilerExtensionVersion = "1.1.1"
 //    }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
     
     // 뷰바인딩
@@ -62,7 +67,6 @@ dependencies {
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("androidx.datastore:datastore-core:1.0.0")
-    implementation("androidx.core:core-ktx:+")
     implementation("androidx.core:core-ktx:+")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -107,11 +111,21 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences-core:1.0.0")
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
+    //Fcm
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-messaging:23.4.1")
+
     //QR
     implementation("com.journeyapps:zxing-android-embedded:4.2.0")
 
-    //fcm
-    implementation("com.google.firebase:firebase-messaging:23.4.1")
+    //TedPermission
+    implementation("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
+    implementation("io.github.ParkSangGwon:tedpermission-coroutine:3.3.0")
+
+    //Jetpack Navigation
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 }
 
 kapt {

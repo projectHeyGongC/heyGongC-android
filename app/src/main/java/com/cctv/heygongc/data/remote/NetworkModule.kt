@@ -3,6 +3,7 @@ package com.cctv.heygongc.data.remote
 import com.google.gson.GsonBuilder
 import com.cctv.heygongc.data.local.LocalDataStoreManager
 import com.cctv.heygongc.data.remote.apicalladapter.ApiCallAdapterFactory
+import com.cctv.heygongc.data.remote.service.DeviceService
 import com.cctv.heygongc.ui.login.LoginService
 import dagger.Module
 import dagger.Provides
@@ -71,7 +72,8 @@ object NetworkModule {
         gsonConverterFactory: GsonConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https:/13.125.159.97/")
+            .baseUrl("http://15.165.133.184/")     // 이전 우리 서버 주소
+            //.baseUrl("https://www.googleapis.com/") // token은 google 서버에서 받아옴
             .client(client)
             .addConverterFactory(scalarsConverterFactory)
             .addConverterFactory(gsonConverterFactory)
@@ -83,5 +85,11 @@ object NetworkModule {
     @Provides
     fun provideLoginService(retrofit: Retrofit): LoginService {
         return retrofit.create(LoginService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideDeviceService(retrofit: Retrofit): DeviceService {
+        return retrofit.create(DeviceService::class.java)
     }
 }

@@ -2,6 +2,7 @@ package com.cctv.heygongc
 
 import android.annotation.SuppressLint
 import android.content.DialogInterface
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -9,14 +10,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.databinding.ActivityMainBinding
 import com.cctv.heygongc.ui.analysis.AnalysisFragment
 import com.cctv.heygongc.ui.analysis.SoundFragment
-import com.cctv.heygongc.ui.fragment.MonitoringFragment
+import com.cctv.heygongc.ui.monitoring.MonitoringFragment
 import com.cctv.heygongc.ui.fragment.PremiumFragment
 import com.cctv.heygongc.ui.profile.ProfileFragment
 import com.cctv.heygongc.ui.profile.SettingFragment
+import com.cctv.heygongc.util.SharedPreferencesManager
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ActivityMain : AppCompatActivity() {
 //    lateinit var fm: FragmentManager
 //    lateinit var fragmentMap: MutableMap<String, Fragment>
@@ -61,12 +66,33 @@ class ActivityMain : AppCompatActivity() {
         mBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        handleInactiveAppNotificationIntent(intent)
 
 
 
 //        binding.bottomNavi.labelVisibilityMode = LABEL_VISIBILITY_LABELED   // label 항상 보이기
         initFragmentMap()
         initBottomNavigation()
+
+        var sp = SharedPreferencesManager(this)
+        var a = sp.loadData(Common.ACCESS_TOKEN, "")
+        var b = sp.loadData(Common.REFRESH_TOKEN, "")
+
+    }
+
+    private fun handleInactiveAppNotificationIntent(intent: Intent?) {
+        if (intent?.hasExtra("type") == true) {
+
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        handleNotificationIntent(intent)
+    }
+
+    private fun handleNotificationIntent(intent: Intent?) {
+
     }
 
     @SuppressLint("MissingSuperCall")

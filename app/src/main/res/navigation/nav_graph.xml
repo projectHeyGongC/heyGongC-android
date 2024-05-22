@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/monitoringFragment">
+
+    <fragment
+        android:id="@+id/analysisFragment"
+        android:name="com.cctv.heygongc.ui.analysis.AnalysisFragment"
+        android:label="AnalysisFragment">
+        <action
+            android:id="@+id/action_analysisFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.cctv.heygongc.ui.profile.ProfileFragment"
+        android:label="ProfileFragment" />
+    <fragment
+        android:id="@+id/monitoringFragment"
+        android:name="com.cctv.heygongc.ui.monitoring.MonitoringFragment"
+        android:label="MonitoringFragment">
+        <action
+            android:id="@+id/action_monitoringFragment_to_scanFragment"
+            app:destination="@id/scanFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scanFragment"
+        android:name="com.cctv.heygongc.ui.scan.ScanFragment"
+        android:label="ScanFragment" />
+</navigation>

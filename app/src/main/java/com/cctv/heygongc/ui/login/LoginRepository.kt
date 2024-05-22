@@ -1,31 +1,30 @@
 package com.cctv.heygongc.ui.login
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.cctv.heygongc.R
+import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.data.remote.model.LoginGoogleRequestModel
 import com.cctv.heygongc.data.remote.model.LoginGoogleResponseModel
 import com.cctv.heygongc.data.remote.model.UserLoginRequest
-import com.cctv.heygongc.ui.fragment.ActivityJoin
+import com.cctv.heygongc.data.remote.model.UserLoginResponse
+import com.cctv.heygongc.util.SharedPreferencesManager
+import dagger.hilt.android.qualifiers.ApplicationContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
-class LoginRepository (val context: Activity) {
+class LoginRepository @Inject constructor(
+    @ApplicationContext private val context: Context
+){
 
-    @Inject
-    lateinit var loginService: LoginService     // Inject 해줬는데 왜 lateinit 오류가 나오지.
+//    @Inject
+//    lateinit var loginService: LoginService     // Inject 해줬는데 왜 lateinit 오류가 나오지. 필드 인젝 안되는데
 
-    private val getAccessTokenBaseUrl = "https://www.googleapis.com"
-//    private val loginBaseUrl = "http://13.125.159.97"
-    private val loginBaseUrl = "https://heygongc-511c4.firebaseapp.com"
-
-
-    fun getAccessToken(authCode:String) {
-        loginService.getAccessToken(
+    fun getGoogleAccessToken(flagGoogleAccessToken: MutableLiveData<Int>, authCode:String) {
+        LoginService.loginRetrofit("https://www.googleapis.com/").getAccessToken(
             request = LoginGoogleRequestModel(
                 grant_type = "authorization_code",
                 client_id = context.getString(R.string.google_login_client_id),
@@ -35,77 +34,98 @@ class LoginRepository (val context: Activity) {
         ).enqueue(object : Callback<LoginGoogleResponseModel> {
             override fun onResponse(call: Call<LoginGoogleResponseModel>, response: Response<LoginGoogleResponseModel>) {
                 if(response.isSuccessful) {
-                    val accessToken = response.body()?.access_token.orEmpty()
-
-                    // third part 서버로 access token 보내기
-                    login(accessToken)
+                    // authcode로 얻은 accesstoken과 우리서버 login api응답으로 받은 accesstoken 값이 다르다. authcode 토큰 값으로 우리 서버에 보내야 로그인 가능
+                    Common.loginToken = response.body()?.access_token.orEmpty()
+                    flagGoogleAccessToken.value = 0
+                } else {
+                    flagGoogleAccessToken.value = 1
                 }
             }
             override fun onFailure(call: Call<LoginGoogleResponseModel>, t: Throwable) {
+                flagGoogleAccessToken.value = 2
                 Log.e(TAG, "getOnFailure: ",t.fillInStackTrace() )
             }
         })
     }
 
-    fun login(accessToken:String){
-        loginService.login(
-            snsType = "google",
+    fun googleLogin(flagGoogleLogin: MutableLiveData<Int>){
+        LoginService.loginRetrofit("http://15.165.133.184/").googleLogin(
             loginRequest = UserLoginRequest(
-                "testDeviceId",
-                "Android",
-                null,
-                UserLoginRequest.Token(
-                    accessToken,
-                    ""
-                )
+                "testDeviceId", // todo uuid로 넣기
+                "AOS",
+                "GOOGLE",
+                Common.loginToken,
+                Common.fcmToken,
+                true
             )
-        ).enqueue(object :Callback<UserLoginRequest.Token>{
-            override fun onResponse(call: Call<UserLoginRequest.Token>, response: Response<UserLoginRequest.Token>) {
+        ).enqueue(object :Callback<UserLoginResponse>{
+            override fun onResponse(call: Call<UserLoginResponse>, response: Response<UserLoginResponse>) {
                 if (response.isSuccessful){
-                    if (response.code() == 204) { // 회원가입 필요
-                        signup(accessToken)
-                    } else if (response.code() == 200) {    // 로그인 성공. 메인화면으로 이동. 여기서 access token, refresh token shared에 저장해야되나?
-                        context.startActivity(Intent(context, ActivityJoin::class.java))
-                        context.finish()
+                    if (response.code() == 200) {    // 로그인 성공. 메인화면으로 이동. 여기서 access token, refresh token shared에 저장해야되나?
+
+                        var data: UserLoginResponse? = response.body()
+
+                        savePreference(data)
+
+                        flagGoogleLogin.value = 0
+                    } else {
+                        flagGoogleLogin.value = 1
+                    }
+                } else {
+                    if (response.code() == 400) { // 회원가입 필요
+                        flagGoogleLogin.value = 2
+                    } else {
+                        flagGoogleLogin.value = 3
                     }
                 }
             }
-            override fun onFailure(call: Call<UserLoginRequest.Token>, t: Throwable) {
-                Log.e("로그인","로그인 실패")
-                Log.e(TAG, "sendOnFailure: ${t.fillInStackTrace()}", )
+            override fun onFailure(call: Call<UserLoginResponse>, t: Throwable) {
+                flagGoogleLogin.value = 4
+                t.printStackTrace()
             }
         })
     }
 
-    fun signup(accessToken:String){
-        loginService.signup(
-            snsType = "google",
+    fun googleSignup(flagGoogleSignup: MutableLiveData<Int>){
+        LoginService.loginRetrofit("http://15.165.133.184/").googleSignup(
             loginRequest = UserLoginRequest(
-                "testDeviceId",
-                "Android",
-                true,
-                UserLoginRequest.Token(
-                    accessToken,
-                    ""
-                )
+                "testDeviceId",     // todo
+                "AOS",
+                "GOOGLE",
+                Common.loginToken,
+                Common.fcmToken,
+                true
             )
-        ).enqueue(object :Callback<UserLoginRequest.Token>{
-            override fun onResponse(call: Call<UserLoginRequest.Token>, response: Response<UserLoginRequest.Token>) {
+        ).enqueue(object :Callback<UserLoginResponse>{
+            override fun onResponse(call: Call<UserLoginResponse>, response: Response<UserLoginResponse>) {
                 Log.e("로그인","회원가입 성공, response.isSuccessful : ${response.isSuccessful}, ${response.code()}, ${response.message()}")
                 if (response.isSuccessful){
                     if (response.code() == 200) { // 회원가입 완료되었으니. 토큰 shared에 저장하면서 메인화면으로 이동
+                        var data: UserLoginResponse? = response.body()
 
+                        savePreference(data)
+                        flagGoogleSignup.value = 0
+                    } else {
+                        flagGoogleSignup.value = 1
                     }
-
+                } else {
+                    flagGoogleSignup.value = 2
                 }
             }
-            override fun onFailure(call: Call<UserLoginRequest.Token>, t: Throwable) {
-                Log.e("로그인","회원가입 실패")
-                Log.e(TAG, "sendOnFailure: ${t.fillInStackTrace()}", )
+            override fun onFailure(call: Call<UserLoginResponse>, t: Throwable) {
+                t.printStackTrace()
+                flagGoogleSignup.value = 3
             }
         })
     }
 
+    fun savePreference(data: UserLoginResponse?) {
+        var pm = SharedPreferencesManager(context)
+        pm.saveData(Common.LOGIN_TOKEN, Common.loginToken ?: "")  // authcode로 얻은 accessToken
+        pm.saveData(Common.ACCESS_TOKEN, data?.accessToken ?: "")  // api accessToken
+        pm.saveData(Common.REFRESH_TOKEN, data?.refreshToken ?: "")
+        pm.saveData(Common.FCM_TOKEN, Common.fcmToken ?: "")
+    }
 
 
     companion object {

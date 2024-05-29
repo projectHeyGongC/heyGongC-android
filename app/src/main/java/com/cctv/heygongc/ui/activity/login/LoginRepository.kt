@@ -137,6 +137,9 @@ class LoginRepository @Inject constructor(
 //        pm.saveData(pm.FCM_TOKEN, Common.fcmToken ?: "")
 //    }
 
+    // 회원탈퇴
+    suspend fun googleLogin(userLoginRequest: UserLoginRequest) = loginService.googleLogin(userLoginRequest)
+
 
     companion object {
         const val TAG = "LoginRepository"

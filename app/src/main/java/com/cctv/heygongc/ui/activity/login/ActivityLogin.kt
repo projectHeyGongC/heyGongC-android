@@ -1,12 +1,14 @@
 package com.cctv.heygongc.ui.activity.login
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.cctv.heygongc.ui.activity.main.ActivityMain
@@ -124,8 +126,16 @@ class ActivityLogin : AppCompatActivity() {
 
     @SuppressLint("MissingSuperCall")
     override fun onBackPressed() {
-        finishAffinity()
-        System.exit(0)
+
+        var ab = AlertDialog.Builder(this)
+        ab.setMessage("헤이공씨를 종료하시겠습니까?")
+        ab.setPositiveButton("확인", DialogInterface.OnClickListener { dialogInterface, i ->
+            finishAffinity()
+            System.exit(0)
+        })
+        ab.setNegativeButton("취소",null)
+        ab.create().show()
+
     }
 
     private fun setListener() {

@@ -1,5 +1,6 @@
 package com.cctv.heygongc.ui.fragment.profile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.cctv.heygongc.ui.activity.main.ActivityMain
 import com.cctv.heygongc.data.local.Common
 import com.cctv.heygongc.databinding.FragmentSettingBinding
 import com.cctv.heygongc.data.local.SharedPreferencesManager
+import com.cctv.heygongc.ui.activity.login.ActivityLogin
 import com.cctv.heygongc.ui.fragment.monitoring.MonitoringViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,12 +40,8 @@ class SettingFragment : Fragment() {
 //        model = ViewModelProvider(requireActivity()).get(FragmentViewModel::class.java)     // fragment들 viewmodel 공유
 //
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_setting, container, false)
-        binding.viewModel = viewModel
+        binding.viewModel = viewModel   // viewmodel 생명주기 따로 설정안해줘도되나?
 
-
-
-
-        // todo : 세팅에서 뒤로 누르기 하면 프로필 화면으로 이동하도록 설정, 로그아웃, 회원탈퇴 로직 적용하기
 
 
         setObserve()
@@ -80,6 +78,15 @@ class SettingFragment : Fragment() {
             }
         }
 
+        viewModel.flagLogout.observe(viewLifecycleOwner) {
+            if (it) {
+                resetPreference()
+                var intent = Intent(activity, ActivityLogin::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            }
+        }
+
 
 
 
@@ -99,10 +106,8 @@ class SettingFragment : Fragment() {
         pm.saveData(pm.LOGIN_TOKEN, "")  // authcode로 얻은 accessToken
         pm.saveData(pm.ACCESS_TOKEN, "")  // api accessToken
         pm.saveData(pm.REFRESH_TOKEN, "")
-        pm.saveData(pm.FCM_TOKEN, "")
 
         Common.loginToken = ""
-        Common.fcmToken = ""
     }
 
 

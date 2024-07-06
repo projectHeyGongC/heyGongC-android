@@ -138,7 +138,7 @@ class LoginRepository @Inject constructor(
 //    }
 
     // 회원탈퇴
-    suspend fun googleLogin(userLoginRequest: UserLoginRequest) = loginService.googleLogin(userLoginRequest)
+//    suspend fun googleLogin(userLoginRequest: UserLoginRequest) = loginService.googleLogin(userLoginRequest)
 
 
     companion object {

@@ -14,7 +14,7 @@ kotlin {
 
 android {
     namespace = "com.cctv.heygongc"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.cctv.heygongc"
@@ -66,6 +66,8 @@ android {
     buildFeatures {
         dataBinding = true
     }
+
+
 }
 
 

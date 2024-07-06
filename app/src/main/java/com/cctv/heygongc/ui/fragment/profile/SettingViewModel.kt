@@ -35,65 +35,7 @@ class SettingViewModel @Inject constructor(
     }
 
     fun deleteAccount() {
-        try {
-            viewModelScope.launch {
-                val response_accessToken = loginRepository.getGoogleAccessToken(loginGoogleRequestModel)
 
-                if (response_accessToken.isSuccessful) {    // 구글로 부터 로그인토큰 (access token) 얻기 성공
-
-                    // 구글 엑세스 토큰 얻었으니 우리 서버 로그인 시도
-                    var data: LoginGoogleResponseModel = response_accessToken.body()!!
-
-
-//                    var userLoginRequest = UserLoginRequest(
-//                        deviceId = Common.deviceId,
-//                        deviceOs = "AOS",
-//                        snsType = "GOOGLE",
-//                        accessToken = data.access_token,
-//                        fcmToken = Common.fcmToken,
-//                        ads = true
-//                    )
-//                    Common.loginToken = data.access_token   // 구글로 부터 얻은 토큰
-
-//                    val response_login = loginRepository.googleLogin(userLoginRequest)
-
-                    val response_login = googleLogin(data)
-
-                    if (response_login.isSuccessful) {  // 우리서버 응답 성공
-                        when (response_login.code()) {
-                            200 -> {
-                                var data: UserLoginResponse = response_login.body()!!
-
-                                Common.accessToken = data.accessToken
-                                Common.refreshToken = data.refreshToken
-
-                                flagGoogleLogin.value = 0
-                            }
-                            else -> {
-                                flagGoogleLogin.value = 1
-                            }
-                        }
-                    } else {    // 우리서버 응답 실패
-                        when (response_login.code()) {
-                            400 -> {
-                                flagGoogleLogin.value = 2
-                            }
-                            else -> {
-                                flagGoogleLogin.value = 3
-                            }
-                        }
-                    }
-                } else {
-                    flagGoogleAccessToken.value = 1 // todo 여기서 throw로 아래의 catch문으로 보낼수 있나?
-                    Log.e("LoginViewModel","accessToken 얻기 실패")
-                }
-
-            }
-
-        } catch (e: ApiException) {
-            e.printStackTrace()
-            flagGoogleAccessToken.value = 1
-        }
     }
 
 
